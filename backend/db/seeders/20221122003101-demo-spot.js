@@ -13,7 +13,7 @@ module.exports = {
     return queryInterface.bulkInsert(options, [
       {
         ownerId: 1,
-        address: '777 Aegon Rd',
+        address: "777 Aegon Rd",
         city: "King's Landing",
         state: "Crownlands",
         country: "Westeros",
@@ -25,7 +25,7 @@ module.exports = {
       },
       {
         ownerId: 2,
-        address: '123 Disney Street',
+        address: "123 Disney Street",
         city: "Anaheim",
         state: "California",
         country: "United States of America",
@@ -37,7 +37,7 @@ module.exports = {
       },
       {
         ownerId: 3,
-        address: '13 Olympian Ave',
+        address: "13 Olympian Ave",
         city: "New York City",
         state: "New York",
         country: "United States of America",
