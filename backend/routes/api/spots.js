@@ -1,7 +1,7 @@
 const express = require('express')
 
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
-const { Spot, Review, SpotImage } = require('../../db/models');
+const { Spot, Review, SpotImage, User } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const spotimage = require('../../db/models/spotimage');
@@ -61,7 +61,6 @@ router.get('/', async (req, res) => {
 router.post('/', requireAuth, async (req, res, next) => {
     const { address, city, state, country, lat, lng, name, description, price } = await req.body
     let err = new Error('Validation Error')
-    console.log(name.length)
     err.errors = []
     if ( !address || !city || !state || !country || !lat || !lng
         || !description || !price || (name.length >= 50) ) {
@@ -78,9 +77,12 @@ router.post('/', requireAuth, async (req, res, next) => {
             return next(err)
         }
 
-    const newSpot = Spot.build({
-        address, city, state, country, lat, lng, name, description, price
-    })
+        newSpot = Spot.build({
+            address, city, state, country, lat, lng, name, description, price
+        })
+        ownerId = res.req.user.dataValues.id
+        newSpot.ownerId = ownerId
+
     await newSpot.save()
     res.json(newSpot)
 })
