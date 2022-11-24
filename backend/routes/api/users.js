@@ -4,6 +4,7 @@ const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { User } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
+const e = require('express');
 
 const router = express.Router();
 
@@ -38,10 +39,21 @@ router.post(
   validateSignup,
   async (req, res) => {
     const { firstName, lastName, email, password, username } = req.body;
+
+    // const userEmails = await User.findAll({
+    //   attributes: ["email"]
+    // })
+    // let emailObjList = []
+    // userEmails.forEach(userEmail => {emailObjList.push(userEmail.toJSON()) })
+    // let emailList = []
+    // emailObjList.forEach(userEmail => {
+    //   emailList.push(Object.values(userEmail))
+    // })
+
     const user = await User.signup({ firstName, lastName, email, username, password });
 
-    await setTokenCookie(res, user);
-
+    const token = await setTokenCookie(res, user);
+    user.dataValues.token = token
     return res.json({
       user: user
     });
