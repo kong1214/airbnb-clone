@@ -37,18 +37,50 @@ const validateSignup = [
 router.post(
   '/',
   validateSignup,
-  async (req, res) => {
+  async (req, res, next) => {
     const { firstName, lastName, email, password, username } = req.body;
 
-    // const userEmails = await User.findAll({
-    //   attributes: ["email"]
-    // })
-    // let emailObjList = []
-    // userEmails.forEach(userEmail => {emailObjList.push(userEmail.toJSON()) })
-    // let emailList = []
-    // emailObjList.forEach(userEmail => {
-    //   emailList.push(Object.values(userEmail))
-    // })
+    const userEmails = await User.findAll({
+      attributes: ["email"]
+    })
+    let emailObjList = []
+    userEmails.forEach(userEmail => {emailObjList.push(userEmail.toJSON()) })
+    let emailList = []
+    emailObjList.forEach(userEmail => {
+      emailList.push(Object.values(userEmail))
+    })
+
+    // EMAIL ERROR HANDLER
+    for (let userEmail of emailList) {
+      for (let currentEmail of userEmail) {
+        if (currentEmail === email) {
+          const err = new Error('User already exists')
+          err.errors = ["User with that email already exists"]
+          err.status = 403
+          return next(err)
+        }
+      }
+    }
+
+    const userUsernames = await User.findAll({
+      attributes: ["username"]
+    })
+    let usernamesObjList = []
+    userUsernames.forEach(userUsername => {usernamesObjList.push(userUsername.toJSON()) })
+    let usernameList = []
+    usernamesObjList.forEach(userUsername => {usernameList.push(Object.values(userUsername))})
+
+    // USERNAME ERROR HANDLER
+    for (let userUsername of usernameList) {
+      for (let currentUsername of userUsername) {
+        if (currentUsername = username) {
+          const err = new Error("User already exists")
+          err.status = 403
+          err.errors = ["User with that username already exists"]
+          return next(err)
+        }
+      }
+    }
 
     const user = await User.signup({ firstName, lastName, email, username, password });
 
