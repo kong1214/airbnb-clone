@@ -8,6 +8,7 @@ const spotimage = require('../../db/models/spotimage');
 
 const router = express.Router();
 
+// GET ALL SPOTS
 router.get('/', async (req, res) => {
     const reviews = await Review.findAll({
         attributes: ['id', 'spotId', 'stars']
@@ -53,9 +54,36 @@ router.get('/', async (req, res) => {
             }
         }
     }
-
     res.json({Spots: spots})
 })
 
-module.exports = router;
+// CREATE A SPOT
+router.post('/', restoreUser, async (req, res, next) => {
+    const { address, city, state, country, lat, lng, name, description, price } = await req.body
+    let err = new Error('Validation Error')
+    console.log(name.length)
+    err.errors = []
+    if ( !address || !city || !state || !country || !lat || !lng
+        || !description || !price || (name.length >= 50) ) {
+            if (!address) err.errors.push("Street address is required")
+            if (!city) err.errors.push("City is required")
+            if (!state) err.errors.push("State is required")
+            if (!country) err.errors.push("Country is required")
+            if (!lat) err.errors.push("Latitude is required")
+            if (!lng) err.errors.push("Longitude is required")
+            if (name.length >= 50) err.errors.push("Name must be less than 50 characters")
+            if (!description) err.errors.push("Description is required.")
+            if (!price) err.errors.push("Price per day is required.")
+            err.status = 400;
+            return next(err)
+        }
 
+    const newSpot = Spot.build({
+        address, city, state, country, lat, lng, name, description, price
+    })
+    await newSpot.save()
+    res.json(newSpot)
+})
+
+
+module.exports = router;
