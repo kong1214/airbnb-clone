@@ -61,7 +61,6 @@ router.get('/', async (req, res) => {
 router.post('/', requireAuth, async (req, res, next) => {
     const { address, city, state, country, lat, lng, name, description, price } = await req.body
     let err = new Error('Validation Error')
-    console.log(name.length)
     err.errors = []
     if ( !address || !city || !state || !country || !lat || !lng
         || !description || !price || (name.length >= 50) ) {
