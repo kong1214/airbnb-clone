@@ -270,55 +270,58 @@ router.put('/:spotId', requireAuth, async (req, res, next) => {
     res.json(currentSpot)
 })
 
+// Create a Review for a Spot based on the Spot's id
+router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
+    const loggedInUserId = res.req.user.dataValues.id
+    const spotId = Number(req.params.spotId);
+    const currentSpot = await Spot.findByPk(spotId)
+    // Error response: Couldn't find a Spot with the specified id
+    if (currentSpot === null) {
+        const err = new Error()
+        err.message = "Spot couldn't be found";
+        err.status = 404;
+        err.statusCode = 404;
+        return next(err)
+    }
+    const { review, stars } = req.body;
+    // Error Response: Body validation errors
+    let err = new Error('Validation Error')
+    err.errors = []
+    if (!review || (stars < 1 || stars > 5)) {
+        if (!review) err.errors.push("Review text is required")
+        if (stars < 1 || stars > 5) err.errors.push("Stars must be an integer from 1 to 5")
+        err.status = 400;
+        err.statusCode = 400;
+        return next(err)
+    }
+
+    // Error response: Review from the current user already exists for the Spot
+    const userReviews = await Review.findAll({
+        where: {userId: loggedInUserId},
+    })
+    let userReviewsArr = []
+    userReviews.forEach(userReview => {userReviewsArr.push(userReview.toJSON()) })
+    for (const userReview of userReviewsArr) {
+        console.log(spotId)
+        if (userReview.spotId === spotId) {
+            const err = new Error()
+            err.message = "User already has a review for this spot",
+            err.status = 403;
+            err.statusCode = 403;
+            return next(err)
+        }
+    }
+    const newReview = Review.build({
+        userId: loggedInUserId,
+        spotId,
+        review,
+        stars
+    })
+
+    await newReview.save()
+
+    res.json(newReview)
+})
+
 
 module.exports = router;
-
-
-
-// ownerId = res.req.user.dataValues.id
-// const ownerSpotsQuery = await Spot.findAll({
-//     where: {ownerId},
-// })
-
-// const ownerSpotsArr = []
-// for (const ownerSpot of ownerSpotsQuery) ownerSpotsArr.push(ownerSpot.toJSON())
-// const ownerSpotIds = await Spot.findAll({
-//     where: {ownerId},
-//     attributes: ["id"]
-// })
-// let ownerSpotIdsArr = []
-// for (const ownerSpotId of ownerSpotIds) ownerSpotIdsArr.push(Object.values(ownerSpotId.toJSON()))
-// let spotIdsArr = []
-// for (const ownerSpotIdArr of ownerSpotIdsArr) {
-//     for (const ownerSpotId of ownerSpotIdArr) {spotIdsArr.push(ownerSpotId)}
-// }
-
-// const avgReviewOwnerSpotsArr = []
-// const spotImagesArr = []
-// for (const spotId of spotIdsArr) {
-//     const avgReviewSpotArr = await Review.findAll({
-//         where: {spotId},
-//         attributes: [
-//             "spotId", [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"]
-//         ]
-//     })
-//     for (const avgReview of avgReviewSpotArr) {avgReviewOwnerSpotsArr.push(avgReview.toJSON())}
-
-//     const previewPicturesArr = await SpotImage.findAll({
-//         where: {spotId},
-//         attributes: ["spotId", "url"],
-//         where: {preview: true}
-//     })
-//     for (const spotImage of previewPicturesArr) {spotImagesArr.push(spotImage.toJSON())}
-// }
-
-// for (const ownerSpot of ownerSpotsArr) {
-//     for (const avgReview of avgReviewOwnerSpotsArr) {
-//         if (ownerSpot.id === avgReview.spotId) ownerSpot.avgRating = avgReview.avgRating
-//     }
-//     for (let spotImage of spotImagesArr) {
-//         if (ownerSpot.id === spotImage.spotId) ownerSpot.previewImage = spotImage.url
-//     }
-// }
-
-// res.json({Spots: ownerSpotsArr})
