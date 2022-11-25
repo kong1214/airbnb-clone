@@ -168,6 +168,65 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
     res.json(spotImage)
 })
 
+// Get details of a Spot from an id
+router.get('/:spotId', async (req, res, next) => {
+    const spotId = Number(req.params.spotId)
+    const spotIdCheck = await Spot.findOne({
+        where: {id: spotId}
+    })
+    if (spotIdCheck === null) {
+        const err = new Error()
+        err.message = "Spot couldn't be found";
+        err.status = 404;
+        err.statusCode = 404;
+        return next(err)
+    }
+    const spotQuery = await Spot.findByPk(spotId, {
+        include: [
+            {
+                model: Review,
+                attributes: [
+                    [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"]
+                ]
+            }
+        ]
+    })
+
+    // console.log(spotImages)
+    // get review data for the spot
+    const spot = spotQuery.toJSON()
+
+    const numberOfReviews = await Review.count({
+        where: {spotId}
+    })
+    spot.avgStarRating = spot.Reviews[0].avgRating
+    spot.numReviews = numberOfReviews
+    delete spot.Reviews
+
+    // Get all spot images for the spot
+    const SpotImages = []
+    const spotImages = await SpotImage.findAll({
+        where: {spotId}
+    })
+    spotImages.forEach(spotImage => {SpotImages.push(spotImage.toJSON()) })
+    spot.SpotImages = SpotImages;
+
+    // Get owner data for the spot
+    const ownerDataQuery = await User.findByPk(spot.ownerId, {
+        attributes: ["id", "firstName", "lastName"]
+    })
+    const ownerData = ownerDataQuery.toJSON()
+    // console.log(ownerData)
+    spot.Owner = ownerData
+
+
+
+    res.json(spot)
+})
+
+
+
+
 module.exports = router;
 
 
