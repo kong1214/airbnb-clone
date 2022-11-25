@@ -46,6 +46,18 @@ module.exports = {
         name: "Olympus",
         description: "The Palace of the Gods",
         price: 200
+      },
+      {
+        ownerId: 3,
+        address: "1450 Empire St",
+        city: "New York City",
+        state: "New York",
+        country: "United States of America",
+        lat: 40.7300,
+        lng: 73.9850,
+        name: "Empire State Building",
+        description: "The tallest building in America",
+        price: 180
       }
     ], {});
   },
@@ -54,7 +66,7 @@ module.exports = {
     options.tableName = 'Spots';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      name: { [Op.in]: ['The Red Keep', 'Disneyland', 'Olympus'] }
+      name: { [Op.in]: ['The Red Keep', 'Disneyland', 'Olympus', 'Empire State Building'] }
     }, {});
   }
 };

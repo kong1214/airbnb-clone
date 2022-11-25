@@ -40,6 +40,16 @@ module.exports = {
         spotId: 3,
         url: "olympus-picture2",
         preview: false
+      },
+      {
+        spotId: 4,
+        url: "empire-state-building-picture1",
+        preview: true
+      },
+      {
+        spotId: 4,
+        url: "empire-state-building-picture2",
+        preview: false
       }
 
     ], {});
@@ -49,7 +59,7 @@ module.exports = {
     options.tableName = 'SpotImages';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      spotId: { [Op.in]: [1, 2, 3] }
+      spotId: { [Op.in]: [1, 2, 3, 4] }
     }, {});
   }
 };
