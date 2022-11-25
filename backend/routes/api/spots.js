@@ -120,7 +120,7 @@ router.get('/current', requireAuth, async (req, res) => {
         const imageUrl = spot.SpotImages[0].url
         delete spot.SpotImages
         spot.previewImage = imageUrl
-        console.log("spot", spot)
+        // console.log("spot", spot)
     })
     //--------ADD avgReview to response array---------//
     for (let spot of spotsArr) {
@@ -128,7 +128,7 @@ router.get('/current', requireAuth, async (req, res) => {
             where: { spotId: spot.id },
             attributes: ["spotId", [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"]]
         })
-        console.log(spotAvgRatings)
+        // console.log(spotAvgRatings)
         spotAvgRatings.forEach(spotAvgRating => {
             const avgRatingJSON = spotAvgRating.toJSON()
             // console.log(avgRatingJSON)
