@@ -55,5 +55,42 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
     res.json(newReviewImageRes)
 })
 
+// Get all Reviews of the Current User
+router.get('/current', requireAuth, async (req, res) => {
+    const responseArr = []
+    const loggedInUserId = res.req.user.dataValues.id;
+    const reviewsQueryArray = await Review.findAll({
+        where: {userId: loggedInUserId},
+        include: [
+            {model: User, attributes: ["id", "firstName", "lastName"]},
+            {
+                model: Spot,
+                attributes: ["id", "ownerId", "address", "city", "state", "country", "lat", "lng", "name", "price"],
+                include: [{model: SpotImage, where: {preview: true}}]
+            },
+            {model: ReviewImage}
+        ]
+    })
+    const reviewsParsedQueryArray = []
+    reviewsQueryArray.forEach(reviewObject => {reviewsParsedQueryArray.push(reviewObject.toJSON())});
+
+    // console.log(reviewsParsedQueryArray)
+    //For each parsed review
+    reviewsParsedQueryArray.forEach(review => {
+        //key into each review's spots' previewImage object and set the array --
+        // to each spot
+        review.Spot.previewImage = review.Spot.SpotImages[0].url
+        // delete the SpotImages array within the spot object
+        delete review.Spot.SpotImages
+    })
+
+
+    res.json({Reviews: reviewsParsedQueryArray})
+})
+
+
+
+
+
 
 module.exports = router;
