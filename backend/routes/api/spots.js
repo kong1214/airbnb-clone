@@ -138,7 +138,7 @@ router.get('/current', requireAuth, async (req, res) => {
         })
     }
 
-    res.json(spotsArr)
+    res.json({"Spots": spotsArr})
 
 })
 
