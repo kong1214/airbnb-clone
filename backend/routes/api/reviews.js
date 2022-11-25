@@ -17,6 +17,7 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
         where: {id: currentReviewId},
         include: [{model: ReviewImage}]
     })
+    const parsedReviewCheckerArr = reviewChecker.toJSON();
     if (!reviewChecker) {
         const err = new Error()
         err.message = "Review couldn't be found"
@@ -24,8 +25,15 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
         err.status = 404
         return next(err)
     }
-    const parsedReviewCheckerArr = reviewChecker.toJSON();
-    console.log(parsedReviewCheckerArr)
+    console.log(parsedReviewCheckerArr.userId)
+    console.log(loggedInUserId)
+    if (parsedReviewCheckerArr.userID !== loggedInUserId) {
+        const err = new Error()
+        err.message = "User must be the owner of this review to create a picture"
+        err.status = 401;
+        err.statusCode = 401;
+        return next(err)
+    }
     if (parsedReviewCheckerArr.ReviewImages.length >= 10) {
         const err = new Error()
         err.message = "Maximum number of images for this resource was reached."
