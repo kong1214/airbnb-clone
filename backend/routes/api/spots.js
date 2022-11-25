@@ -86,10 +86,11 @@ router.post('/', requireAuth, async (req, res, next) => {
             if (!description) err.errors.push("Description is required.")
             if (!price) err.errors.push("Price per day is required.")
             err.status = 400;
+            err.statusCode = 400;
             return next(err)
         }
 
-        newSpot = Spot.build({
+        const newSpot = Spot.build({
             address, city, state, country, lat, lng, name, description, price
         })
         ownerId = res.req.user.dataValues.id
@@ -149,6 +150,32 @@ router.get('/current', requireAuth, async (req, res) => {
     }
 
     res.json({Spots: ownerSpotsArr})
+})
+
+// ADD AN IMAGE TO A SPOT BASED ON SPOT ID
+router.post('/:spotId/images', requireAuth, async (req, res, next) => {
+    const spotId = Number(req.params.spotId)
+    const {url, preview} = await req.body
+    const spotIdCheck = await Spot.findOne({
+        where: {id: spotId}
+    })
+    if (spotIdCheck === null) {
+        const err = new Error()
+        err.message = "Spot couldn't be found";
+        err.status = 404;
+        err.statusCode = 404;
+        return next(err)
+    }
+
+    const newSpotImage = SpotImage.build({
+        spotId, url, preview
+    })
+    await newSpotImage.save()
+    const spotImageId = newSpotImage.toJSON().id
+    const spotImage = await SpotImage.findOne({
+        where: {id: spotImageId}
+    })
+    res.json(spotImage)
 })
 
 module.exports = router;
