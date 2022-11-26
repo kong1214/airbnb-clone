@@ -105,23 +105,20 @@ router.post('/', requireAuth, async (req, res, next) => {
 router.get('/current', requireAuth, async (req, res) => {
     const loggedInUserId = res.req.user.dataValues.id
     const loggedInUserSpots = await Spot.findAll({
-        where: { ownerId: loggedInUserId },
-        include: [
-            {
-                model: SpotImage,
-                where: { preview: true }
-            },
-        ]
+        where: { ownerId: loggedInUserId }
     })
     //--------ADD previewImageUrl to response array---------//
+    // console.log(loggedInUserSpots)
     let spotsArr = []
     loggedInUserSpots.forEach(spot => { spotsArr.push(spot.toJSON()) })
-    spotsArr.forEach(spot => {
-        const imageUrl = spot.SpotImages[0].url
-        delete spot.SpotImages
-        spot.previewImage = imageUrl
-        // console.log("spot", spot)
-    })
+    console.log(spotsArr)
+    for (let spot of spotsArr) {
+        const previewImage = await SpotImage.findOne({
+            attributes: ["spotId", "url" ],
+            where: {preview: true, spotId: spot.id}
+        })
+        spot.previewImage = previewImage.toJSON().url
+    }
     //--------ADD avgReview to response array---------//
     for (let spot of spotsArr) {
         const spotAvgRatings = await Review.findAll({
