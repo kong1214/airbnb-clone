@@ -175,7 +175,8 @@ router.get('/:spotId', async (req, res, next) => {
                 model: Review,
                 attributes: [
                     [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"]
-                ]
+                ],
+                group: "id"
             }
         ]
     })
