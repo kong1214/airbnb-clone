@@ -118,12 +118,15 @@ router.get('/current', requireAuth, async (req, res) => {
         spot.previewImage = previewImage.toJSON().url
     }
     //--------ADD avgReview to response array---------//
+    let count = 0
     for (let spot of spotsArr) {
-        const spotAvgRatings = await Review.findOne({
+        const spotAvgRatings = await Review.findAll({
             where: { spotId: spot.id },
-            attributes: ["spotId", [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"]]
+            attributes: ["spotId", [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"]],
+            group: "spotId"
         })
-        spot.avgRating = spotAvgRatings.toJSON().avgRating
+        console.log(spotAvgRatings)
+        spot.avgRating = spotAvgRatings[0].toJSON().avgRating
     }
     res.json({ "Spots": spotsArr })
 })
