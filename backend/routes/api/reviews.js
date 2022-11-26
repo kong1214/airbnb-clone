@@ -12,12 +12,13 @@ const router = express.Router();
 // Add an Image to a Review based on the Review's id
 router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
     const loggedInUserId = res.req.user.dataValues.id;
-    const currentReviewId = req.params.reviewId
-    const reviewChecker = await Review.findOne({
-        where: {id: currentReviewId},
+    const currentReviewId = Number(req.params.reviewId)
+    // console.log(currentReviewId)
+    // console.log(loggedInUserId)
+    const reviewChecker = await Review.findByPk(currentReviewId, {
         include: [{model: ReviewImage}]
     })
-    const parsedReviewCheckerArr = reviewChecker.toJSON();
+    // console.log(reviewChecker)
     if (!reviewChecker) {
         const err = new Error()
         err.message = "Review couldn't be found"
@@ -25,9 +26,10 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
         err.status = 404
         return next(err)
     }
-    console.log(parsedReviewCheckerArr.userId)
-    console.log(loggedInUserId)
-    if (parsedReviewCheckerArr.userID !== loggedInUserId) {
+    const parsedReviewCheckerArr = reviewChecker.toJSON();
+    // console.log(parsedReviewCheckerArr.userId)
+    // console.log(loggedInUserId)
+    if (parsedReviewCheckerArr.userId !== loggedInUserId) {
         const err = new Error()
         err.message = "User must be the owner of this review to create a picture"
         err.status = 401;
