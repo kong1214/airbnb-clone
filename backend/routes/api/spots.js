@@ -108,10 +108,8 @@ router.get('/current', requireAuth, async (req, res) => {
         where: { ownerId: loggedInUserId }
     })
     //--------ADD previewImageUrl to response array---------//
-    // console.log(loggedInUserSpots)
     let spotsArr = []
     loggedInUserSpots.forEach(spot => { spotsArr.push(spot.toJSON()) })
-    console.log(spotsArr)
     for (let spot of spotsArr) {
         const previewImage = await SpotImage.findOne({
             attributes: ["spotId", "url" ],
@@ -121,22 +119,13 @@ router.get('/current', requireAuth, async (req, res) => {
     }
     //--------ADD avgReview to response array---------//
     for (let spot of spotsArr) {
-        const spotAvgRatings = await Review.findAll({
+        const spotAvgRatings = await Review.findOne({
             where: { spotId: spot.id },
             attributes: ["spotId", [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"]]
         })
-        // console.log(spotAvgRatings)
-        spotAvgRatings.forEach(spotAvgRating => {
-            const avgRatingJSON = spotAvgRating.toJSON()
-            // console.log(avgRatingJSON)
-            const avgRating = Object.values(avgRatingJSON).find(value => avgRatingJSON.avgRating === value)
-            // console.log(avgRating)
-            if (avgRatingJSON.spotId === spot.id) spot.avgRating = avgRating
-        })
+        spot.avgRating = spotAvgRatings.toJSON().avgRating
     }
-
     res.json({ "Spots": spotsArr })
-
 })
 
 // ADD AN IMAGE TO A SPOT BASED ON SPOT ID
