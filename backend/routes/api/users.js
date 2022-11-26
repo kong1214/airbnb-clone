@@ -67,10 +67,8 @@ router.post(
     })
     let usernamesObjList = []
     userUsernames.forEach(userUsername => {usernamesObjList.push(userUsername.toJSON()) })
-    console.log(userUsernames)
     let usernameList = []
     usernamesObjList.forEach(userUsername => {usernameList.push(Object.values(userUsername))})
-    console.log(usernameList)
 
     // USERNAME ERROR HANDLER
     for (let userUsername of usernameList) {
