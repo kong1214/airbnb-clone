@@ -185,7 +185,7 @@ router.get('/:spotId', async (req, res, next) => {
         where: {spotId},
         attributes: [[sequelize.fn("AVG", sequelize.col("stars")), "avgRating"]]
     })
-    if (reviewAvgQuery.numReviews === 0) spot.avgStarRating = "There is no review for this spot yet!"
+    if (reviewAvgQuery.num === 0) spot.avgStarRating = "There is no review for this spot yet!"
     else spot.avgStarRating = Number(reviewAvgQuery[0].toJSON().avgRating)
 
     // Get all spot images for the spot
@@ -332,6 +332,7 @@ router.get('/:spotId/reviews', async (req, res, next) => {
 
     res.json({Reviews: parsedReviewsArr})
 })
+
 
 
 module.exports = router;
