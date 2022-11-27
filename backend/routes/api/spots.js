@@ -115,7 +115,8 @@ router.get('/current', requireAuth, async (req, res) => {
             attributes: ["spotId", "url" ],
             where: {preview: true, spotId: spot.id}
         })
-        spot.previewImage = previewImage.toJSON().url
+        if (!previewImage) spot.previewImage = "No preview image url found!"
+        else spot.previewImage = previewImage.toJSON().url
     }
     //--------ADD avgReview to response array---------//
     for (let spot of spotsArr) {
@@ -127,7 +128,9 @@ router.get('/current', requireAuth, async (req, res) => {
         // console.log(spotAvgRatings)
         if (spotAvgRatings.length === 0) {
             spot.avgRating = "No reviews for this spot yet!"
-        } else spot.avgRating = spotAvgRatings[0].toJSON().avgRating
+        } else {
+            spot.avgRating = spotAvgRatings[0].toJSON().avgRating
+        }
     }
     res.json({ "Spots": spotsArr })
 })
