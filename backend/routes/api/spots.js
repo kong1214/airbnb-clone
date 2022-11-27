@@ -174,28 +174,19 @@ router.get('/:spotId', async (req, res, next) => {
         err.statusCode = 404;
         return next(err)
     }
-    const spotQuery = await Spot.findByPk(spotId, {
-        include: [
-            {
-                model: Review,
-                attributes: [
-                    [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"]
-                ],
-                group: "Reviews.id"
-            }
-        ],
-        group: "Spots.id"
-    })
-
+    const spotQuery = await Spot.findByPk(spotId)
     // console.log(spotImages)
     // get review data for the spot
     const spot = spotQuery.toJSON()
-    console.log(spot)
+    // console.log(spot)
     const numberOfReviews = await Review.count({where: { spotId }})
-    if (spot.Reviews.length === 0 ) Spot.avgStarRating = "No reviews for this spot yet!"
-    else spot.avgStarRating = Number(spot.Reviews[0].avgRating)
     spot.numReviews = numberOfReviews
-    delete spot.Reviews
+    const reviewAvgQuery = await Review.findAll({
+        where: {spotId},
+        attributes: [[sequelize.fn("AVG", sequelize.col("stars")), "avgRating"]]
+    })
+    if (reviewAvgQuery.length === 0) spot.avgStarRating = "There is no review for this spot yet!"
+    else spot.avgStarRating = Number(reviewAvgQuery[0].toJSON().avgRating)
 
     // Get all spot images for the spot
     const SpotImages = []
