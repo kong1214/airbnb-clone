@@ -181,9 +181,10 @@ router.get('/:spotId', async (req, res, next) => {
                 attributes: [
                     [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"]
                 ],
+                group: "Reviews.id"
             }
         ],
-        group: "Spot.id"
+        group: "Spots.id"
     })
 
     // console.log(spotImages)
