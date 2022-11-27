@@ -190,7 +190,7 @@ router.get('/:spotId', async (req, res, next) => {
     const numberOfReviews = await Review.count({
         where: { spotId }
     })
-    spot.avgStarRating = spot.Reviews[0].avgRating
+    spot.avgStarRating = spot.Reviews[0].Number(avgRating)
     spot.numReviews = numberOfReviews
     delete spot.Reviews
 
