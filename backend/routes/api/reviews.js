@@ -9,6 +9,16 @@ const { Op } = require("sequelize")
 
 const router = express.Router();
 
+const validateReview = [
+    check('review')
+      .exists({ checkFalsy: true })
+      .withMessage("Review text is required"),
+    check('stars')
+      .exists({ checkFalsy: true })
+      .isInt({min: 1, max: 5})
+      .withMessage('Stars must be an integer from 1 to 5'),
+    handleValidationErrors
+  ];
 // ============== Add an Image to a Review based on the Review's id ===========================
 router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
     const loggedInUserId = res.req.user.dataValues.id;
@@ -59,7 +69,6 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
 
 // ========================== Get all Reviews of the Current User ============================
 router.get('/current', requireAuth, async (req, res) => {
-    const responseArr = []
     const loggedInUserId = res.req.user.dataValues.id;
     const reviewsQueryArray = await Review.findAll({
         where: {userId: loggedInUserId},
@@ -91,6 +100,36 @@ router.get('/current', requireAuth, async (req, res) => {
 })
 
 
+// ========================= EDIT A REVIEW ===================
+router.put('/:reviewId', requireAuth, validateReview, async (req, res, next) => {
+    const loggedInUserId = res.req.user.dataValues.id;
+    const reviewId = Number(req.params.reviewId)
+    const reviewQuery = await Review.findByPk(reviewId)
+    // ERROR HANDLER IF REVIEW DOESNT EXIST
+    if (!reviewQuery) {
+        const err = new Error()
+        err.message = "Review couldn't be found"
+        err.statusCode = 404;
+        err.status = 404;
+        return next(err)
+    }
+    const parsedReviewQuery = reviewQuery.toJSON()
+    // Error if user is not authorized to edit the review
+    if (parsedReviewQuery.userId !== loggedInUserId) {
+        const err = new Error()
+        err.message = "This user is not authorized to edit this review"
+        err.status = 401;
+        err.statusCode = 401;
+        return next(err)
+    }
+    const { review, stars } = req.body
+
+    reviewQuery.update({
+        review, stars
+    })
+
+    res.json(reviewQuery)
+})
 
 
 
