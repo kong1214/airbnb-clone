@@ -9,7 +9,7 @@ const { Op } = require("sequelize")
 
 const router = express.Router();
 
-// GET ALL SPOTS
+// ================================= GET ALL SPOTS =================================
 router.get('/', async (req, res) => {
     const reviews = await Review.findAll({
         attributes: ['id', 'spotId', 'stars']
@@ -69,7 +69,7 @@ router.get('/', async (req, res) => {
     res.json({ Spots: spots })
 })
 
-// CREATE A SPOT
+// ============================== CREATE A SPOT =================================
 router.post('/', requireAuth, async (req, res, next) => {
     const { address, city, state, country, lat, lng, name, description, price } = await req.body
     let err = new Error('Validation Error')
@@ -101,7 +101,7 @@ router.post('/', requireAuth, async (req, res, next) => {
 
 })
 
-// GET ALL SPOTS OWNED BY THE CURRENT USER
+// ========================== GET ALL SPOTS OWNED BY THE CURRENT USER ======================
 router.get('/current', requireAuth, async (req, res) => {
     const loggedInUserId = res.req.user.dataValues.id
     const loggedInUserSpots = await Spot.findAll({
@@ -135,7 +135,7 @@ router.get('/current', requireAuth, async (req, res) => {
     res.json({ "Spots": spotsArr })
 })
 
-// ADD AN IMAGE TO A SPOT BASED ON SPOT ID
+// ======================= ADD AN IMAGE TO A SPOT BASED ON SPOT ID ==================
 router.post('/:spotId/images', requireAuth, async (req, res, next) => {
     const spotId = Number(req.params.spotId)
     const { url, preview } = await req.body
@@ -161,7 +161,7 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
     res.json(spotImage)
 })
 
-// Get details of a Spot from an id
+// ================== Get details of a Spot from an id ===========================
 router.get('/:spotId', async (req, res, next) => {
     const spotId = Number(req.params.spotId)
     const spotIdCheck = await Spot.findOne({
@@ -189,9 +189,10 @@ router.get('/:spotId', async (req, res, next) => {
     // console.log(spotImages)
     // get review data for the spot
     const spot = spotQuery.toJSON()
+    console.log(spot)
     const numberOfReviews = await Review.count({where: { spotId }})
-    if (!spot.Reviews[0].avgRating) Spot.avgStarRating = "No reviews for this spot yet!"
-    else spot.avgStarRating = spot.Reviews[0].Number(avgRating)
+    if (spot.Reviews.length === 0 ) Spot.avgStarRating = "No reviews for this spot yet!"
+    else spot.avgStarRating = Number(spot.Reviews[0].avgRating)
     spot.numReviews = numberOfReviews
     delete spot.Reviews
 
