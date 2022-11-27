@@ -1,7 +1,7 @@
 const express = require('express')
 
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
-const { Spot, Review, SpotImage, User, sequelize } = require('../../db/models');
+const { Spot, Review, ReviewImage, SpotImage, User, sequelize } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const spotimage = require('../../db/models/spotimage');
@@ -125,7 +125,9 @@ router.get('/current', requireAuth, async (req, res) => {
             group: "spotId"
         })
         // console.log(spotAvgRatings)
-        spot.avgRating = spotAvgRatings[0].toJSON().avgRating
+        if (spotAvgRatings.length > 0) {
+            spot.avgRating = spotAvgRatings[0].toJSON().avgRating
+        }
     }
     res.json({ "Spots": spotsArr })
 })
@@ -175,7 +177,8 @@ router.get('/:spotId', async (req, res, next) => {
                 model: Review,
                 attributes: [
                     [sequelize.fn("AVG", sequelize.col("stars")), "avgRating"]
-                ]
+                ],
+                group: "id"
             }
         ]
     })
@@ -309,6 +312,31 @@ router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
     await newReview.save()
 
     res.json(newReview)
+})
+
+
+// Get all Reviews by a Spot's id
+router.get('/:spotId/reviews', async (req, res, next) => {
+    const currentSpotId = req.params.spotId
+    const unparsedReviewsArr = await Review.findAll({
+        where: { spotId: currentSpotId},
+        include: [
+            {model: User, attributes: ["id", "firstName", "lastName"]},
+            {model: ReviewImage}
+        ]
+    })
+    if (unparsedReviewsArr.length === 0) {
+        const err = new Error()
+        err.message = "Spot couldn't be found",
+        err.status = 404
+        err.statusCode = 404
+        return next(err)
+    }
+    const parsedReviewsArr = []
+    unparsedReviewsArr.forEach(review => { parsedReviewsArr.push(review.toJSON()) })
+    console.log(parsedReviewsArr)
+
+    res.json({Reviews: parsedReviewsArr})
 })
 
 
