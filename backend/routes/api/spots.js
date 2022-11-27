@@ -129,7 +129,7 @@ router.get('/current', requireAuth, async (req, res) => {
         if (spotAvgRatings.length === 0) {
             spot.avgRating = "No reviews for this spot yet!"
         } else {
-            spot.avgRating = spotAvgRatings[0].toJSON().avgRating
+            spot.avgRating = Number(spotAvgRatings[0].toJSON().avgRating)
         }
     }
     res.json({ "Spots": spotsArr })
