@@ -4,11 +4,54 @@ const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth')
 const { Spot, Review, ReviewImage, SpotImage, User, sequelize } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
-const spotimage = require('../../db/models/spotimage');
 const { Op } = require("sequelize")
 
 const router = express.Router();
 
+const validateSpot = [
+    check('address')
+      .exists({ checkFalsy: true })
+      .withMessage("Street address is required"),
+    check('city')
+      .exists({ checkFalsy: true })
+      .withMessage("City is required"),
+    check('state')
+      .exists({ checkFalsy: true })
+      .withMessage("State is required"),
+    check('country')
+      .exists({ checkFalsy: true })
+      .withMessage("Country is required"),
+    check('lat')
+      .exists({ checkFalsy: true })
+      .isNumeric()
+      .withMessage("Latitude is not valid"),
+    check('lng')
+      .exists({ checkFalsy: true })
+      .isNumeric()
+      .withMessage("Longitude is not valid"),
+    check('name')
+      .exists({ checkFalsy: true })
+      .isLength({min: 1, max: 49})
+      .withMessage("Name must be less than 50 characters"),
+    check('description')
+      .exists({ checkFalsy: true })
+      .withMessage("Description is required"),
+    check('price')
+      .exists({ checkFalsy: true })
+      .withMessage("Price per day is required"),
+    handleValidationErrors
+  ]
+
+  const validateReview = [
+    check('review')
+      .exists({ checkFalsy: true })
+      .withMessage("Review text is required"),
+    check('stars')
+      .exists({ checkFalsy: true })
+      .isInt({min: 1, max: 5})
+      .withMessage('Stars must be an integer from 1 to 5'),
+    handleValidationErrors
+  ];
 // ================================= GET ALL SPOTS =================================
 router.get('/', async (req, res) => {
     const reviews = await Review.findAll({
@@ -70,25 +113,10 @@ router.get('/', async (req, res) => {
 })
 
 // ============================== CREATE A SPOT =================================
-router.post('/', requireAuth, async (req, res, next) => {
+router.post('/', requireAuth, validateSpot, async (req, res, next) => {
     const { address, city, state, country, lat, lng, name, description, price } = await req.body
     let err = new Error('Validation Error')
     err.errors = []
-    if (!address || !city || !state || !country || !lat || !lng
-        || !description || !price || (name.length >= 50)) {
-        if (!address) err.errors.push("Street address is required")
-        if (!city) err.errors.push("City is required")
-        if (!state) err.errors.push("State is required")
-        if (!country) err.errors.push("Country is required")
-        if (!lat) err.errors.push("Latitude is required")
-        if (!lng) err.errors.push("Longitude is required")
-        if (name.length >= 50) err.errors.push("Name must be less than 50 characters")
-        if (!description) err.errors.push("Description is required.")
-        if (!price) err.errors.push("Price per day is required.")
-        err.status = 400;
-        err.statusCode = 400;
-        return next(err)
-    }
 
     const newSpot = Spot.build({
         address, city, state, country, lat, lng, name, description, price
@@ -209,8 +237,8 @@ router.get('/:spotId', async (req, res, next) => {
     res.json(spot)
 })
 
-// Edit a Spot
-router.put('/:spotId', requireAuth, async (req, res, next) => {
+// ============================= Edit a Spot =====================================
+router.put('/:spotId', requireAuth, validateSpot, async (req, res, next) => {
     const loggedInUserId = res.req.user.dataValues.id;
     const spotId = req.params.spotId;
     const currentSpot = await Spot.findByPk(spotId)
@@ -233,21 +261,6 @@ router.put('/:spotId', requireAuth, async (req, res, next) => {
     const { address, city, state, country, lat, lng, name, description, price } = req.body
     let err = new Error('Validation Error')
     err.errors = []
-    if (!address || !city || !state || !country || !lat || !lng
-        || !description || !price || (name.length >= 50 || !name)) {
-        if (!address) err.errors.push("Street address is required")
-        if (!city) err.errors.push("City is required")
-        if (!state) err.errors.push("State is required")
-        if (!country) err.errors.push("Country is required")
-        if (!lat) err.errors.push("Latitude is required")
-        if (!lng) err.errors.push("Longitude is required")
-        if (name.length >= 50 || !name) err.errors.push("Name must be less than 50 characters")
-        if (!description) err.errors.push("Description is required.")
-        if (!price) err.errors.push("Price per day is required.")
-        err.status = 400;
-        err.statusCode = 400;
-        return next(err)
-    }
 
     currentSpot.update({
         address, city, state, country, lat, lng, name, description, price
@@ -255,8 +268,8 @@ router.put('/:spotId', requireAuth, async (req, res, next) => {
     res.json(currentSpot)
 })
 
-// Create a Review for a Spot based on the Spot's id
-router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
+// ===================== Create a Review for a Spot based on the Spot's id ==========
+router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res, next) => {
     const loggedInUserId = res.req.user.dataValues.id
     const spotId = Number(req.params.spotId);
     const currentSpot = await Spot.findByPk(spotId)
@@ -309,7 +322,7 @@ router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
 })
 
 
-// Get all Reviews by a Spot's id
+// ======================== Get all Reviews by a Spot's id ==================
 router.get('/:spotId/reviews', async (req, res, next) => {
     const currentSpotId = req.params.spotId
     const unparsedReviewsArr = await Review.findAll({
