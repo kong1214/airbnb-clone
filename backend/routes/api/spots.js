@@ -312,6 +312,8 @@ router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
     res.json(newReview)
 })
 
+
+// Get all Reviews by a Spot's id
 router.get('/:spotId/reviews', async (req, res, next) => {
     const currentSpotId = req.params.spotId
     const unparsedReviewsArr = await Review.findAll({
