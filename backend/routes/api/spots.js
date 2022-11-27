@@ -125,9 +125,9 @@ router.get('/current', requireAuth, async (req, res) => {
             group: "spotId"
         })
         // console.log(spotAvgRatings)
-        if (spotAvgRatings.length > 0) {
-            spot.avgRating = spotAvgRatings[0].toJSON().avgRating
-        }
+        if (spotAvgRatings.length = 0) {
+            spot.avgRating = "No reviews for this spot yet!"
+        } else spot.avgRating = spotAvgRatings[0].toJSON().avgRating
     }
     res.json({ "Spots": spotsArr })
 })
@@ -190,7 +190,7 @@ router.get('/:spotId', async (req, res, next) => {
     const numberOfReviews = await Review.count({
         where: { spotId }
     })
-    spot.avgStarRating = spot.Reviews[0].avgRating
+    spot.avgStarRating = spot.Reviews[0].Number(avgRating)
     spot.numReviews = numberOfReviews
     delete spot.Reviews
 
