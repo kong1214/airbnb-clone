@@ -125,7 +125,9 @@ router.get('/current', requireAuth, async (req, res) => {
             group: "spotId"
         })
         // console.log(spotAvgRatings)
-        spot.avgRating = spotAvgRatings[0].toJSON().avgRating
+        if (spotAvgRatings.length > 0) {
+            spot.avgRating = spotAvgRatings[0].toJSON().avgRating
+        }
     }
     res.json({ "Spots": spotsArr })
 })
