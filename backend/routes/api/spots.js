@@ -183,7 +183,7 @@ router.get('/:spotId', async (req, res, next) => {
                 ],
             }
         ],
-        group: "id"
+        group: "Spot.id"
     })
 
     // console.log(spotImages)
