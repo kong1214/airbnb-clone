@@ -9,7 +9,7 @@ const { Op } = require("sequelize")
 
 const router = express.Router();
 
-// Add an Image to a Review based on the Review's id
+// ============== Add an Image to a Review based on the Review's id ===========================
 router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
     const loggedInUserId = res.req.user.dataValues.id;
     const currentReviewId = Number(req.params.reviewId)
@@ -57,7 +57,7 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
     res.json(newReviewImageRes)
 })
 
-// Get all Reviews of the Current User
+// ========================== Get all Reviews of the Current User ============================
 router.get('/current', requireAuth, async (req, res) => {
     const responseArr = []
     const loggedInUserId = res.req.user.dataValues.id;
