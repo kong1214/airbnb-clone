@@ -189,11 +189,9 @@ router.get('/:spotId', async (req, res, next) => {
     // console.log(spotImages)
     // get review data for the spot
     const spot = spotQuery.toJSON()
-
-    const numberOfReviews = await Review.count({
-        where: { spotId }
-    })
-    spot.avgStarRating = spot.Reviews[0].Number(avgRating)
+    const numberOfReviews = await Review.count({where: { spotId }})
+    if (!spot.Reviews[0].avgRating) Spot.avgStarRating = "No reviews for this spot yet!"
+    else spot.avgStarRating = spot.Reviews[0].Number(avgRating)
     spot.numReviews = numberOfReviews
     delete spot.Reviews
 
