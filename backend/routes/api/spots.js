@@ -419,15 +419,10 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
             }
         }
     })
-    console.log("All bookings after the requested startDate: ")
-    console.log(bookingQuery)
     if (bookingQuery.length > 0) {
-        bookingQuery.forEach(booking => {
-            console.log("\nbooking:")
-            console.log(booking)
+        for (let booking of bookingQuery) {
             const bookingErrors = bookingConflictChecker(startDate, endDate, booking.dataValues.startDate, booking.dataValues.endDate)
-            // console.log(booking)
-            // console.log(bookingErrors)
+
             if (bookingErrors.length > 0) {
                 const err = new Error()
                 err.message = "Sorry, this spot is already booked for the specified dates"
@@ -436,31 +431,18 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
                 err.errors = bookingErrors;
                 return next(err)
             }
-        })
+        }
     }
     // Success Response
-    // const newBooking = await Booking.build({
-    //     spotId, userId: loggedInUserId, startDate, endDate
-    // })
+    const newBooking = await Booking.build({
+        spotId, userId: loggedInUserId, startDate, endDate
+    })
+    await newBooking.save()
 
-    // await newBooking.save()
-    res.json()
+    res.json(newBooking)
 })
 
-module.exports = router;
 
-// bookingConflictChecker
-// bookingQuery.forEach(booking => {parsedBookingQuery.push(booking.toJSON())})
-// parsedBookingQuery.forEach(booking => {
-//     const bookingErrors = bookingConflictChecker(startDate, endDate, booking.startDate, booking.endDate)
-//     // console.log(booking.startDate)
-//     // console.log(booking.endDate)
-//     if (bookingErrors.length > 0) {
-//         const err = new Error()
-//         err.message = "Sorry, this spot is already booked for the specified dates"
-//         err.status = 403;
-//         err.statusCode = 403;
-//         err.errors = bookingErrors;
-//         return next(err)
-//     }
-// })
+
+
+module.exports = router;
