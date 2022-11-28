@@ -131,7 +131,34 @@ router.put('/:reviewId', requireAuth, validateReview, async (req, res, next) => 
     res.json(reviewQuery)
 })
 
+// ======================================= DELETE A Review ======================
+router.delete('/:reviewId', requireAuth, async (req, res, next) => {
+    const currentReviewId = Number(req.params.reviewId)
+    const loggedInUserId = res.req.user.dataValues.id
 
+    const reviewQueryTest = await Review.findOne({
+        where: {id: currentReviewId},
+    })
+    // ERROR HANDLER if the review doesn't exist
+    if (reviewQueryTest === null) {
+        const err = new Error()
+        err.message = "Review couldn't be found";
+        err.status = 404;
+        err.statusCode = 404;
+        return next(err)
+    }
+    // ERROR HANDLER if the logged in user is not the owner of the booking
+    if (reviewQueryTest.dataValues.userId !== loggedInUserId)  {
+        const err = new Error()
+        err.message = "Review must belong to the current User"
+        err.status = 401
+        err.statusCode = 401
+        return next(err)
+    }
+
+    await reviewQueryTest.destroy()
+    res.json({message: "Successfully deleted"})
+})
 
 
 module.exports = router;

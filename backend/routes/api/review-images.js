@@ -17,7 +17,7 @@ router.delete('/:reviewImageId', requireAuth, async (req, res, next) => {
         attributes: ["id", "reviewId"],
         include: [{model: Review}]
     })
-    // ERROR HANDLER if the spotImage doesn't exist
+    // ERROR HANDLER if the reviewImage doesn't exist
     if (reviewImageQueryTest === null) {
         const err = new Error()
         err.message = "Review image couldn't be found";
@@ -25,7 +25,7 @@ router.delete('/:reviewImageId', requireAuth, async (req, res, next) => {
         err.statusCode = 404;
         return next(err)
     }
-    // ERROR HANDLER if the logged in user is not the owner of the spot
+    // ERROR HANDLER if the logged in user is not the owner of the review
     if (reviewImageQueryTest.dataValues.Review.dataValues.userId !== loggedInUserId)  {
         const err = new Error()
         err.message = "Review must belong to the current User"
