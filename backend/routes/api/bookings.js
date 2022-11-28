@@ -23,11 +23,11 @@ const bookingConflictChecker = (date1, date2, date3, date4) => {
 
     const errors = []
     if (currentStartDate >= dateCheckStartDate && currentStartDate <= dateCheckEndDate) {
-        console.log("Start date is between the start date and end date of another booking!")
+        // console.log("Start date is between the start date and end date of another booking!")
         errors.push("Start date conflicts with an existing booking")
     }
     if (currentEndDate >= dateCheckStartDate && currentEndDate <= dateCheckEndDate) {
-        console.log("End date is between the start date and end date of another booking!")
+        // console.log("End date is between the start date and end date of another booking!")
         errors.push("End date conflicts with an existing booking")
     }
     return errors;
