@@ -486,5 +486,32 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
 })
 
 
+// ======================================= DELETE A Review ======================
+router.delete('/:spotId', requireAuth, async (req, res, next) => {
+    const currentSpotId = Number(req.params.spotId)
+    const loggedInUserId = res.req.user.dataValues.id
 
+    const spotQueryTest = await Spot.findOne({
+        where: {id: currentSpotId},
+    })
+    // ERROR HANDLER if the spot doesn't exist
+    if (spotQueryTest === null) {
+        const err = new Error()
+        err.message = "spot couldn't be found";
+        err.status = 404;
+        err.statusCode = 404;
+        return next(err)
+    }
+    // ERROR HANDLER if the logged in user is not the owner of the spot
+    if (spotQueryTest.dataValues.ownerId !== loggedInUserId)  {
+        const err = new Error()
+        err.message = "Spot must belong to the current User"
+        err.status = 401
+        err.statusCode = 401
+        return next(err)
+    }
+
+    await spotQueryTest.destroy()
+    res.json({message: "Successfully deleted"})
+})
 module.exports = router;
