@@ -29,8 +29,8 @@ router.delete('/:reviewImageId', requireAuth, async (req, res, next) => {
     if (reviewImageQueryTest.dataValues.Review.dataValues.userId !== loggedInUserId)  {
         const err = new Error()
         err.message = "Review must belong to the current User"
-        err.status = 401
-        err.statusCode = 401
+        err.status = 403
+        err.statusCode = 403
         return next(err)
     }
 

@@ -105,12 +105,6 @@ router.get('/', async (req, res) => {
     // Get all the spotIds into an array that have reviews
     const reviewsObjSpotIds = Object.keys(reviewsObj)
 
-    // Query for all preview Images
-    const previewImages = await SpotImage.findAll({
-        where: {
-            preview: true
-        }
-    })
 
     //PAGINATION / QUERY PARAMS
     let { page, size } = req.query;
@@ -131,15 +125,26 @@ router.get('/', async (req, res) => {
 
 
 
-
-
     // Query for all spots
     const spots = await Spot.findAll({
         attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat',
             'lng', 'name', 'description', 'price', 'createdAt', 'updatedAt'],
+        include: [{
+            model: SpotImage,
+            where: {
+                preview: true
+            }
+        }],
         whereQueryParams,
         ...pagination,
     })
+
+    for (let spot of spots) {
+        // console.log(spot.dataValues.SpotImages[0])
+        spot.dataValues.previewImage = spot.dataValues.SpotImages[0].dataValues.url
+        console.log(spot.previewImage)
+        delete spot.dataValues.SpotImages
+    }
 
     // for each spot in the spots array query
     for (let spot of spots) {
@@ -150,12 +155,6 @@ router.get('/', async (req, res) => {
                 //set avgRating of the spot to the avgRating of the currentReview
                 let currentReview = reviewsObj[reviewsObjSpotId]
                 spot.dataValues.avgRating = currentReview.averageStars
-            }
-        }
-        // for each preview image of the preview image
-        for (let previewImage of previewImages) {
-            if (spot.id === previewImage.dataValues.spotId) {
-                spot.dataValues.previewImage = previewImage.dataValues.url
             }
         }
     }
@@ -215,16 +214,28 @@ router.get('/current', requireAuth, async (req, res) => {
 
 // ======================= ADD AN IMAGE TO A SPOT BASED ON SPOT ID ==================
 router.post('/:spotId/images', requireAuth, async (req, res, next) => {
+    const loggedInUserId = res.req.user.dataValues.id
     const spotId = Number(req.params.spotId)
     const { url, preview } = await req.body
     const spotIdCheck = await Spot.findOne({
         where: { id: spotId }
     })
+    // ERROR HANDLER if spot cannot be found
     if (spotIdCheck === null) {
         const err = new Error()
         err.message = "Spot couldn't be found";
         err.status = 404;
         err.statusCode = 404;
+        return next(err)
+    }
+
+    console.log(loggedInUserId)
+    console.log(spotIdCheck.dataValues.ownerId)
+    // ERROR HANDLER if user is not authorized to add a spot
+    if (loggedInUserId !== spotIdCheck.dataValues.ownerId) {
+        const err = new Error()
+        err.message = "The user must own this spot to add an image"
+        err.status = 403;
         return next(err)
     }
 
@@ -303,8 +314,8 @@ router.put('/:spotId', requireAuth, validateSpot, async (req, res, next) => {
     if (currentSpot.toJSON().ownerId !== loggedInUserId) {
         const err = new Error()
         err.message = "Spot must belong to the current User"
-        err.status = 401
-        err.statusCode = 401
+        err.status = 403
+        err.statusCode = 403
         return next(err)
     }
 
@@ -530,8 +541,8 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
     if (spotQueryTest.dataValues.ownerId !== loggedInUserId)  {
         const err = new Error()
         err.message = "Spot must belong to the current User"
-        err.status = 401
-        err.statusCode = 401
+        err.status = 403
+        err.statusCode = 403
         return next(err)
     }
 
