@@ -4,7 +4,7 @@ const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth')
 const { Spot, Review, ReviewImage, SpotImage, User, Booking, sequelize } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
-const { Op } = require("sequelize")
+const { Op, where } = require("sequelize")
 
 const router = express.Router();
 
@@ -111,10 +111,34 @@ router.get('/', async (req, res) => {
             preview: true
         }
     })
+
+    //PAGINATION / QUERY PARAMS
+    let { page, size } = req.query;
+    let pagination = {}
+    if(!page) page = 0
+    if(!size) size = 20
+    if(Number(page) > 10) page = 10
+    if (Number(page) > 20) size = 20
+    pagination.limit = size;
+    pagination.offset = size * (page - 1)
+    let whereQueryParams = {}
+    if (req.query.minLat) whereQueryParams.lat = {[Op.gte]: req.query.minLat}
+    if (req.query.maxLat) whereQueryParams.lat = {[Op.lte]: req.query.maxLat}
+    if (req.query.minLng) whereQueryParams.lng = {[Op.gte]: req.query.minLng}
+    if (req.query.maxLng) whereQueryParams.lng = {[Op.lte]: req.query.maxLng}
+    if (req.query.minPrice) whereQueryParams.price = {[Op.gte]: req.query.minPrice}
+    if (req.query.maxPrice) whereQueryParams.price = {[Op.lte]: req.query.maxPrice}
+
+
+
+
+
     // Query for all spots
     const spots = await Spot.findAll({
         attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat',
             'lng', 'name', 'description', 'price', 'createdAt', 'updatedAt'],
+        whereQueryParams,
+        ...pagination,
     })
 
     // for each spot in the spots array query
@@ -135,7 +159,7 @@ router.get('/', async (req, res) => {
             }
         }
     }
-    res.json({ Spots: spots })
+    res.json({ Spots: spots, page: Number(page), size: Number(size) })
 })
 
 // ============================== CREATE A SPOT =================================
