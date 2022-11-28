@@ -125,8 +125,6 @@ router.get('/', async (req, res) => {
 
 
 
-
-
     // Query for all spots
     const spots = await Spot.findAll({
         attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat',
