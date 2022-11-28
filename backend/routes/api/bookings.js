@@ -155,5 +155,34 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
 })
 
 
+// ======================================= DELETE A BOOKING =================
+router.delete('/:bookingId', requireAuth, async (req, res, next) => {
+    const currentBookingId = Number(req.params.bookingId)
+    const loggedInUserId = res.req.user.dataValues.id
+
+    const bookingQueryTest = await Booking.findOne({
+        where: {id: currentBookingId},
+    })
+    // ERROR HANDLER if the booking doesn't exist
+    if (bookingQueryTest === null) {
+        const err = new Error()
+        err.message = "Booking couldn't be found";
+        err.status = 404;
+        err.statusCode = 404;
+        return next(err)
+    }
+    // ERROR HANDLER if the logged in user is not the owner of the booking
+    if (bookingQueryTest.dataValues.userId !== loggedInUserId)  {
+        const err = new Error()
+        err.message = "Booking must belong to the current User"
+        err.status = 401
+        err.statusCode = 401
+        return next(err)
+    }
+
+    await bookingQueryTest.destroy()
+    res.json({message: "Successfully deleted"})
+})
+
 
 module.exports = router;
