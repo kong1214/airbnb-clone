@@ -115,7 +115,7 @@ router.get('/', async (req, res) => {
     //PAGINATION / QUERY PARAMS
     let { page, size } = req.query;
     let pagination = {}
-    if(!page) page = 0
+    if(!page) page = 1
     if(!size) size = 20
     if(Number(page) > 10) page = 10
     if (Number(page) > 20) size = 20
