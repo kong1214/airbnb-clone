@@ -412,13 +412,13 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
         return next(err)
     }
     // Error handler: Spot must NOT belong to the current user
-    if (spotQuery.dataValues.ownerId === loggedInUserId) {
-        const err = new Error()
-        err.status = 401;
-        err.statusCode = 401;
-        err.message = "This user is the owner and cannot make a booking here!"
-        return next(err)
-    }
+    // if (spotQuery.dataValues.ownerId === loggedInUserId) {
+    //     const err = new Error()
+    //     err.status = 401;
+    //     err.statusCode = 401;
+    //     err.message = "This user is the owner and cannot make a booking here!"
+    //     return next(err)
+    // }
     const { startDate, endDate } = req.body
     // console.log(`StartDate: ${startDate}    EndDate: ${endDate}`)
     const startDateJS = new Date(startDate)
