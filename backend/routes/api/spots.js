@@ -442,6 +442,48 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
     res.json(newBooking)
 })
 
+//====================== Get all Bookings for a Spot based on the Spot's id ===========
+router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
+    const currentSpotId = Number(req.params.spotId)
+    const loggedInUserId = res.req.user.dataValues.id
+
+    const spotQueryTest = await Spot.findOne({
+        where: {id: currentSpotId}
+    })
+    // Error if spot cannot be found
+    if (spotQueryTest === null) {
+        const err = new Error()
+        err.message = "Spot couldn't be found";
+        err.status = 404;
+        err.statusCode = 404;
+        return next(err)
+    }
+
+    const bookingResponseArr = []
+    // Success if the one querying owns the spot
+    if (spotQueryTest.dataValues.ownerId === loggedInUserId) {
+        const spotQuery = await Booking.findAll({
+            where: {spotId: currentSpotId},
+            include: [
+                {
+                    model: User,
+                    attributes: ["id", "firstName", "lastName"]
+                }
+            ],
+            attributes: ["id", "spotId", "userId", "startDate", "endDate", "createdAt", "updatedAt"]
+        })
+        spotQuery.forEach(booking => {bookingResponseArr.push(booking.toJSON())})
+    // Success if the one querying does not own the spot
+    } else {
+        const spotQuery = await Booking.findAll({
+            where: {spotId: currentSpotId},
+            attributes: ["spotId", "startDate", "endDate"]
+        })
+        spotQuery.forEach(booking => {bookingResponseArr.push(booking.toJSON())})
+    }
+
+    res.json({Bookings: bookingResponseArr})
+})
 
 
 
