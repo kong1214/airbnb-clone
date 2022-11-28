@@ -109,6 +109,7 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
     }
 
     const { startDate, endDate } = req.body
+    const startDateJS = new Date(startDate)
 
     // ERROR HANDLER for body validations
     if (endDateChecker(startDate, endDate) === false) {
@@ -122,8 +123,33 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
 
     let today = new Date()
 
+
+    // Error handler: There must not be a booking in this period
+    const bookingQuery = await Booking.findAll({
+        where: {
+            spotId: bookingQueryTest.dataValues.spotId,
+            startDate: {
+                [Op.gte]: startDateJS
+            }
+        }
+    })
+    if (bookingQuery.length > 0) {
+        for (let booking of bookingQuery) {
+            const bookingErrors = bookingConflictChecker(startDate, endDate, booking.dataValues.startDate, booking.dataValues.endDate)
+
+            if (bookingErrors.length > 0) {
+                const err = new Error()
+                err.message = "Sorry, this spot is already booked for the specified dates"
+                err.status = 403;
+                err.statusCode = 403;
+                err.errors = bookingErrors;
+                return next(err)
+            }
+        }
+    }
+    // Success Response
     bookingQueryTest.update({
-        startDate, endDate
+        startDate, endDate, updatedAt: today
     })
 
     res.json(bookingQueryTest)
