@@ -214,16 +214,28 @@ router.get('/current', requireAuth, async (req, res) => {
 
 // ======================= ADD AN IMAGE TO A SPOT BASED ON SPOT ID ==================
 router.post('/:spotId/images', requireAuth, async (req, res, next) => {
+    const loggedInUserId = res.req.user.dataValues.id
     const spotId = Number(req.params.spotId)
     const { url, preview } = await req.body
     const spotIdCheck = await Spot.findOne({
         where: { id: spotId }
     })
+    // ERROR HANDLER if spot cannot be found
     if (spotIdCheck === null) {
         const err = new Error()
         err.message = "Spot couldn't be found";
         err.status = 404;
         err.statusCode = 404;
+        return next(err)
+    }
+
+    console.log(loggedInUserId)
+    console.log(spotIdCheck.dataValues.ownerId)
+    // ERROR HANDLER if user is not authorized to add a spot
+    if (loggedInUserId !== spotIdCheck.dataValues.ownerId) {
+        const err = new Error()
+        err.message = "The user must own this spot to add an image"
+        err.status = 403;
         return next(err)
     }
 
@@ -302,8 +314,8 @@ router.put('/:spotId', requireAuth, validateSpot, async (req, res, next) => {
     if (currentSpot.toJSON().ownerId !== loggedInUserId) {
         const err = new Error()
         err.message = "Spot must belong to the current User"
-        err.status = 401
-        err.statusCode = 401
+        err.status = 403
+        err.statusCode = 403
         return next(err)
     }
 
@@ -529,8 +541,8 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
     if (spotQueryTest.dataValues.ownerId !== loggedInUserId)  {
         const err = new Error()
         err.message = "Spot must belong to the current User"
-        err.status = 401
-        err.statusCode = 401
+        err.status = 403
+        err.statusCode = 403
         return next(err)
     }
 

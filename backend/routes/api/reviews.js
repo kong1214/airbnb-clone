@@ -42,8 +42,8 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
     if (parsedReviewCheckerArr.userId !== loggedInUserId) {
         const err = new Error()
         err.message = "User must be the owner of this review to create a picture"
-        err.status = 401;
-        err.statusCode = 401;
+        err.status = 403;
+        err.statusCode = 403;
         return next(err)
     }
     if (parsedReviewCheckerArr.ReviewImages.length >= 10) {
@@ -118,8 +118,8 @@ router.put('/:reviewId', requireAuth, validateReview, async (req, res, next) => 
     if (parsedReviewQuery.userId !== loggedInUserId) {
         const err = new Error()
         err.message = "This user is not authorized to edit this review"
-        err.status = 401;
-        err.statusCode = 401;
+        err.status = 403;
+        err.statusCode = 403;
         return next(err)
     }
     const { review, stars } = req.body
@@ -151,8 +151,8 @@ router.delete('/:reviewId', requireAuth, async (req, res, next) => {
     if (reviewQueryTest.dataValues.userId !== loggedInUserId)  {
         const err = new Error()
         err.message = "Review must belong to the current User"
-        err.status = 401
-        err.statusCode = 401
+        err.status = 403
+        err.statusCode = 403
         return next(err)
     }
 
