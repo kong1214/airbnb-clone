@@ -142,7 +142,7 @@ router.get('/', async (req, res) => {
     for (let spot of spots) {
         // console.log(spot.dataValues.SpotImages[0])
         spot.dataValues.previewImage = spot.dataValues.SpotImages[0].dataValues.url
-        console.log(spot.previewImage)
+        // console.log(spot.previewImage)
         delete spot.dataValues.SpotImages
     }
 
@@ -229,8 +229,8 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
         return next(err)
     }
 
-    console.log(loggedInUserId)
-    console.log(spotIdCheck.dataValues.ownerId)
+    // console.log(loggedInUserId)
+    // console.log(spotIdCheck.dataValues.ownerId)
     // ERROR HANDLER if user is not authorized to add a spot
     if (loggedInUserId !== spotIdCheck.dataValues.ownerId) {
         const err = new Error()
