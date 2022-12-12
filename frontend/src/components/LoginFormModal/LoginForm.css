@@ -12,3 +12,7 @@
     margin: 15px 15px;
     display: flex;
 }
+
+.button {
+    display: flex;
+}
