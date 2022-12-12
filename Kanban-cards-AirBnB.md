@@ -13,6 +13,8 @@ Copy each of the following sections into its own card on a Kanban board for the
 project. GitHub Kanban boards use markdown formatting, allowing these sections
 to be copied directly:
 
+=========================================BACK END=========================================
+
 
 ### Authentication Required
 
@@ -367,3 +369,54 @@ Return spots filtered by query parameters.
 - [ ] Error response with status 400 is given when query parameter validations
   for the `page`, `size`, `minLat`, `maxLat`, `minLng`, `maxLng`, `minPrice`, or
   `maxPrice` are violated
+
+
+=========================================FRONT END=========================================
+
+
+### Feature 1 (Spots) Create a spot
+
+Create a spot
+
+- [ ] Showcase error handling for failed cases.
+- [ ] Successfully create item (whatever it is your website does).
+
+### Feature 1 (Spots) Read a spot
+
+Read a spot
+
+- [ ] Previously created item should now be visible somewhere. Showcase this.
+
+### Feature 1 (Spots) Update a spot
+
+Update a spot
+
+- [ ] Successfully update item.
+- [ ] Showcase item being changed.
+
+### Feature 1 (Spots) Delete a spot
+
+Delete a spot
+
+- [ ] Delete item successfully. NOTE: You may want to wait to do this if your second Feature    depends on this first feature. You may circle back to this and showcase Delete for both features at the same time. This will speed up your presentation significantly.
+- [ ] Successfully showcase item is no longer present. This INCLUDES scenarios where it should cascade Delete (i.e., Delete a "Spot" that has "Reviews/Bookings", now those should also have been deleted.
+
+### Feature 2 (Reviews) Create a review
+
+Create a spot
+
+- [ ] Showcase error handling for failed cases.
+- [ ] Successfully create item (whatever it is your website does).
+
+### Feature 2 (Reviews) Read a review
+
+Read a spot
+
+- [ ] Previously created item should now be visible somewhere. Showcase this.
+
+### Feature 2 (Reviews) Delete a review
+
+Delete a review
+
+- [ ] Delete item successfully. NOTE: You may want to wait to do this if your second Feature    depends on this first feature. You may circle back to this and showcase Delete for both features at the same time. This will speed up your presentation significantly.
+- [ ] Successfully showcase item is no longer present. This INCLUDES scenarios where it should cascade Delete (i.e., Delete a "Spot" that has "Reviews/Bookings", now those should also have been deleted.

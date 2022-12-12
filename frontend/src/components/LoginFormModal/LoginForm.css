@@ -1,0 +1,14 @@
+.login-header {
+    display: flex;
+    justify-content: center;
+}
+
+.login-form {
+    display: block;
+    margin: 15px 15px;
+}
+
+.login-content {
+    margin: 15px 15px;
+    display: flex;
+}
