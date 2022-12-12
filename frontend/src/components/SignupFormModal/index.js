@@ -31,14 +31,15 @@ function SignupFormModal() {
 
   return (
     <>
-      <h1>Sign Up</h1>
-      <form onSubmit={handleSubmit}>
+      <h1 className="signup-header">Sign Up</h1>
+      <form onSubmit={handleSubmit} className="signup-form">
         <ul>
           {errors.map((error, idx) => <li key={idx}>{error}</li>)}
         </ul>
         <label>
-          Email
           <input
+            className="signup-input"
+            placeholder="Email"
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -46,8 +47,9 @@ function SignupFormModal() {
           />
         </label>
         <label>
-          Username
           <input
+            className="signup-input"
+            placeholder="Username"
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
@@ -55,8 +57,9 @@ function SignupFormModal() {
           />
         </label>
         <label>
-          First Name
           <input
+            className="signup-input"
+            placeholder="First Name"
             type="text"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
@@ -64,8 +67,9 @@ function SignupFormModal() {
           />
         </label>
         <label>
-          Last Name
           <input
+            className="signup-input"
+            placeholder="Last Name"
             type="text"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
@@ -73,8 +77,9 @@ function SignupFormModal() {
           />
         </label>
         <label>
-          Password
           <input
+            className="signup-input"
+            placeholder="Password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -82,15 +87,16 @@ function SignupFormModal() {
           />
         </label>
         <label>
-          Confirm Password
           <input
+            className="signup-input"
+            placeholder="Confirm Password"
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
           />
         </label>
-        <button type="submit">Sign Up</button>
+        <button className="signup-input" type="submit">Sign Up</button>
       </form>
     </>
   );
