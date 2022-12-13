@@ -14,8 +14,12 @@ const loadSpots = (spots) => {
 export const getAllSpots = () => async (dispatch) => {
     const response = await fetch('/api/spots');
     const data = await response.json();
-    dispatch(loadSpots(data.Spots));
-    return data.Spots
+    let normalizedData = {}
+    data.Spots.forEach(spot => {
+      normalizedData[spot.id] = spot
+    })
+    dispatch(loadSpots(normalizedData));
+    return normalizedData
 };
 
 

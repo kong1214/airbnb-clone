@@ -18,7 +18,6 @@ const SpotsIndex = () => {
     }
 
     const spots = Object.values(data)
-    // spots.forEach(spot => console.log(spot))
 
     return (
         <div>
