@@ -24,10 +24,13 @@ function LoginFormModal() {
       );
   };
 
-  const logInDemoUser = () => {
-    setCredential("demo@user.io")
-    setPassword("password")
+  const logInDemoUser = (e) => {
+    e.preventDefault()
 
+    // setCredential("demo@user.io")
+    // setPassword("password")
+    return dispatch(sessionActions.login({ credential: "demo@user.io", password: "password"}))
+    .then(closeModal)
   }
 
   return (

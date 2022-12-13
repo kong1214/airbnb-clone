@@ -1,0 +1,9 @@
+.index-container {
+    border: 1px solid black;
+    display: flex;
+}
+
+.card-container {
+    margin: 15px;
+    border: 1px dotted black
+}
