@@ -38,20 +38,26 @@ export const getOneSpot = (spotId) => async (dispatch) => {
 }
 
 
-const initialState = {}
+const initialState = {
+  allSpots: {},
+  singleSpot: {}
+
+}
 
 const spotsReducer = (state = initialState, action) => {
-    let newState = {...state};
-    switch (action.type) {
-      case GET_ALL_SPOTS:
-        newState.spots = action.spots;
-        return newState;
-      case GET_ONE_SPOT:
-        newState.spot = action.spot
-        return newState
-      default:
-        return state;
-    }
-  };
+  let newState
+  switch (action.type) {
+    case GET_ALL_SPOTS:
+      newState = {allSpots: {}, singleSpot: {}}
+      newState.allSpots = action.spots;
+      return newState;
+    case GET_ONE_SPOT:
+      newState = {...state, singleSpopt: {} }
+      newState.singleSpot = action.spot
+      return newState
+    default:
+      return state;
+  }
+};
 
 export default spotsReducer

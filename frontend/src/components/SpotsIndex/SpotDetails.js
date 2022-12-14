@@ -12,15 +12,14 @@ const SpotDetails = ({}) => {
         dispatch(spotsActions.getOneSpot(Number(spotId)));
     }, [dispatch])
 
-    const spot = useSelector(state => state.spots.spot)
-    if (!spot) return null;
+    const spot = useSelector(state => state.spots.singleSpot)
+    if (spot.id === undefined) return null;
 
     if (spot.avgStarRating === undefined) spot.avgStarRating = "New"
     let location
     if (spot.country === "United States of America"){
         location = `${spot.city}, ${spot.state}`
     } else location = `${spot.city}, ${spot.country}`
-
 
     return (
         <div>
@@ -29,7 +28,7 @@ const SpotDetails = ({}) => {
             <div>{`${location}`}</div>
             <div className="spot-details-image-container">
                 {spot.SpotImages.map(spotImage => (
-                    <img className="spot-details-image" src={spotImage.url}></img>
+                    <img key={spotImage.id} className="spot-details-image" src={spotImage.url}></img>
                 ))}
             </div>
             <button className="reviews-button">Leave a Review</button>

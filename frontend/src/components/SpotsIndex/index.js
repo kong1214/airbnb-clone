@@ -11,14 +11,12 @@ const SpotsIndex = () => {
         dispatch(spotsActions.getAllSpots());
     }, [dispatch])
 
-    const data = useSelector(state => state.spots.spots)
-
+    const data = useSelector(state => state.spots.allSpots)
     if (!data) {
         return null
     }
 
     const spots = Object.values(data)
-
     return (
         <div>
             <h1 className="header-container">Spots Index Goes Here</h1>
