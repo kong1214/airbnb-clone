@@ -11,7 +11,7 @@ import { Link } from "react-router-dom"
 
     return (
         <Link to={`/spots/${spot.id}`} className="card-container">
-            <img src={`${spot.previewImage}`} />
+            <img className="preview-image" src={`${spot.previewImage}`} />
             <div>{`avgStars = ${spot.avgRating}`}</div>
             <div>{`location: ${location} `}</div>
             <div>{`price: $${spot.price} per night`}</div>

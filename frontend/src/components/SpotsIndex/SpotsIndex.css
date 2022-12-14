@@ -1,9 +1,16 @@
 .index-container {
     border: 1px solid black;
     display: flex;
+    justify-content: center;
 }
 
 .card-container {
     margin: 15px;
-    border: 1px dotted black
+    border: 1px dotted black;
+    width: 25%;
+    height: auto
+}
+
+.preview-image {
+    width: 100%
 }
