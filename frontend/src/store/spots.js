@@ -1,6 +1,8 @@
-//Action Type Constants
-const GET_ALL_SPOTS = "spots/getSpots"
+import { csrfFetch } from "./csrf";
 
+//Action Type Constants
+const GET_ALL_SPOTS = "spots/getAllSpots"
+const GET_ONE_SPOT = "spots/getOneSpot"
 
 //Action creators
 const loadSpots = (spots) => {
@@ -10,9 +12,15 @@ const loadSpots = (spots) => {
     };
 };
 
+const loadOneSpot = (spot) => {
+  return {
+    type: GET_ONE_SPOT,
+    spot
+  };
+}
   // thunk action creators
 export const getAllSpots = () => async (dispatch) => {
-    const response = await fetch('/api/spots');
+    const response = await csrfFetch('/api/spots');
     const data = await response.json();
     let normalizedData = {}
     data.Spots.forEach(spot => {
@@ -21,6 +29,14 @@ export const getAllSpots = () => async (dispatch) => {
     dispatch(loadSpots(normalizedData));
     return normalizedData
 };
+
+export const getOneSpot = (spotId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots/${spotId}`);
+  const data = await response.json()
+  console.log(data)
+  dispatch(loadOneSpot(data))
+  return data
+}
 
 
 const initialState = {}
@@ -31,6 +47,8 @@ const spotsReducer = (state = initialState, action) => {
       case GET_ALL_SPOTS:
         newState.spots = action.spots;
         return newState;
+      case GET_ONE_SPOT:
+        newState.spot = action.spot
       default:
         return state;
     }
