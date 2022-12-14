@@ -14,3 +14,13 @@
 .preview-image {
     width: 100%
 }
+
+.spot-details-image-container {
+    display: flex;
+    border: 1px dotted black;
+    margin: 15px;
+}
+.spot-details-image {
+    margin: 5px;
+    width: 35%
+}
