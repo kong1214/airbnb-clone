@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import * as spotsActions from "../../store/spots";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
+import { useHistory } from "react-router-dom"
 import "./SpotsModal.css";
 
 function CreateSpotModal() {
   const dispatch = useDispatch();
+  const history = useHistory()
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [country, setCountry] = useState("");
-  const [lat, setLat] = useState("");
-  const [lng, setLng] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
@@ -24,13 +24,16 @@ function CreateSpotModal() {
     // make the return
     setErrors([])
     return dispatch(spotsActions.createOneSpot({
-        address, city, state, country, lat, lng, name, description, price, previewImage
+        address, city, state, country, lat: 100, lng: 100, name, description, price, previewImage
     }))
-    .then(closeModal)
+    .then((res) => {
+      closeModal()
+      history.push(`/spots/${res.id}`)
+    })
     .catch(async (res) => {
-        const data = await res.json();
-        if (data && data.errors) setErrors(data.errors);
-      });
+      const data = await res.json();
+      if (data && data.errors) setErrors(data.errors);
+    })
   };
 
 
@@ -76,26 +79,6 @@ function CreateSpotModal() {
             type="text"
             value={country}
             onChange={(e) => setCountry(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          <input
-            className="form-input"
-            placeholder="Latitude"
-            type="text"
-            value={lat}
-            onChange={(e) => setLat(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          <input
-            className="form-input"
-            placeholder="Longitude"
-            type="text"
-            value={lng}
-            onChange={(e) => setLng(e.target.value)}
             required
           />
         </label>

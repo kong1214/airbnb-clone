@@ -82,6 +82,7 @@ export const createOneSpot = (spot) => async dispatch => {
     })
     if (spotImageFetchResponse.ok) {
       dispatch(addSpot(data))
+      dispatch(loadOneSpot(data))
       return data
     }
   }

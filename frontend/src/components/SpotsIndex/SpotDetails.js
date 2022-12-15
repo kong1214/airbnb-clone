@@ -6,21 +6,23 @@ import OpenModalButton from "../OpenModalButton"
 import EditSpotModal from "./EditSpotModal"
 import "./SpotsIndex.css"
 
-const SpotDetails = ({}) => {
+const SpotDetails = ({ }) => {
     const history = useHistory()
     const { spotId } = useParams()
     const dispatch = useDispatch()
+
 
     useEffect(() => {
         dispatch(spotsActions.getOneSpot(Number(spotId)));
     }, [dispatch])
 
     const spot = useSelector(state => state.spots.singleSpot)
+    const sessionUser = useSelector(state => state.session.user);
     if (spot.id === undefined) return null;
 
     if (spot.numReviews === 0) spot.avgStarRating = "New"
     let location
-    if (spot.country === "United States of America"){
+    if (spot.country === "United States of America") {
         location = `${spot.city}, ${spot.state}`
     } else location = `${spot.city}, ${spot.country}`
 
@@ -29,6 +31,18 @@ const SpotDetails = ({}) => {
         .then(history.push("/"))
     }
 
+    let sessionLinks
+    if (sessionUser) {
+        sessionLinks = (
+            <div className="session-links">
+                <button className="reviews-button">Leave a Review</button>
+                <OpenModalButton
+                    buttonText="Edit this Spot"
+                    modalComponent={<EditSpotModal spotId={Number(spotId)} />} />
+                <button onClick={deleteHandler}>Delete this Spot</button>
+            </div>
+        )
+    }
 
     return (
         <div>
@@ -42,12 +56,8 @@ const SpotDetails = ({}) => {
             </div>
             <div>{`$${spot.price} night`}</div>
             <div>{`${spot.description}`}</div>
-            <button className="reviews-button">Leave a Review</button>
-          <OpenModalButton
-          buttonText="Edit this Spot"
-          modalComponent={<EditSpotModal spotId={Number(spotId)}/>} />
-          <button onClick={deleteHandler}>Delete this Spot</button>
+            {sessionLinks}
         </div>
     )
- }
- export default SpotDetails
+}
+export default SpotDetails
