@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import * as spotsActions from "../../store/spots";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 import {useHistory } from "react-router-dom";
 import "./SpotsModal.css";
@@ -8,13 +8,16 @@ import "./SpotsModal.css";
 function EditSpotModal({spotId}) {
   const dispatch = useDispatch();
   const history = useHistory()
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [country, setCountry] = useState("");
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
+
+  const spot = useSelector(state => state.spots.singleSpot)
+
+  const [address, setAddress] = useState(spot.address);
+  const [city, setCity] = useState(spot.city);
+  const [state, setState] = useState(spot.state);
+  const [country, setCountry] = useState(spot.country);
+  const [name, setName] = useState(spot.name);
+  const [description, setDescription] = useState(spot.description);
+  const [price, setPrice] = useState(spot.price);
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
 
