@@ -5,11 +5,8 @@ import { useModal } from "../../context/Modal";
 import { useParams } from "react-router-dom";
 import "./SpotsModal.css";
 
-function EditSpotModal() {
+function EditSpotModal({spotId}) {
   const dispatch = useDispatch();
-  const { spotId } = useParams()
-
-
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
@@ -23,12 +20,11 @@ function EditSpotModal() {
   const { closeModal } = useModal();
 
   const handleSubmit = (e) => {
-    e.preventDefault();
     // make the return
     setErrors([])
     return dispatch(spotsActions.editOneSpot({
         address, city, state, country, lat, lng, name, description, price
-    }, Number(spotId)))
+    }, spotId))
     .then(closeModal)
     .catch(async (res) => {
         const data = await res.json();

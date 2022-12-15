@@ -40,10 +40,11 @@ const SpotDetails = ({}) => {
                     <img key={spotImage.id} className="spot-details-image" src={spotImage.url}></img>
                 ))}
             </div>
+            <div>{`$${spot.price} night`}</div>
             <button className="reviews-button">Leave a Review</button>
           <OpenModalButton
           buttonText="Edit this Spot"
-          modalComponent={<EditSpotModal />} />
+          modalComponent={<EditSpotModal spotId={Number(spotId)}/>} />
           <button onClick={deleteHandler}>Delete this Spot</button>
         </div>
     )
