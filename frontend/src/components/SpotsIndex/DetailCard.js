@@ -7,7 +7,7 @@ import { Link } from "react-router-dom"
         location = `${spot.city}, ${spot.state}`
     } else location = `${spot.city}, ${spot.country}`
 
-    // if (spot.avgRating === undefined) spot.avgRating = "New"
+    if (spot.avgRating === undefined) spot.avgRating = "New"
 
     return (
         <Link to={`/spots/${spot.id}`} className="card-container">

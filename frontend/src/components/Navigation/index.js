@@ -5,6 +5,7 @@ import ProfileButton from './ProfileButton';
 import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
+import CreateSpotModal from '../SpotsIndex/CreateSpotModal';
 import './Navigation.css';
 
 function Navigation({ isLoaded }){
@@ -15,6 +16,9 @@ function Navigation({ isLoaded }){
     sessionLinks = (
       <li>
         <ProfileButton user={sessionUser} />
+        <OpenModalButton
+          buttonText="Create a Spot"
+          modalComponent={<CreateSpotModal />}/>
       </li>
     );
   } else {

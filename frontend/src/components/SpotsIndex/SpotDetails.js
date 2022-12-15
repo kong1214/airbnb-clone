@@ -15,7 +15,7 @@ const SpotDetails = ({}) => {
     const spot = useSelector(state => state.spots.singleSpot)
     if (spot.id === undefined) return null;
 
-    if (spot.avgStarRating === undefined) spot.avgStarRating = "New"
+    if (spot.numReviews === 0) spot.avgStarRating = "New"
     let location
     if (spot.country === "United States of America"){
         location = `${spot.city}, ${spot.state}`

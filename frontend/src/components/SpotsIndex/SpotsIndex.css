@@ -2,13 +2,14 @@
     border: 1px solid black;
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 .card-container {
     margin: 15px;
     border: 1px dotted black;
-    width: 25%;
-    height: auto
+    width: 22%;
+    height: auto;
 }
 
 .preview-image {
