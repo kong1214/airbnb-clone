@@ -2,17 +2,16 @@ import React, { useState } from "react";
 import * as spotsActions from "../../store/spots";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
-import { useParams } from "react-router-dom";
+import {useHistory } from "react-router-dom";
 import "./SpotsModal.css";
 
 function EditSpotModal({spotId}) {
   const dispatch = useDispatch();
+  const history = useHistory()
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [country, setCountry] = useState("");
-  const [lat, setLat] = useState("");
-  const [lng, setLng] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
@@ -23,9 +22,10 @@ function EditSpotModal({spotId}) {
     // make the return
     setErrors([])
     return dispatch(spotsActions.editOneSpot({
-        address, city, state, country, lat, lng, name, description, price
+        address, city, state, country, lat: 100, lng: 100, name, description, price
     }, spotId))
     .then(closeModal)
+    .then(() => history.pushState(`/spots/${spotId}`))
     .catch(async (res) => {
         const data = await res.json();
         if (data && data.errors) setErrors(data.errors);
@@ -72,24 +72,6 @@ function EditSpotModal({spotId}) {
             type="text"
             value={country}
             onChange={(e) => setCountry(e.target.value)}
-          />
-        </label>
-        <label>
-          <input
-            className="form-input"
-            placeholder="Latitude"
-            type="text"
-            value={lat}
-            onChange={(e) => setLat(e.target.value)}
-          />
-        </label>
-        <label>
-          <input
-            className="form-input"
-            placeholder="Longitude"
-            type="text"
-            value={lng}
-            onChange={(e) => setLng(e.target.value)}
           />
         </label>
         <label>

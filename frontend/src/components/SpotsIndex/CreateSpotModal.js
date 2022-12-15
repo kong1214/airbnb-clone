@@ -28,8 +28,9 @@ function CreateSpotModal() {
     }))
     .then((res) => {
       closeModal()
-      history.push(`/spots/${res.id}`)
+      return dispatch(spotsActions.getOneSpot(res.id))
     })
+    .then((res) => history.push(`/spots/${res.id}`))
     .catch(async (res) => {
       const data = await res.json();
       if (data && data.errors) setErrors(data.errors);
