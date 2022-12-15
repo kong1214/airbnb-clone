@@ -41,6 +41,7 @@ const SpotDetails = ({}) => {
                 ))}
             </div>
             <div>{`$${spot.price} night`}</div>
+            <div>{`${spot.description}`}</div>
             <button className="reviews-button">Leave a Review</button>
           <OpenModalButton
           buttonText="Edit this Spot"

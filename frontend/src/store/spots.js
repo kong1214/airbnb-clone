@@ -88,7 +88,6 @@ export const createOneSpot = (spot) => async dispatch => {
 }
 
 export const editOneSpot = (spot, spotId) => async dispatch => {
-  console.log(spotId)
   const { address, city, state, country, lat, lng, name, description, price } = spot
   const response = await csrfFetch(`/api/spots/${spotId}`, {
     method: "PUT",

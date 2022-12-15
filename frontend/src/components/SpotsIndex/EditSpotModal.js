@@ -119,7 +119,7 @@ function EditSpotModal({spotId}) {
             onChange={(e) => setPrice(e.target.value)}
           />
         </label>
-        <button className="form-input button" type="submit">Create</button>
+        <button className="form-input button" type="submit">Edit</button>
       </form>
     </>
   );
