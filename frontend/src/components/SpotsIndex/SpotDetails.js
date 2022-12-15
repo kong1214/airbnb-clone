@@ -35,7 +35,7 @@ const SpotDetails = ({ }) => {
     if (sessionUser) {
         sessionLinks = (
             <div className="session-links">
-                <button className="reviews-button">Leave a Review</button>
+                <button className="create-a-review-button">Leave a Review</button>
                 <OpenModalButton
                     buttonText="Edit this Spot"
                     modalComponent={<EditSpotModal spotId={Number(spotId)} />} />
@@ -56,7 +56,10 @@ const SpotDetails = ({ }) => {
             </div>
             <div>{`$${spot.price} night`}</div>
             <div>{`${spot.description}`}</div>
-            {sessionLinks}
+            <div className = "buttons">
+                <button className="view-reviews-for-spot-button">View all Reviews</button>
+                {sessionLinks}
+            </div>
         </div>
     )
 }

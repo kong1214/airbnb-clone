@@ -18,3 +18,7 @@
 .edit-spot-form {
     margin: 25px;
 }
+
+.buttons {
+    display: flex;
+}
