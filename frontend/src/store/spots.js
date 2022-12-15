@@ -4,6 +4,8 @@ import { csrfFetch } from "./csrf";
 const GET_ALL_SPOTS = "spots/getAllSpots"
 const GET_ONE_SPOT = "spots/getOneSpot"
 const CREATE_A_SPOT = "spots/createSpot"
+const EDIT_A_SPOT = "spots/editSpot"
+const DELETE_SPOT = 'spots/deleteSpot'
 
 //Action creators
 const loadSpots = (spots) => {
@@ -21,10 +23,23 @@ const loadOneSpot = (spot) => {
 }
 
 const addSpot = (spot) => {
-  console.log("spot in addSpot action creator", spot)
   return {
     type: CREATE_A_SPOT,
     spot
+  }
+}
+
+const editSpot = (spot) => {
+  return {
+    type: EDIT_A_SPOT,
+    spot
+  }
+}
+
+const deleteSpot = (spotId) => {
+  return {
+    type: DELETE_SPOT,
+    spotId
   }
 }
 
@@ -72,6 +87,29 @@ export const createOneSpot = (spot) => async dispatch => {
   }
 }
 
+export const editOneSpot = (spot, spotId) => async dispatch => {
+  const { address, city, state, country, lat, lng, name, description, price } = spot
+  const response = await csrfFetch(`/api/spots/${spotId}`, {
+    method: "PUT",
+    body: JSON.stringify({address, city, state, country, lat, lng, name, description, price})
+  })
+  if (response.ok) {
+    const data = await response.json()
+    dispatch(editSpot(data))
+    return data;
+  }
+}
+
+export const deleteOneSpot = (spotId) => async dispatch => {
+  const response = await csrfFetch(`/api/spots/${spotId}`, {
+    method: "DELETE"
+  })
+  if (response.ok) {
+    dispatch(deleteSpot(spotId))
+  }
+}
+
+
 
 const initialState = {
   allSpots: {},
@@ -93,6 +131,14 @@ const spotsReducer = (state = initialState, action) => {
     case CREATE_A_SPOT:
       newState = {...state}
       newState.allSpots[action.spot.id] = action.spot
+      return newState
+    case EDIT_A_SPOT:
+      newState = {...state}
+      newState.allSpots[action.spot.id] = {...action.spot}
+      return newState
+    case DELETE_SPOT:
+      newState = {...state}
+      delete newState.allSpots[action.spotId]
       return newState
     default:
       return state;

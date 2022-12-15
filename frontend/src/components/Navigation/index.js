@@ -6,9 +6,10 @@ import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 import CreateSpotModal from '../SpotsIndex/CreateSpotModal';
+import EditSpotModal from '../SpotsIndex/EditSpotModal';
 import './Navigation.css';
 
-function Navigation({ isLoaded }){
+function Navigation({ isLoaded }) {
   const sessionUser = useSelector(state => state.session.user);
 
   let sessionLinks;
@@ -18,7 +19,7 @@ function Navigation({ isLoaded }){
         <ProfileButton user={sessionUser} />
         <OpenModalButton
           buttonText="Create a Spot"
-          modalComponent={<CreateSpotModal />}/>
+          modalComponent={<CreateSpotModal />} />
       </li>
     );
   } else {

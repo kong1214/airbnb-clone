@@ -521,7 +521,7 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
 })
 
 
-// ======================================= DELETE A Review ======================
+// ======================================= DELETE A SpotId ======================
 router.delete('/:spotId', requireAuth, async (req, res, next) => {
     const currentSpotId = Number(req.params.spotId)
     const loggedInUserId = res.req.user.dataValues.id
