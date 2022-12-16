@@ -11,7 +11,7 @@ const ReviewCard = ({ review }) => {
     const monthIdx = date.getMonth()
     let fullDate = `${monthNames[monthIdx]} ${year}`
     return (
-        <div className="card-container">
+        <div className="review-card-container">
             <div className="user-name">{`${review.User.firstName} ${review.User.lastName}`}</div>
             <div className="creation-date">{fullDate}</div>
             <div className="stars-rating">{`*STAR ICON* ${review.stars}`}</div>
