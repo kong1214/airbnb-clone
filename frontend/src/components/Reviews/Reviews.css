@@ -1,12 +1,14 @@
 .reviews-container {
-    margin-left: 300px;
-    margin-right: 300px;
+    margin-left: 450px;
+    margin-right: 450px;
     display: block;
     justify-content: center;;
 }
 
 .review-cards-container {
     display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .reviews-header {
@@ -16,6 +18,7 @@
 }
 
 .review-card-container {
-    width: 50%;
-    border: none
+    width: 400px;
+    margin: 10px;
+    border: 1px dotted black;
 }

@@ -48,6 +48,7 @@ function EditSpotModal({spotId}) {
             type="text"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
+            required
           />
         </label>
         <label>
@@ -57,6 +58,7 @@ function EditSpotModal({spotId}) {
             type="text"
             value={city}
             onChange={(e) => setCity(e.target.value)}
+            required
           />
         </label>
         <label>
@@ -66,6 +68,7 @@ function EditSpotModal({spotId}) {
             type="text"
             value={state}
             onChange={(e) => setState(e.target.value)}
+            required
           />
         </label>
         <label>
@@ -75,6 +78,7 @@ function EditSpotModal({spotId}) {
             type="text"
             value={country}
             onChange={(e) => setCountry(e.target.value)}
+            required
           />
         </label>
         <label>
@@ -84,6 +88,7 @@ function EditSpotModal({spotId}) {
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            required
           />
         </label>
         <label>
@@ -93,6 +98,7 @@ function EditSpotModal({spotId}) {
             type="text"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+            required
           />
         </label>
         <label>
@@ -102,6 +108,7 @@ function EditSpotModal({spotId}) {
             type="text"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
+            required   
           />
         </label>
         <button className="form-input button" type="submit">Edit</button>

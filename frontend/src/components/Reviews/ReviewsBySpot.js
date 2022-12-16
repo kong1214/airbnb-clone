@@ -12,7 +12,7 @@ const ReviewsBySpot = ({spotId, numReviews}) => {
     }, [dispatch])
 
     const data = useSelector(state => state.reviews.spot)
-
+    
     if (!data) {
         return null
     }

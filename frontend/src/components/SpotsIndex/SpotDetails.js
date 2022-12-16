@@ -5,6 +5,7 @@ import { useEffect } from "react"
 import OpenModalButton from "../OpenModalButton"
 import EditSpotModal from "./EditSpotModal"
 import ReviewsBySpot from "../Reviews/ReviewsBySpot"
+import CreateReviewModal from "../Reviews/CreateReviewModal"
 import "./SpotsIndex.css"
 
 const SpotDetails = ({ }) => {
@@ -17,10 +18,11 @@ const SpotDetails = ({ }) => {
         dispatch(spotsActions.getOneSpot(Number(spotId)));
     }, [dispatch])
 
+
     const spot = useSelector(state => state.spots.singleSpot)
     const sessionUser = useSelector(state => state.session.user);
-    if (spot.id === undefined) return null;
 
+    if (spot.id === undefined) return null;
     if (spot.numReviews === 0) spot.avgStarRating = "New"
     let location
     if (spot.country === "United States of America") {
@@ -36,7 +38,9 @@ const SpotDetails = ({ }) => {
     if (sessionUser) {
         sessionLinks = (
             <div className="session-links">
-                <button className="create-a-review-button">Leave a Review</button>
+                <OpenModalButton
+                    buttonText="Leave a Review"
+                    modalComponent={<CreateReviewModal spotId={Number(spotId)}/>}/>
                 <OpenModalButton
                     buttonText="Edit this Spot"
                     modalComponent={<EditSpotModal spotId={Number(spotId)} />} />
