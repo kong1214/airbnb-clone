@@ -26,11 +26,14 @@ function CreateSpotModal() {
     return dispatch(spotsActions.createOneSpot({
         address, city, state, country, lat: 100, lng: 100, name, description, price, previewImage
     }))
-    .then((res) => {
+    .then(async (res) => {
       closeModal()
-      return dispatch(spotsActions.getOneSpot(res.id))
+      const thisSpot = await dispatch(spotsActions.getOneSpot(res.id))
+      return thisSpot
     })
-    .then((res) => history.push(`/spots/${res.id}`))
+    .then((res) => {
+      history.push(`/spots/${res.id}`)
+    })
     .catch(async (res) => {
       const data = await res.json();
       if (data && data.errors) setErrors(data.errors);
@@ -43,7 +46,8 @@ function CreateSpotModal() {
       <h1 className="create-spot-header">Create a Spot</h1>
       <form onSubmit={handleSubmit} className="create-spot-form">
         <ul>{errors.map((error, idx) => <li key={idx}>{error}</li>)}</ul>
-        <label>
+        <label className="form-input-with-label">
+          Address
           <input
             className="form-input"
             placeholder="Address"
@@ -53,7 +57,8 @@ function CreateSpotModal() {
             required
           />
         </label>
-        <label>
+        <label className="form-input-with-label">
+          City
           <input
             className="form-input"
             placeholder="City"
@@ -63,7 +68,8 @@ function CreateSpotModal() {
             required
           />
         </label>
-        <label>
+        <label className="form-input-with-label">
+          State
           <input
             className="form-input"
             placeholder="State"
@@ -73,7 +79,8 @@ function CreateSpotModal() {
             required
           />
         </label>
-        <label>
+        <label className="form-input-with-label">
+          Country
           <input
             className="form-input"
             placeholder="Country"
@@ -83,7 +90,8 @@ function CreateSpotModal() {
             required
           />
         </label>
-        <label>
+        <label className="form-input-with-label">
+          Name
           <input
             className="form-input"
             placeholder="Name of the Spot"
@@ -93,7 +101,8 @@ function CreateSpotModal() {
             required
           />
         </label>
-        <label>
+        <label className="form-input-with-label">
+          Description
           <input
             className="form-input"
             placeholder="Description"
@@ -103,7 +112,8 @@ function CreateSpotModal() {
             required
           />
         </label>
-        <label>
+        <label className="form-input-with-label">
+          Price
           <input
             className="form-input"
             placeholder="Price per night"
@@ -113,7 +123,8 @@ function CreateSpotModal() {
             required
           />
         </label>
-        <label>
+        <label className="form-input-with-label">
+          Preview URL
           <input
             className="form-input"
             placeholder="Preview Image"
@@ -123,7 +134,9 @@ function CreateSpotModal() {
             required
           />
         </label>
-        <button className="form-input button" type="submit">Create</button>
+        <div className="create-button-container">
+          <button className="create-a-spot-form-button" type="submit">Create</button>
+        </div>
       </form>
     </>
   );

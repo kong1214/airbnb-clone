@@ -33,12 +33,11 @@ function SignupFormModal() {
     <>
       <h1 className="signup-header">Sign Up</h1>
       <form onSubmit={handleSubmit} className="signup-form">
-        <ul>
+        <ul className="signup-errors">
           {errors.map((error, idx) => <li key={idx}>{error}</li>)}
         </ul>
-        <label>
+        <label className="signup-input-with-label">
           <input
-            className="signup-input"
             placeholder="Email"
             type="text"
             value={email}
@@ -46,9 +45,8 @@ function SignupFormModal() {
             required
           />
         </label>
-        <label>
+        <label className="signup-input-with-label">
           <input
-            className="signup-input"
             placeholder="Username"
             type="text"
             value={username}
@@ -56,9 +54,8 @@ function SignupFormModal() {
             required
           />
         </label>
-        <label>
+        <label className="signup-input-with-label">
           <input
-            className="signup-input"
             placeholder="First Name"
             type="text"
             value={firstName}
@@ -66,9 +63,8 @@ function SignupFormModal() {
             required
           />
         </label>
-        <label>
+        <label className="signup-input-with-label">
           <input
-            className="signup-input"
             placeholder="Last Name"
             type="text"
             value={lastName}
@@ -76,9 +72,8 @@ function SignupFormModal() {
             required
           />
         </label>
-        <label>
+        <label className="signup-input-with-label">
           <input
-            className="signup-input"
             placeholder="Password"
             type="password"
             value={password}
@@ -86,9 +81,8 @@ function SignupFormModal() {
             required
           />
         </label>
-        <label>
+        <label className="signup-input-with-label">
           <input
-            className="signup-input"
             placeholder="Confirm Password"
             type="password"
             value={confirmPassword}
@@ -96,7 +90,9 @@ function SignupFormModal() {
             required
           />
         </label>
-        <button className="signup-input" type="submit">Sign Up</button>
+        <div className="signup-button-container">
+          <button className="signup-user-button" type="submit">Sign Up</button>
+        </div>
       </form>
     </>
   );

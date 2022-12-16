@@ -13,13 +13,14 @@ const SpotsIndex = () => {
 
     const data = useSelector(state => state.spots.allSpots)
     if (!data) {
+        console.log("data is null")
         return null
     }
 
     const spots = Object.values(data)
     return (
         <div>
-            <h1 className="header-container">Spots Index Goes Here</h1>
+            <h1 className="header-container"></h1>
             <div className="index-container">
                 {spots.map(spot => (
                     <DetailCard

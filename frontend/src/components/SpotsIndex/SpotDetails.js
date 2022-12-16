@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux"
 import { useParams, useHistory } from "react-router-dom"
 import * as spotsActions from "../../store/spots"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import OpenModalButton from "../OpenModalButton"
 import EditSpotModal from "./EditSpotModal"
 import ReviewsBySpot from "../Reviews/ReviewsBySpot"
@@ -12,10 +12,11 @@ const SpotDetails = ({ }) => {
     const history = useHistory()
     const { spotId } = useParams()
     const dispatch = useDispatch()
+    const [spotIsLoaded, setSpotIsLoaded] = useState(false);
 
 
     useEffect(() => {
-        dispatch(spotsActions.getOneSpot(Number(spotId)));
+        dispatch(spotsActions.getOneSpot(Number(spotId))).then(() => setSpotIsLoaded(true));;
     }, [dispatch])
 
 
@@ -23,6 +24,7 @@ const SpotDetails = ({ }) => {
     const sessionUser = useSelector(state => state.session.user);
 
     if (spot.id === undefined) return null;
+    // if(spot.SpotImages) return null
     if (spot.numReviews === 0) spot.avgStarRating = "New"
     let location
     if (spot.country === "United States of America") {
@@ -55,7 +57,8 @@ const SpotDetails = ({ }) => {
             <div>{`*star-icon*${spot.avgStarRating}`}</div>
             <div>{`${location}`}</div>
             <div className="spot-details-image-container">
-                {spot.SpotImages.map(spotImage => (
+                {spot.SpotImages &&
+                spot.SpotImages.map(spotImage => (
                     <img key={spotImage.id} className="spot-details-image" src={spotImage.url}></img>
                 ))}
             </div>
@@ -65,7 +68,7 @@ const SpotDetails = ({ }) => {
                 {sessionLinks}
             </div>
             <div>
-                <ReviewsBySpot spotId={spot.id} numReviews={spot.numReviews}/>
+                {spotIsLoaded && <ReviewsBySpot spotId={spot.id} numReviews={spot.numReviews}/>}
             </div>
         </div>
     )

@@ -9,15 +9,14 @@ const ReviewsBySpot = ({spotId, numReviews}) => {
 
     useEffect(() => {
         dispatch(reviewsActions.getReviewsBySpot(spotId));
-    }, [dispatch])
+        return () => dispatch(reviewsActions.clearReviews())
+    }, [dispatch, spotId])
 
     const data = useSelector(state => state.reviews.spot)
-    
-    if (!data) {
+    const reviews = Object.values(data)
+    if (reviews.length === 0) {
         return null
     }
-
-    const reviews = Object.values(data)
     return (
         <div className="reviews-container">
             <h2 className="reviews-header">Reviews</h2>

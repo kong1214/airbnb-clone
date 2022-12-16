@@ -1,4 +1,5 @@
 .index-container {
+    margin-top: 5%;
     border: 1px solid black;
     display: flex;
     justify-content: center;
@@ -8,12 +9,13 @@
 .card-container {
     margin: 15px;
     border: 1px dotted black;
-    width: 22%;
+    width: 15%;
     height: auto;
 }
 
 .preview-image {
-    width: 100%
+    width: 100%;
+    height: 65%;
 }
 
 .spot-details-image-container {
@@ -23,5 +25,5 @@
 }
 .spot-details-image {
     margin: 5px;
-    width: 35%
+    width: 35%;
 }

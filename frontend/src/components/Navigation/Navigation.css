@@ -1,3 +1,47 @@
 .hidden {
     display: none
 }
+
+.navButtons {
+    display: flex;
+}
+
+.home-button-container {
+    /* display: flex; */
+    margin-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.login-signup-buttons {
+    display: flex;
+    padding-left: 90%;
+    padding-right: 10px;
+}
+
+.login-button {
+    margin-top: 10px;
+    margin-right: 5px;
+}
+.signup-button {
+    margin-top: 10px;
+    margin-left: 5px;
+}
+
+.logged-in-nav-buttons {
+    display: flex;
+    padding-left: 82%;
+    padding-right: 10px;
+}
+.create-a-spot-button {
+    margin-top: 10px;
+    margin-right: 5px;
+}
+.view-all-reviews-button {
+    margin-top: 10px;
+    margin-right: 5px;
+}
+.profile-button {
+    margin-top: 10px;
+    margin-right: 5px;
+}

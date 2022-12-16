@@ -1,0 +1,17 @@
+.reviews-by-user-container-with-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.review-by-user-card-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.delete-review-button {
+    height: 40px;
+}

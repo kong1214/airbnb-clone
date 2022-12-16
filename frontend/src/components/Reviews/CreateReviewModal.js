@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { useHistory } from "react-router-dom"
 import * as reviewsActions from "../../store/reviews"
@@ -13,7 +13,6 @@ function CreateReviewModal({spotId}) {
 
     const [stars, setStars] = useState("")
     const [review, setReview] = useState("")
-    const [url, setUrl] = useState("")
     const [errors, setErrors] = useState([]);
 
 
@@ -21,14 +20,20 @@ function CreateReviewModal({spotId}) {
         e.preventDefault();
         setErrors([])
         return dispatch(reviewsActions.createReviewBySpot({
-            review, stars, spotId, url
+            review, stars, spotId
         }))
         .then((res) => {
           closeModal()
-          return dispatch(spotsActions.getOneSpot(spotId))
+        //   console.log(spotId)
+            console.log("create review res", res)
+          return dispatch(spotsActions.getOneSpot(res.spotId))
         })
-        .then((res) => history.push(`/spots/${res.id}`))
+        .then((res) => {
+            console.log("get one spot res", res)
+            history.push(`/spots/${res.id}`)
+        })
         .catch(async (res) => {
+            console.log("catch", res)
           const data = await res.json();
           if (data && data.errors) setErrors(data.errors);
         })
@@ -57,16 +62,6 @@ function CreateReviewModal({spotId}) {
                         type="text"
                         value={stars}
                         onChange={(e) => setStars(e.target.value)}
-                        required
-                    />
-                </label>
-                <label>
-                    <input
-                        className="create-review-form-input"
-                        placeholder="Image URL"
-                        type="text"
-                        value={url}
-                        onChange={(e) => setUrl(e.target.value)}
                         required
                     />
                 </label>

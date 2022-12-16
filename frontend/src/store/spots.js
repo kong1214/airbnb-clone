@@ -118,28 +118,34 @@ const initialState = {
 }
 
 const spotsReducer = (state = initialState, action) => {
-  let newState
   switch (action.type) {
-    case GET_ALL_SPOTS:
-      newState = {allSpots: {}, singleSpot: {}}
+    case GET_ALL_SPOTS: {
+      const newState = {allSpots: {}, singleSpot: {}}
       newState.allSpots = action.spots;
       return newState;
-    case GET_ONE_SPOT:
-      newState = {...state, singleSpot: {} }
+    }
+    case GET_ONE_SPOT: {
+      const newState = {allSpots: {}, singleSpot: {} }
       newState.singleSpot = action.spot
       return newState
-    case CREATE_A_SPOT:
-      newState = {...state}
+    }
+    case CREATE_A_SPOT: {
+      const newState = {...state, allSpots: {...state.allSpots}, singleSpot: action.spot}
       newState.allSpots[action.spot.id] = action.spot
+      console.log("state", state)
+      console.log("newState", newState)
       return newState
-    case EDIT_A_SPOT:
-      newState = {...state}
+    }
+    case EDIT_A_SPOT: {
+      const newState = {...state}
       newState.allSpots[action.spot.id] = {...action.spot}
       return newState
-    case DELETE_SPOT:
-      newState = {...state}
+    }
+    case DELETE_SPOT: {
+      const newState = {...state}
       delete newState.allSpots[action.spotId]
       return newState
+    }
     default:
       return state;
   }
