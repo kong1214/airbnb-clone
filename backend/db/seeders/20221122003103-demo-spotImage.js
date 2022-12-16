@@ -33,7 +33,7 @@ module.exports = {
       },
       {
         spotId: 3,
-        url: "https://static.wikia.nocookie.net/olympians/images/f/fc/TwelveOlympians.jpg/revision/latest?cb=20180606002535",
+        url: "https://diginomica.com/sites/default/files/images/2017-03/olympus.jpg",
         preview: true
       },
       {
