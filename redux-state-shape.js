@@ -49,23 +49,4 @@ store = {
         optionalOrderedList: [],
       },
     },
-    bookings: {
-      user: {
-        [bookingId]: {
-          bookingData,
-          Spot: {
-            spotData,
-          },
-        },
-        optionalOrderedList: [],
-      },
-      // Note here that your responses can actually be different here as well.
-      // HINT: What information should you see if you own this spot? (Refer to API Docs).
-      spot: {
-        [bookingId]: {
-          bookingData,
-        },
-        optionalOrderedList: [],
-      },
-    },
   };

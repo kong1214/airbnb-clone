@@ -4,6 +4,7 @@ import * as spotsActions from "../../store/spots"
 import { useEffect } from "react"
 import OpenModalButton from "../OpenModalButton"
 import EditSpotModal from "./EditSpotModal"
+import ReviewsBySpot from "../Reviews/ReviewsBySpot"
 import "./SpotsIndex.css"
 
 const SpotDetails = ({ }) => {
@@ -57,8 +58,10 @@ const SpotDetails = ({ }) => {
             <div>{`$${spot.price} night`}</div>
             <div>{`${spot.description}`}</div>
             <div className = "buttons">
-                <button className="view-reviews-for-spot-button">View all Reviews</button>
                 {sessionLinks}
+            </div>
+            <div>
+                <ReviewsBySpot spotId={spot.id} numReviews={spot.numReviews}/>
             </div>
         </div>
     )

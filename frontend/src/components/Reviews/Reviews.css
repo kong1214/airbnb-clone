@@ -1,0 +1,21 @@
+.reviews-container {
+    margin-left: 300px;
+    margin-right: 300px;
+    display: block;
+    justify-content: center;;
+}
+
+.review-cards-container {
+    display: flex;
+}
+
+.reviews-header {
+    margin: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.card-container {
+    width: 50%;
+    border: none
+}
