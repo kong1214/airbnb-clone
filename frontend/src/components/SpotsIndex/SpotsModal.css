@@ -1,0 +1,43 @@
+.create-spot-header {
+    display: flex;
+    justify-content: center;;
+    margin: 25px;
+}
+
+.create-spot-form {
+    margin: 25px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-input {
+    display: flex;
+    margin-left: 10px;
+}
+
+.edit-spot-header {
+    margin: 25px;
+}
+
+.edit-spot-form {
+    margin: 25px;
+}
+
+.create-a-spot-form-button {
+    display: flex;
+    width: 30%;
+    justify-content: center;
+    margin-right: 10px;
+}
+
+.form-input-with-label {
+    display: flex;
+    margin: 10px;
+    justify-content: end;
+}
+.create-button-container {
+    display: flex;
+    justify-content: end;
+    width: 100%;
+    margin-top: 10px;
+}

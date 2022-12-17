@@ -24,6 +24,15 @@ function LoginFormModal() {
       );
   };
 
+  const logInDemoUser = (e) => {
+    e.preventDefault()
+
+    // setCredential("demo@user.io")
+    // setPassword("password")
+    return dispatch(sessionActions.login({ credential: "demo@user.io", password: "password" }))
+      .then(closeModal)
+  }
+
   return (
     <>
       <h1 className="login-header">Log In</h1>
@@ -33,9 +42,9 @@ function LoginFormModal() {
             <li key={idx}>{error}</li>
           ))}
         </ul>
-        <label>
+        <label className="login-input-with-label">
           <input
-            className="login-content"
+            className="login-input"
             placeholder="Username or Email"
             type="text"
             value={credential}
@@ -43,9 +52,9 @@ function LoginFormModal() {
             required
           />
         </label>
-        <label>
+        <label className="login-input-with-label">
           <input
-            className="login-content"
+            className="login-input"
             placeholder="Password"
             type="password"
             value={password}
@@ -53,7 +62,10 @@ function LoginFormModal() {
             required
           />
         </label>
-        <button className="login-content" type="submit">Log In</button>
+        <div className="demo-login-buttons">
+          <button className="login-user-button" type="submit">Log In</button>
+          <button className="demo-user-button" type="submit" onClick={logInDemoUser}>Demo-User</button>
+        </div>
       </form>
     </>
   );

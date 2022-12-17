@@ -1,0 +1,24 @@
+.reviews-container {
+    margin-left: 450px;
+    margin-right: 450px;
+    display: block;
+    justify-content: center;;
+}
+
+.review-cards-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.reviews-header {
+    margin: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.review-card-container {
+    width: 400px;
+    margin: 10px;
+    border: 1px dotted black;
+}

@@ -364,7 +364,8 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res, ne
         // console.log(spotId)
         if (userReview.spotId === spotId) {
             const err = new Error()
-            err.message = "User already has a review for this spot",
+            err.errors = []
+            err.errors.push("User already has a review for this spot")
                 err.status = 403;
             err.statusCode = 403;
             return next(err)
@@ -394,17 +395,19 @@ router.get('/:spotId/reviews', async (req, res, next) => {
         ]
     })
     if (unparsedReviewsArr.length === 0) {
-        const err = new Error()
-        err.message = "Spot couldn't be found",
-            err.status = 404
-        err.statusCode = 404
-        return next(err)
-    }
-    const parsedReviewsArr = []
-    unparsedReviewsArr.forEach(review => { parsedReviewsArr.push(review.toJSON()) })
-    // console.log(parsedReviewsArr)
+        // const err = new Error()
+        // err.message = "Review couldn't be found",
+        //     err.status = 404
+        // err.statusCode = 404
+        // return next(err)
+        res.json({Reviews: []})
+    } else {
+        const parsedReviewsArr = []
+        unparsedReviewsArr.forEach(review => { parsedReviewsArr.push(review.toJSON()) })
+        // console.log(parsedReviewsArr)
 
-    res.json({ Reviews: parsedReviewsArr })
+        res.json({ Reviews: parsedReviewsArr})
+    }
 })
 
 // ================= Create a Booking from a Spot based on the Spot's id ==================
@@ -521,7 +524,7 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
 })
 
 
-// ======================================= DELETE A Review ======================
+// ======================================= DELETE A SpotId ======================
 router.delete('/:spotId', requireAuth, async (req, res, next) => {
     const currentSpotId = Number(req.params.spotId)
     const loggedInUserId = res.req.user.dataValues.id
