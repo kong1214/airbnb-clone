@@ -355,21 +355,22 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res, ne
     }
 
     // Error response: Review from the current user already exists for the Spot
-    // const userReviews = await Review.findAll({
-    //     where: { userId: loggedInUserId },
-    // })
-    // let userReviewsArr = []
-    // userReviews.forEach(userReview => { userReviewsArr.push(userReview.toJSON()) })
-    // for (const userReview of userReviewsArr) {
-    //     // console.log(spotId)
-    //     if (userReview.spotId === spotId) {
-    //         const err = new Error()
-    //         err.message = "User already has a review for this spot",
-    //             err.status = 403;
-    //         err.statusCode = 403;
-    //         return next(err)
-    //     }
-    // }
+    const userReviews = await Review.findAll({
+        where: { userId: loggedInUserId },
+    })
+    let userReviewsArr = []
+    userReviews.forEach(userReview => { userReviewsArr.push(userReview.toJSON()) })
+    for (const userReview of userReviewsArr) {
+        // console.log(spotId)
+        if (userReview.spotId === spotId) {
+            const err = new Error()
+            err.errors = []
+            err.errors.push("User already has a review for this spot")
+                err.status = 403;
+            err.statusCode = 403;
+            return next(err)
+        }
+    }
     const newReview = Review.build({
         userId: loggedInUserId,
         spotId,
