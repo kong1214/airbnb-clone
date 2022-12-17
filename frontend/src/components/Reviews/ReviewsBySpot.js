@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import * as reviewsActions from "../../store/reviews"
 import ReviewCard from "./ReviewCard"
@@ -6,13 +6,16 @@ import "./Reviews.css"
 
 const ReviewsBySpot = ({spotId, numReviews}) => {
     const dispatch = useDispatch()
+    const [reviewIsLoaded, setReviewIsLoaded] = useState(false)
+
 
     useEffect(() => {
-        dispatch(reviewsActions.getReviewsBySpot(spotId));
+        dispatch(reviewsActions.getReviewsBySpot(spotId)).then(() => setReviewIsLoaded(true));
         return () => dispatch(reviewsActions.clearReviews())
-    }, [dispatch, spotId])
+    }, [dispatch, spotId, numReviews])
 
     const data = useSelector(state => state.reviews.spot)
+    console.log("reviews data", data)
     const reviews = Object.values(data)
     if (reviews.length === 0) {
         return null

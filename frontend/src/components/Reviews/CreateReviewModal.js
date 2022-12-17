@@ -24,16 +24,9 @@ function CreateReviewModal({spotId}) {
         }))
         .then((res) => {
           closeModal()
-        //   console.log(spotId)
-            console.log("create review res", res)
           return dispatch(spotsActions.getOneSpot(res.spotId))
         })
-        .then((res) => {
-            console.log("get one spot res", res)
-            history.push(`/spots/${res.id}`)
-        })
         .catch(async (res) => {
-            console.log("catch", res)
           const data = await res.json();
           if (data && data.errors) setErrors(data.errors);
         })

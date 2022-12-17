@@ -6,6 +6,7 @@ const ReviewCard = ({ review }) => {
         "July", "August", "September", "October", "November", "December"
     ];
 
+    if (!review.User) return null;
     let date = new Date(review.createdAt)
     const year = date.getFullYear()
     const monthIdx = date.getMonth()

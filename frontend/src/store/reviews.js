@@ -105,7 +105,7 @@ const reviewsReducer = (state = initialState, action) => {
       newState.spot = action.reviews;
       return newState;
     case CREATE_REVIEW:
-      newState = {...state}
+      newState = {...state, spot: {...state.spot}, user: {...state.user}}
       newState.spot[action.review.id] = action.review
       return newState
     case GET_REVIEWS_BY_USER:
