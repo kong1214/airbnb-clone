@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useHistory } from "react-router-dom"
 import * as reviewsActions from "../../store/reviews"
@@ -12,18 +12,18 @@ function ReviewsByUser() {
     const history = useHistory()
 
     useEffect(() => {
-        dispatch(reviewsActions.getReviewsByUser());
+        dispatch(reviewsActions.getReviewsByUser())
     }, [dispatch])
 
     const data = useSelector(state => state.reviews.user)
-    console.log("data", data)
     if (Object.values(data).length === 0) {
         return null
     }
+    console.log("data", data)
     const deleteHandler = (reviewId) => {
         return dispatch(reviewsActions.deleteOneReview(reviewId))
         .then((res) => {
-            history.push(`/`)
+            // history.push(`/`)
         })
     }
 

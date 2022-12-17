@@ -15,7 +15,6 @@ function CreateReviewModal({spotId}) {
     const [review, setReview] = useState("")
     const [errors, setErrors] = useState([]);
 
-
     const handleSubmit = (e) => {
         e.preventDefault();
         setErrors([])
