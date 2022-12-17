@@ -13,7 +13,7 @@ const SpotsIndex = () => {
 
     const data = useSelector(state => state.spots.allSpots)
     if (!data) {
-        console.log("data is null")
+        // console.log("data is null")
         return null
     }
 

@@ -15,7 +15,7 @@ const ReviewsBySpot = ({spotId, numReviews}) => {
     }, [dispatch, spotId, numReviews])
 
     const data = useSelector(state => state.reviews.spot)
-    console.log("reviews data", data)
+    // console.log("reviews data", data)
     const reviews = Object.values(data)
     if (reviews.length === 0) {
         return null

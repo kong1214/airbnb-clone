@@ -19,7 +19,7 @@ function ReviewsByUser() {
     if (Object.values(data).length === 0) {
         return null
     }
-    console.log("data", data)
+    // console.log("data", data)
     const deleteHandler = (reviewId) => {
         return dispatch(reviewsActions.deleteOneReview(reviewId))
         .then((res) => {
