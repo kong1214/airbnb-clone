@@ -27,3 +27,11 @@
     margin: 5px;
     width: 35%;
 }
+.price {
+    font-weight: bold;
+}
+
+a:visited {
+    text-decoration: none;
+    color: black;
+}

@@ -25,11 +25,20 @@ const SpotDetails = ({ }) => {
 
     if (spot.id === undefined) return null;
     // if(spot.SpotImages) return null
-    if (spot.numReviews === 0) spot.avgStarRating = "New"
     let location
     if (spot.country === "United States of America") {
         location = `${spot.city}, ${spot.state}`
     } else location = `${spot.city}, ${spot.country}`
+
+    let avgRating
+    if (spot.numReviews === 0) {
+        avgRating = "New"
+    } else {
+        const numAvgRating = Number(spot.avgStarRating)
+        avgRating = numAvgRating.toFixed(2)
+    }
+
+
 
     const deleteHandler = () => {
         return dispatch(spotsActions.deleteOneSpot(spotId))
@@ -54,7 +63,9 @@ const SpotDetails = ({ }) => {
     return (
         <div>
             <h1>{`${spot.name}`}</h1>
-            <div>{`*star-icon*${spot.avgStarRating}`}</div>
+            <div className="star-rating-container">
+                <i class="fa-solid fa-star">{`${avgRating}`}</i>
+            </div>
             <div>{`${location}`}</div>
             <div className="spot-details-image-container">
                 {spot.SpotImages &&
@@ -62,7 +73,10 @@ const SpotDetails = ({ }) => {
                     <img key={spotImage.id} className="spot-details-image" src={spotImage.url}></img>
                 ))}
             </div>
-            <div>{`$${spot.price} night`}</div>
+            <div className="price-container">
+                <span className="price">{`$${spot.price} `}</span>
+                <span className="night">night</span>
+            </div>
             <div>{`${spot.description}`}</div>
             <div className = "buttons">
                 {sessionLinks}

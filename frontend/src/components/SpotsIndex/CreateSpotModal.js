@@ -45,11 +45,11 @@ function CreateSpotModal() {
     <>
       <h1 className="create-spot-header">Create a Spot</h1>
       <form onSubmit={handleSubmit} className="create-spot-form">
-        <ul>{errors.map((error, idx) => <li key={idx}>{error}</li>)}</ul>
-        <label className="form-input-with-label">
+        <ul className="create-a-spot-errors-container">{errors.map((error, idx) => <li key={idx}>{error}</li>)}</ul>
+        <label className="signup-form-input-with-label">
           Address
           <input
-            className="form-input"
+            className="signup-form-input"
             placeholder="Address"
             type="text"
             value={address}
@@ -57,10 +57,10 @@ function CreateSpotModal() {
             required
           />
         </label>
-        <label className="form-input-with-label">
+        <label className="signup-form-input-with-label">
           City
           <input
-            className="form-input"
+            className="signup-form-input"
             placeholder="City"
             type="text"
             value={city}
@@ -68,10 +68,10 @@ function CreateSpotModal() {
             required
           />
         </label>
-        <label className="form-input-with-label">
+        <label className="signup-form-input-with-label">
           State
           <input
-            className="form-input"
+            className="signup-form-input"
             placeholder="State"
             type="text"
             value={state}
@@ -79,10 +79,10 @@ function CreateSpotModal() {
             required
           />
         </label>
-        <label className="form-input-with-label">
+        <label className="signup-form-input-with-label">
           Country
           <input
-            className="form-input"
+            className="signup-form-input"
             placeholder="Country"
             type="text"
             value={country}
@@ -90,10 +90,10 @@ function CreateSpotModal() {
             required
           />
         </label>
-        <label className="form-input-with-label">
+        <label className="signup-form-input-with-label">
           Name
           <input
-            className="form-input"
+            className="signup-form-input"
             placeholder="Name of the Spot"
             type="text"
             value={name}
@@ -101,10 +101,10 @@ function CreateSpotModal() {
             required
           />
         </label>
-        <label className="form-input-with-label">
+        <label className="signup-form-input-with-label">
           Description
           <input
-            className="form-input"
+            className="signup-form-input"
             placeholder="Description"
             type="text"
             value={description}
@@ -112,10 +112,10 @@ function CreateSpotModal() {
             required
           />
         </label>
-        <label className="form-input-with-label">
+        <label className="signup-form-input-with-label">
           Price
           <input
-            className="form-input"
+            className="signup-form-input"
             placeholder="Price per night"
             type="text"
             value={price}
@@ -123,10 +123,10 @@ function CreateSpotModal() {
             required
           />
         </label>
-        <label className="form-input-with-label">
+        <label className="signup-form-input-with-label">
           Preview URL
           <input
-            className="form-input"
+            className="signup-form-input"
             placeholder="Preview Image"
             type="text"
             value={previewImage}

@@ -7,14 +7,26 @@ import { Link } from "react-router-dom"
         location = `${spot.city}, ${spot.state}`
     } else location = `${spot.city}, ${spot.country}`
 
-    if (spot.avgRating === undefined) spot.avgRating = "New"
+    let avgRating
+    if (spot.avgRating === undefined) {
+        avgRating = "New"
+    } else {
+        const numAvgRating = Number(spot.avgRating)
+        avgRating = numAvgRating.toFixed(2)
+    }
 
     return (
         <Link to={`/spots/${spot.id}`} className="card-container">
             <img className="preview-image" src={`${spot.previewImage}`} />
-            <div>{`avgStars = ${spot.avgRating}`}</div>
+            <div>
+                <i className="fa-solid fa-star"></i>
+                {`${avgRating}`}
+                </div>
             <div>{`location: ${location} `}</div>
-            <div>{`price: $${spot.price} per night`}</div>
+            <div className="price-container">
+                <span className="price">{`$${spot.price} `}</span>
+                <span className="night">night</span>
+            </div>
         </Link>
     )
  }
