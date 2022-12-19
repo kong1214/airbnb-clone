@@ -64,7 +64,8 @@ const SpotDetails = ({ }) => {
         <div>
             <h1>{`${spot.name}`}</h1>
             <div className="star-rating-container">
-                <i class="fa-solid fa-star">{`${avgRating}`}</i>
+                <i class="fa-solid fa-star"></i>
+                {`${avgRating} - ${spot.numReviews} reviews`}
             </div>
             <div>{`${location}`}</div>
             <div className="spot-details-image-container">
@@ -73,7 +74,7 @@ const SpotDetails = ({ }) => {
                     <img key={spotImage.id} className="spot-details-image" src={spotImage.url}></img>
                 ))}
             </div>
-            <div className="price-container">
+            <div className="spot-details-price-container">
                 <span className="price">{`$${spot.price} `}</span>
                 <span className="night">night</span>
             </div>

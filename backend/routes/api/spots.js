@@ -313,7 +313,7 @@ router.put('/:spotId', requireAuth, validateSpot, async (req, res, next) => {
 
     if (currentSpot.toJSON().ownerId !== loggedInUserId) {
         const err = new Error()
-        err.errors =[]
+        err.errors = []
         err.errors.push("Spot must belong to the current User")
         err.status = 403
         err.statusCode = 403

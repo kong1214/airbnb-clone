@@ -14,7 +14,7 @@ function Navigation({ isLoaded }) {
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
-      <div className="logged-in-nav-buttons">
+      <span className="logged-in-nav-buttons">
         <div className="create-a-spot-button">
           <OpenModalButton
             buttonText="Create a Spot"
@@ -28,11 +28,11 @@ function Navigation({ isLoaded }) {
         <div className="profile-button">
           <ProfileButton user={sessionUser} />
         </div>
-      </div>
+      </span>
     );
   } else {
     sessionLinks = (
-      <div className="login-signup-buttons">
+      <span className="login-signup-buttons">
         <div className="login-button">
           <OpenModalButton
             buttonText="Log In"
@@ -45,7 +45,7 @@ function Navigation({ isLoaded }) {
             modalComponent={<SignupFormModal />}
           />
         </div>
-      </div>
+      </span>
     );
   }
 

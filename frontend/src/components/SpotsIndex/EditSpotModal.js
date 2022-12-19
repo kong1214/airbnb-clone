@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import * as spotsActions from "../../store/spots";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
-import {useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import "./SpotsModal.css";
 
-function EditSpotModal({spotId}) {
+function EditSpotModal({ spotId }) {
   const dispatch = useDispatch();
   const history = useHistory()
 
@@ -25,11 +25,11 @@ function EditSpotModal({spotId}) {
     // make the return
     setErrors([])
     return dispatch(spotsActions.editOneSpot({
-        address, city, state, country, lat: 100, lng: 100, name, description, price
+      address, city, state, country, lat: 100, lng: 100, name, description, price
     }, spotId))
-    .then(closeModal)
-    .then(() => history.pushState(`/spots/${spotId}`))
-    .catch(async (res) => {
+      .then(closeModal)
+      .then(() => history.push(`/spots/${spotId}`))
+      .catch(async (res) => {
         const data = await res.json();
         if (data && data.errors) setErrors(data.errors);
       });
@@ -108,7 +108,7 @@ function EditSpotModal({spotId}) {
             type="text"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
-            required   
+            required
           />
         </label>
         <button className="form-input button" type="submit">Edit</button>

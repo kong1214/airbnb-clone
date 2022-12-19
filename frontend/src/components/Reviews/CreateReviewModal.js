@@ -6,7 +6,7 @@ import * as reviewsActions from "../../store/reviews"
 import * as spotsActions from "../../store/spots";
 import "./ReviewModal.css"
 
-function CreateReviewModal({spotId}) {
+function CreateReviewModal({ spotId }) {
     const dispatch = useDispatch();
     const history = useHistory()
     const { closeModal } = useModal();
@@ -21,15 +21,15 @@ function CreateReviewModal({spotId}) {
         return dispatch(reviewsActions.createReviewBySpot({
             review, stars, spotId
         }))
-        .then((res) => {
-          closeModal()
-          return dispatch(spotsActions.getOneSpot(res.spotId))
-        })
-        .catch(async (res) => {
-          const data = await res.json();
-          if (data && data.errors) setErrors(data.errors);
-        })
-      };
+            .then((res) => {
+                closeModal()
+                return dispatch(spotsActions.getOneSpot(res.spotId))
+            })
+            .catch(async (res) => {
+                const data = await res.json();
+                if (data && data.errors) setErrors(data.errors);
+            })
+    };
 
 
     return (

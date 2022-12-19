@@ -1,9 +1,9 @@
 import "./SpotsIndex.css"
 import { Link } from "react-router-dom"
 
- const DetailCard = ({spot}) => {
+const DetailCard = ({ spot }) => {
     let location
-    if (spot.country === "United States of America"){
+    if (spot.country === "United States of America") {
         location = `${spot.city}, ${spot.state}`
     } else location = `${spot.city}, ${spot.country}`
 
@@ -18,16 +18,18 @@ import { Link } from "react-router-dom"
     return (
         <Link to={`/spots/${spot.id}`} className="card-container">
             <img className="preview-image" src={`${spot.previewImage}`} />
-            <div>
-                <i className="fa-solid fa-star"></i>
-                {`${avgRating}`}
-                </div>
-            <div>{`location: ${location} `}</div>
+            <div className="detail-card-location-and-avgRating">
+                <div className="detail-card-location">{`${location} `}</div>
+                <span className="star-avg-rating-container">
+                    <i className="fa-solid fa-star"></i>
+                    {`${avgRating}`}
+                </span>
+            </div>
             <div className="price-container">
                 <span className="price">{`$${spot.price} `}</span>
                 <span className="night">night</span>
             </div>
         </Link>
     )
- }
- export default DetailCard
+}
+export default DetailCard
