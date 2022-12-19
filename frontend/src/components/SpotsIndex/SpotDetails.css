@@ -1,0 +1,37 @@
+.session-links{
+    display: flex;
+    justify-content: center;
+}
+.session-buttons{
+    margin: 10px;
+}
+.spot-details-description-and-price{
+    margin-top: 15px;
+    display: flex;
+
+}
+.spot-details-description{
+    width: 80%;
+    font-size: 25px
+}
+.spot-details-price-container{
+    display: flex;
+    justify-content: end;
+    width: 100%;
+    font-size: 25px
+}
+.price{
+    margin-right: 5px;
+}
+.avg-rating-and-location-container{
+    display: flex;
+    margin-bottom: 15px;
+}
+.star-rating-container{
+    width: 30%;
+}
+.spot-details-location-container{
+    width: 100%;
+    display: flex;
+    justify-content: end;
+}

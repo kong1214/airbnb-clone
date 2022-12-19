@@ -38,7 +38,8 @@ const validateSpot = [
         .withMessage("Description is required"),
     check('price')
         .exists({ checkFalsy: true })
-        .withMessage("Price per day is required"),
+        .isNumeric()
+        .withMessage("Price per day is required and it must be a number"),
     handleValidationErrors
 ]
 
@@ -313,7 +314,8 @@ router.put('/:spotId', requireAuth, validateSpot, async (req, res, next) => {
 
     if (currentSpot.toJSON().ownerId !== loggedInUserId) {
         const err = new Error()
-        err.message = "Spot must belong to the current User"
+        err.errors =[]
+        err.errors.push("Spot must belong to the current User")
         err.status = 403
         err.statusCode = 403
         return next(err)
@@ -543,7 +545,8 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
     // ERROR HANDLER if the logged in user is not the owner of the spot
     if (spotQueryTest.dataValues.ownerId !== loggedInUserId)  {
         const err = new Error()
-        err.message = "Spot must belong to the current User"
+        err.errors = []
+        err.errors.push("Spot must belong to the current User")
         err.status = 403
         err.statusCode = 403
         return next(err)

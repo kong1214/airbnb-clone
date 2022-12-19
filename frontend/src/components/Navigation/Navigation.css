@@ -4,19 +4,24 @@
 
 .navButtons {
     display: flex;
+    height: 40%;
 }
 
 .home-button-container {
     /* display: flex; */
     margin-top: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
+    width: 5%;
+}
+.fa-house{
+    height: 100%;
+    width: 100%;
 }
 
 .login-signup-buttons {
     display: flex;
-    padding-left: 90%;
-    padding-right: 10px;
+    justify-content: end;
+    width: 100%;
+    /* padding-left: 90%; */
 }
 
 .login-button {
@@ -30,8 +35,8 @@
 
 .logged-in-nav-buttons {
     display: flex;
-    padding-left: 82%;
-    padding-right: 10px;
+    width: 100%;
+    justify-content: end;
 }
 .create-a-spot-button {
     margin-top: 10px;

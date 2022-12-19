@@ -10,6 +10,7 @@ Logged in users are able to create listings for spots, being able to set price a
 Logged in spot owners are able to update and delete existing spots.
 
 ## Reviews
-User are able to view reviews for a spot.
+Users are able to view reviews for a spot.
+Users are able to view all reviews they have left.
 Logged in users are able to leave a review for a spot, being able to input stars and text.
 Users who leave reviews are able to delete the ones they created.

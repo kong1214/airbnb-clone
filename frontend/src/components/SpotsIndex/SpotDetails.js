@@ -7,6 +7,7 @@ import EditSpotModal from "./EditSpotModal"
 import ReviewsBySpot from "../Reviews/ReviewsBySpot"
 import CreateReviewModal from "../Reviews/CreateReviewModal"
 import "./SpotsIndex.css"
+import "./SpotDetails.css"
 
 const SpotDetails = ({ }) => {
     const history = useHistory()
@@ -25,28 +26,44 @@ const SpotDetails = ({ }) => {
 
     if (spot.id === undefined) return null;
     // if(spot.SpotImages) return null
-    if (spot.numReviews === 0) spot.avgStarRating = "New"
     let location
     if (spot.country === "United States of America") {
         location = `${spot.city}, ${spot.state}`
     } else location = `${spot.city}, ${spot.country}`
 
+    let avgRating
+    if (spot.numReviews === 0) {
+        avgRating = "New"
+    } else {
+        const numAvgRating = Number(spot.avgStarRating)
+        avgRating = numAvgRating.toFixed(2)
+    }
+
+
+
     const deleteHandler = () => {
         return dispatch(spotsActions.deleteOneSpot(spotId))
-        .then(history.push("/"))
+            .then(history.push("/"))
     }
 
     let sessionLinks
     if (sessionUser) {
         sessionLinks = (
             <div className="session-links">
-                <OpenModalButton
-                    buttonText="Leave a Review"
-                    modalComponent={<CreateReviewModal spotId={Number(spotId)}/>}/>
-                <OpenModalButton
-                    buttonText="Edit this Spot"
-                    modalComponent={<EditSpotModal spotId={Number(spotId)} />} />
-                <button onClick={deleteHandler}>Delete this Spot</button>
+                <div className="create-a-review-button session-buttons">
+                    <OpenModalButton
+                        buttonText="Leave a Review"
+                        modalComponent={<CreateReviewModal spotId={Number(spotId)} />} />
+                </div>
+                <div className="edit-this-spot-button session-buttons">
+                    <OpenModalButton
+                        buttonText="Edit this Spot"
+                        modalComponent={<EditSpotModal spotId={Number(spotId)} />} />
+                </div>
+                <button
+                    className="delete-this-spot-button session-buttons"
+                    onClick={deleteHandler}>Delete this Spot
+                </button>
             </div>
         )
     }
@@ -54,21 +71,33 @@ const SpotDetails = ({ }) => {
     return (
         <div>
             <h1>{`${spot.name}`}</h1>
-            <div>{`*star-icon*${spot.avgStarRating}`}</div>
-            <div>{`${location}`}</div>
+            <div className="avg-rating-and-location-container">
+                <div className="star-rating-container">
+                    <i className="fa-solid fa-star"></i>
+                    {`${avgRating} - ${spot.numReviews} reviews`}
+                </div>
+                <span className="spot-details-location-container">
+                    {`${spot.city}, ${spot.state}, ${spot.country}`}
+                </span>
+            </div>
             <div className="spot-details-image-container">
                 {spot.SpotImages &&
-                spot.SpotImages.map(spotImage => (
-                    <img key={spotImage.id} className="spot-details-image" src={spotImage.url}></img>
-                ))}
+                    spot.SpotImages.map(spotImage => (
+                        <img key={spotImage.id} className="spot-details-image" src={spotImage.url}></img>
+                    ))}
             </div>
-            <div>{`$${spot.price} night`}</div>
-            <div>{`${spot.description}`}</div>
-            <div className = "buttons">
+            <div className="spot-details-description-and-price">
+                <div className="spot-details-description">{`${spot.description}`}</div>
+                <div className="spot-details-price-container">
+                    <span className="price">{`$${spot.price} `}</span>
+                    <span className="night">night</span>
+                </div>
+            </div>
+            <div className="buttons">
                 {sessionLinks}
             </div>
             <div>
-                {spotIsLoaded && <ReviewsBySpot spotId={spot.id} numReviews={spot.numReviews}/>}
+                {spotIsLoaded && <ReviewsBySpot spotId={spot.id} numReviews={spot.numReviews} />}
             </div>
         </div>
     )

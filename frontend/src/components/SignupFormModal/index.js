@@ -33,56 +33,68 @@ function SignupFormModal() {
     <>
       <h1 className="signup-header">Sign Up</h1>
       <form onSubmit={handleSubmit} className="signup-form">
-        <ul className="signup-errors">
+        <ul className="signup-errors-container">
           {errors.map((error, idx) => <li key={idx}>{error}</li>)}
         </ul>
         <label className="signup-input-with-label">
+          Email
           <input
+            className="signup-input"
             placeholder="Email"
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-          />
+            />
         </label>
         <label className="signup-input-with-label">
+          Username
           <input
+            className="signup-input"
             placeholder="Username"
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
-          />
+            />
         </label>
         <label className="signup-input-with-label">
+          First Name
           <input
+            className="signup-input"
             placeholder="First Name"
             type="text"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             required
-          />
+            />
         </label>
         <label className="signup-input-with-label">
+          Last Name
           <input
+            className="signup-input"
             placeholder="Last Name"
             type="text"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             required
-          />
+            />
         </label>
         <label className="signup-input-with-label">
+          Password
           <input
+            className="signup-input"
             placeholder="Password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-          />
+            />
         </label>
         <label className="signup-input-with-label">
+          Confirm Password
           <input
+            className="signup-input"
             placeholder="Confirm Password"
             type="password"
             value={confirmPassword}

@@ -1,5 +1,9 @@
+body {
+    margin-left: 75px;
+    margin-right: 75px;
+}
 .index-container {
-    margin-top: 5%;
+    margin-top: 2%;
     border: 1px solid black;
     display: flex;
     justify-content: center;
@@ -8,7 +12,7 @@
 
 .card-container {
     margin: 15px;
-    border: 1px dotted black;
+    /* border: 1px dotted black; */
     width: 15%;
     height: auto;
 }
@@ -21,9 +25,31 @@
 .spot-details-image-container {
     display: flex;
     border: 1px dotted black;
-    margin: 15px;
+    /* margin: 15px; */
 }
 .spot-details-image {
     margin: 5px;
     width: 35%;
+}
+.price {
+    font-weight: bold;
+}
+
+a:link {
+    text-decoration: none;
+}
+a:visited {
+    text-decoration: none;
+    color: black;
+}
+.detail-card-location-and-avgRating {
+    display: flex;
+}
+.detail-card-location {
+    width: 100%;
+}
+.star-avg-rating-container {
+    display: flex;
+    justify-content: end;
+    width: 20%;
 }

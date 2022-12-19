@@ -13,9 +13,17 @@
 }
 
 .signup-input-with-label {
-    display: flex;
+    display: block;
+    font-weight: bold;
+    justify-content: end;
     margin: 15px;
     height: 40px;
+}
+
+.signup-input {
+    width: 100%;
+    height: 50%
+    /* align-items: center; */
 }
 
 .signup-user-button {
@@ -25,6 +33,13 @@
 
 }
 .signup-button-container {
-    display: flex
+    display: flex;
+    /* height: 50px; */
 }
-
+.signup-errors-container {
+    inline-size: 100%;
+    overflow-wrap: break-word;
+    padding: 5px;
+    margin: 15px;
+    /* justify-content: center; */
+}

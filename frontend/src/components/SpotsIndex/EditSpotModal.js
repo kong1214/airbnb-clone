@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import * as spotsActions from "../../store/spots";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
-import {useHistory } from "react-router-dom";
-import "./SpotsModal.css";
+import { useHistory } from "react-router-dom";
+import "./EditSpotsModal.css";
 
-function EditSpotModal({spotId}) {
+function EditSpotModal({ spotId }) {
   const dispatch = useDispatch();
   const history = useHistory()
 
@@ -22,15 +22,17 @@ function EditSpotModal({spotId}) {
   const { closeModal } = useModal();
 
   const handleSubmit = (e) => {
+    e.preventDefault()
     // make the return
     setErrors([])
     return dispatch(spotsActions.editOneSpot({
-        address, city, state, country, lat: 100, lng: 100, name, description, price
+      address, city, state, country, lat: 100, lng: 100, name, description, price
     }, spotId))
-    .then(closeModal)
-    .then(() => history.pushState(`/spots/${spotId}`))
-    .catch(async (res) => {
+      .then(closeModal)
+      .then(() => history.push(`/`))
+      .catch(async (res) => {
         const data = await res.json();
+        console.log(data)
         if (data && data.errors) setErrors(data.errors);
       });
   };
@@ -40,10 +42,11 @@ function EditSpotModal({spotId}) {
     <>
       <h1 className="edit-spot-header">Edit this Spot</h1>
       <form onSubmit={handleSubmit} className="edit-spot-form">
-        <ul>{errors.map((error, idx) => <li key={idx}>{error}</li>)}</ul>
-        <label>
+        <ul className="edit-a-spot-errors-container">{errors.map((error, idx) => <li key={idx}>{error}</li>)}</ul>
+        <label className="edit-a-spot-form-input-with-label">
+          Address
           <input
-            className="form-input"
+            className="edit-a-spot-form-input"
             placeholder="Address"
             type="text"
             value={address}
@@ -51,9 +54,10 @@ function EditSpotModal({spotId}) {
             required
           />
         </label>
-        <label>
+        <label className="edit-a-spot-form-input-with-label">
+          City
           <input
-            className="form-input"
+            className="edit-a-spot-form-input"
             placeholder="City"
             type="text"
             value={city}
@@ -61,9 +65,10 @@ function EditSpotModal({spotId}) {
             required
           />
         </label>
-        <label>
+        <label className="edit-a-spot-form-input-with-label">
+          State
           <input
-            className="form-input"
+            className="edit-a-spot-form-input"
             placeholder="State"
             type="text"
             value={state}
@@ -71,9 +76,10 @@ function EditSpotModal({spotId}) {
             required
           />
         </label>
-        <label>
+        <label className="edit-a-spot-form-input-with-label">
+          Country
           <input
-            className="form-input"
+            className="edit-a-spot-form-input"
             placeholder="Country"
             type="text"
             value={country}
@@ -81,9 +87,10 @@ function EditSpotModal({spotId}) {
             required
           />
         </label>
-        <label>
+        <label className="edit-a-spot-form-input-with-label">
+          Name
           <input
-            className="form-input"
+            className="edit-a-spot-form-input"
             placeholder="Name of the Spot"
             type="text"
             value={name}
@@ -91,9 +98,10 @@ function EditSpotModal({spotId}) {
             required
           />
         </label>
-        <label>
+        <label className="edit-a-spot-form-input-with-label">
+          Description
           <input
-            className="form-input"
+            className="edit-a-spot-form-input"
             placeholder="Description"
             type="text"
             value={description}
@@ -101,17 +109,20 @@ function EditSpotModal({spotId}) {
             required
           />
         </label>
-        <label>
+        <label className="edit-a-spot-form-input-with-label">
+          Price
           <input
-            className="form-input"
+            className="edit-a-spot-form-input"
             placeholder="Price per night"
             type="text"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
-            required   
+            required
           />
         </label>
-        <button className="form-input button" type="submit">Edit</button>
+        <div className="edit-a-spot-button-container">
+          <button className="edit-a-spot-form-button" type="submit">Edit</button>
+        </div>
       </form>
     </>
   );
