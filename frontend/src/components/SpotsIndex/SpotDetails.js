@@ -64,7 +64,7 @@ const SpotDetails = ({ }) => {
         <div>
             <h1>{`${spot.name}`}</h1>
             <div className="star-rating-container">
-                <i class="fa-solid fa-star"></i>
+                <i className="fa-solid fa-star"></i>
                 {`${avgRating} - ${spot.numReviews} reviews`}
             </div>
             <div>{`${location}`}</div>

@@ -22,15 +22,17 @@ function EditSpotModal({ spotId }) {
   const { closeModal } = useModal();
 
   const handleSubmit = (e) => {
+    e.preventDefault()
     // make the return
     setErrors([])
     return dispatch(spotsActions.editOneSpot({
       address, city, state, country, lat: 100, lng: 100, name, description, price
     }, spotId))
       .then(closeModal)
-      .then(() => history.push(`/spots/${spotId}`))
+      .then(() => history.push(`/`))
       .catch(async (res) => {
         const data = await res.json();
+        console.log(data)
         if (data && data.errors) setErrors(data.errors);
       });
   };
