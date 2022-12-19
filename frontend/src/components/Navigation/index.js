@@ -52,7 +52,9 @@ function Navigation({ isLoaded }) {
   return (
     <div className="navButtons">
       <div className="home-button-container">
-        <NavLink exact to="/">Home</NavLink>
+        <NavLink exact to="/">
+          <i className="fa-solid fa-house fa-2x"></i>
+        </NavLink>
       </div>
       {isLoaded && sessionLinks}
     </div>

@@ -35,9 +35,11 @@ function CreateReviewModal({ spotId }) {
     return (
         <>
             <h1 className="create-review-header">Leave Review</h1>
-            <form onSubmit={handleSubmit} className="create-spot-form">
-                <ul>{errors.map((error, idx) => <li key={idx}>{error}</li>)}</ul>
-                <label>
+            <form onSubmit={handleSubmit} className="create-review-form">
+                <ul className="create-reviews-errors-container">
+                    {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+                </ul>
+                <label className="create-review-input-with-label">
                     <input
                         className="create-review-form-input"
                         placeholder="Description of Review"
@@ -47,7 +49,7 @@ function CreateReviewModal({ spotId }) {
                         required
                     />
                 </label>
-                <label>
+                <label className="create-review-input-with-label">
                     <input
                         className="create-review-form-input"
                         placeholder="Stars"
@@ -57,7 +59,9 @@ function CreateReviewModal({ spotId }) {
                         required
                     />
                 </label>
-                <button className="form-input button" type="submit">Create</button>
+                <div className="create-review-form-input-button-container">
+                    <button className="create-review-form-input-button" type="submit">Create</button>
+                </div>
             </form>
         </>
     )

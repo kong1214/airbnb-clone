@@ -4,11 +4,17 @@
 
 .navButtons {
     display: flex;
+    height: 40%;
 }
 
 .home-button-container {
     /* display: flex; */
     margin-top: 10px;
+    width: 5%;
+}
+.fa-house{
+    height: 100%;
+    width: 100%;
 }
 
 .login-signup-buttons {
