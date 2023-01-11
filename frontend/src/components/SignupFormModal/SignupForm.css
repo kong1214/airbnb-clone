@@ -13,33 +13,38 @@
 }
 
 .signup-input-with-label {
-    display: block;
+    display: flex;
+    flex-direction: column;
     font-weight: bold;
     justify-content: end;
     margin: 15px;
-    height: 40px;
 }
 
 .signup-input {
-    width: 100%;
-    height: 50%
+    height: 50%;
+    margin: 0px;
     /* align-items: center; */
 }
 
 .signup-user-button {
     width: 100%;
-    height: 40%;
+    height: 40px;
     margin: 15px;
-
+    color: white;
+    background-color: rgb(255, 56, 92);
+    border: none;
 }
 .signup-button-container {
     display: flex;
     /* height: 50px; */
 }
 .signup-errors-container {
-    inline-size: 100%;
-    overflow-wrap: break-word;
-    padding: 5px;
-    margin: 15px;
-    /* justify-content: center; */
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding: 2px;
+    justify-content: center;
 }
