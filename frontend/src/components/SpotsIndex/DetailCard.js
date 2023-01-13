@@ -18,7 +18,7 @@ const DetailCard = ({ spot }) => {
     return (
         <Link to={`/spots/${spot.id}`} className="card-container">
             <div className="preview-image-container">
-                <img className="preview-image" src={`${spot.previewImage}`} />
+                <img className="preview-image rounded-corners" src={`${spot.previewImage}`} />
             </div>
             <div className="spot-info">
                 <div className="detail-card-location-and-avgRating">
