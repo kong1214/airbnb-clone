@@ -1,35 +1,34 @@
 body {
+    margin-top: 20px;
     margin-left: 75px;
     margin-right: 75px;
 }
 .index-container {
-    margin-top: 2%;
-    border: 1px solid black;
+    margin-top: 4%;
+    /* border: 1px solid black; */
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     flex-wrap: wrap;
 }
-
 .card-container {
-    margin: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
     /* border: 1px dotted black; */
     width: 15%;
     height: auto;
+    display: flex;
+    flex-direction: column;
 }
-
+.preview-image-container {
+    width: 100%;
+    height: 100%;
+}
 .preview-image {
     width: 100%;
-    height: 65%;
+    height: 100%
 }
-
-.spot-details-image-container {
-    display: flex;
-    border: 1px dotted black;
-    /* margin: 15px; */
-}
-.spot-details-image {
-    margin: 5px;
-    width: 35%;
+.spot-info {
+    margin-top: 5px
 }
 .price {
     font-weight: bold;

@@ -5,6 +5,15 @@
 .session-buttons{
     margin: 10px;
 }
+.spot-details-image-container {
+    display: flex;
+    border: 1px dotted black;
+    /* margin: 15px; */
+}
+.spot-details-image {
+    margin: 5px;
+    width: 35%;
+}
 .spot-details-description-and-price{
     margin-top: 15px;
     display: flex;
