@@ -14,21 +14,21 @@ function Navigation({ isLoaded }) {
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
-      <span className="logged-in-nav-buttons">
+      <div className="logged-in-nav-buttons">
         <div className="create-a-spot-button">
           <OpenModalButton
             buttonText="Create a Spot"
             modalComponent={<CreateSpotModal />} />
         </div>
-        <div className="view-all-reviews-button">
+        <div className="view-all-reviews-button-container">
           <Link to="/reviews/current">
-            <button>View all Reviews</button>
+            <button className="view-all-reviews-button">View all Reviews</button>
           </Link>
         </div>
         <div className="profile-button">
           <ProfileButton user={sessionUser} />
         </div>
-      </span>
+      </div>
     );
   } else {
     sessionLinks = (
@@ -53,7 +53,9 @@ function Navigation({ isLoaded }) {
     <div className="navButtons">
       <div className="home-button-container">
         <NavLink exact to="/">
-          <i className="fa-solid fa-house fa-2x"></i>
+          <i className="fa-solid fa-house fa-2x">
+            <span className="home-button-text">airana</span>
+          </i>
         </NavLink>
       </div>
       {isLoaded && sessionLinks}

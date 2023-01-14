@@ -6,15 +6,21 @@
     display: flex;
     height: 40%;
 }
-
 .home-button-container {
-    /* display: flex; */
+    display: flex;
+    flex-direction: row;
     margin-top: 10px;
-    width: 5%;
+    width: 20%;
 }
 .fa-house{
     height: 100%;
     width: 100%;
+    color:#ff385c;
+}
+.home-button-text{
+    margin-left: 8px;
+    font-size: 25px;
+    font-family: "Tahomagit st"
 }
 
 .login-signup-buttons {
@@ -40,13 +46,37 @@
 }
 .create-a-spot-button {
     margin-top: 10px;
-    margin-right: 5px;
+    margin-right: 10px;
+    width: 70px;
+    height: 40px;
+    color: #ff385c;
 }
-.view-all-reviews-button {
+.view-all-reviews-button-container {
+    margin-top: 10px;
+    margin-right: 10px;
+    width: 70px;
+    height: 40px;
+}
+.view-all-reviews-button{
+    background-color: #ff385c;
+    border: none;
+    color: white;
+}
+.profile-button-container{
+    border-width: thin;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
     margin-top: 10px;
     margin-right: 5px;
+    width: 70px;
+    height: 37px;
 }
-.profile-button {
-    margin-top: 10px;
-    margin-right: 5px;
+.profile-button-container.rounded-corners{
+    border-radius: 15px;
+}
+.modal-buttons {
+    background-color: #ff385c;
+    border: none;
+    color: white;
 }
