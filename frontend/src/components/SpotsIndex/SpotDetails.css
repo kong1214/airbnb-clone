@@ -4,6 +4,8 @@
 }
 .session-buttons{
     margin: 10px;
+    width: 90px;
+    height: 40px;
 }
 .spot-details-image-container {
     display: flex;
@@ -43,4 +45,23 @@
     width: 100%;
     display: flex;
     justify-content: end;
+}
+.delete-this-spot-button{
+    background-color: #ff385c;
+    color: white;
+    border: none;
+    width: 90px;
+    height: 40px;
+}
+.edit-this-spot-button {
+    width: 90px;
+    height: 40px;
+    background-color: #ff385c;
+    display: flex;
+}
+.create-a-review-button {
+    width: 90px;
+    height: 40px;
+    background-color: #ff385c;
+    display: flex;
 }
