@@ -96,7 +96,7 @@ const SpotDetails = ({ }) => {
             <div className="buttons">
                 {sessionLinks}
             </div>
-            <div>
+            <div className="spot-details-reviews-container">
                 {spotIsLoaded && <ReviewsBySpot spotId={spot.id} numReviews={spot.numReviews} />}
             </div>
         </div>

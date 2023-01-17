@@ -1,3 +1,7 @@
+/* body {
+    margin-left: 20%;
+    margin-right: 20%;
+} */
 .session-links{
     display: flex;
     justify-content: center;
@@ -30,6 +34,10 @@
     justify-content: end;
     width: 100%;
     font-size: 25px
+}
+.spot-details-reviews-container{
+    display: flex;
+    justify-content: center;;
 }
 .price{
     margin-right: 5px;

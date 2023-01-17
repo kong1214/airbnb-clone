@@ -1,13 +1,13 @@
 .reviews-container {
-    margin-left: 450px;
-    margin-right: 450px;
-    display: block;
-    justify-content: center;;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 70%
 }
 
 .review-cards-container {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     flex-wrap: wrap;
 }
 
@@ -20,5 +20,13 @@
 .review-card-container {
     width: 400px;
     margin: 10px;
-    border: 1px dotted black;
+    /* border: 1px dotted black; */
+}
+.user-name{
+    font-size: 16px;
+}
+.date-stars-container{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1%;
 }
