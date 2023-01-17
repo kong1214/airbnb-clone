@@ -13,5 +13,12 @@
 }
 
 .delete-review-button {
+    border: none;
+    width: 90px;
     height: 40px;
+    color: white;
+    background-color: #ff385c;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

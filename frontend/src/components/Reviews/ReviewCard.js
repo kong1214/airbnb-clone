@@ -15,7 +15,10 @@ const ReviewCard = ({ review }) => {
         <div className="review-card-container">
             <div className="user-name">{`${review.User.firstName} ${review.User.lastName}`}</div>
             <div className="creation-date">{fullDate}</div>
-            <div className="stars-rating">{`*STAR ICON* ${review.stars}`}</div>
+            <div className="stars-rating">
+                <i className="fa-solid fa-star"></i>
+                {`${review.stars}`}
+                </div>
             <div className="review-text">{review.review}</div>
         </div>
     )
