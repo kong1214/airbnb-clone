@@ -85,6 +85,7 @@ const SpotDetails = ({ }) => {
         )
     }
 
+    
     return (
         <div>
             <h1>{`${spot.name}`}</h1>
