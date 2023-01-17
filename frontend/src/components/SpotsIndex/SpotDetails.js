@@ -48,29 +48,35 @@ const SpotDetails = ({ }) => {
 
     let sessionLinks
     if (sessionUser) {
-        sessionLinks = (
-            <div className="session-links">
-                <div className="create-a-review-button session-buttons">
-                    <OpenModalButton
-                        buttonText="Leave a Review"
-                        modalComponent={<CreateReviewModal spotId={Number(spotId)} />} />
+        if (sessionUser.id === spot.ownerId) {
+            sessionLinks = (
+                <div className="session-links">
+                    <div className="edit-this-spot-button session-buttons">
+                        <OpenModalButton
+                            buttonText="Edit this Spot"
+                            modalComponent={<EditSpotModal spotId={Number(spotId)} />} />
+                    </div>
+                    <button
+                        className="delete-this-spot-button session-buttons"
+                        onClick={deleteHandler}>Delete this Spot
+                    </button>
                 </div>
-                <div className="edit-this-spot-button session-buttons">
-                    <OpenModalButton
-                        buttonText="Edit this Spot"
-                        modalComponent={<EditSpotModal spotId={Number(spotId)} />} />
+            )
+        } else if (sessionUser.id !== spot.ownerId) {
+            sessionLinks = (
+                <div className="session-links">
+                    <div className="create-a-review-button session-buttons">
+                        <OpenModalButton
+                            buttonText="Leave a Review"
+                            modalComponent={<CreateReviewModal spotId={Number(spotId)} />} />
+                    </div>
                 </div>
-                <button
-                    className="delete-this-spot-button session-buttons"
-                    onClick={deleteHandler}>Delete this Spot
-                </button>
-            </div>
-        )
+            )
+        }
     }
 
     const previewImageObj = spot.SpotImages.find(spotImage => spotImage.preview === true)
     const previewImageUrl = previewImageObj.url
-    // const spotImagesClone = [...spot.SpotImages]
     const noPreviewSpotImages = spot.SpotImages.filter(spotImage => spotImage.preview === false)
     while (noPreviewSpotImages.length !== 4) {
         noPreviewSpotImages.push(
@@ -78,7 +84,6 @@ const SpotDetails = ({ }) => {
         )
     }
 
-    console.log(noPreviewSpotImages)
     return (
         <div>
             <h1>{`${spot.name}`}</h1>
