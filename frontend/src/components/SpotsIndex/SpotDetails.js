@@ -77,6 +77,7 @@ const SpotDetails = ({ }) => {
 
     const previewImageObj = spot.SpotImages.find(spotImage => spotImage.preview === true)
     const previewImageUrl = previewImageObj.url
+    // const spotImagesClone = [...spot.SpotImages]
     const noPreviewSpotImages = spot.SpotImages.filter(spotImage => spotImage.preview === false)
     while (noPreviewSpotImages.length !== 4) {
         noPreviewSpotImages.push(
