@@ -13,12 +13,29 @@
 }
 .spot-details-image-container {
     display: flex;
-    border: 1px dotted black;
+    justify-content: space-between;
+    /* justify-content: space-between; */
+    /* border: 1px dotted black; */
     /* margin: 15px; */
 }
+
+.spot-preview-image-container{
+    width: 49.5%;
+    overflow: hidden;
+}
+.spot-preview-image{
+    width: 100%;
+    height: 100%;
+}
+.quad-photos{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 49.5%;
+}
 .spot-details-image {
-    margin: 5px;
-    width: 35%;
+    width: 49%;
+    height: 47.5%
 }
 .spot-details-description-and-price{
     margin-top: 15px;

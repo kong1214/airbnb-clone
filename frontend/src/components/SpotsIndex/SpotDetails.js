@@ -68,6 +68,17 @@ const SpotDetails = ({ }) => {
         )
     }
 
+    const previewImageObj = spot.SpotImages.find(spotImage => spotImage.preview === true)
+    const previewImageUrl = previewImageObj.url
+    // const spotImagesClone = [...spot.SpotImages]
+    const noPreviewSpotImages = spot.SpotImages.filter(spotImage => spotImage.preview === false)
+    while (noPreviewSpotImages.length !== 4) {
+        noPreviewSpotImages.push(
+            { preview: false, url: "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg" }
+        )
+    }
+
+    console.log(noPreviewSpotImages)
     return (
         <div>
             <h1>{`${spot.name}`}</h1>
@@ -81,10 +92,15 @@ const SpotDetails = ({ }) => {
                 </span>
             </div>
             <div className="spot-details-image-container">
-                {spot.SpotImages &&
-                    spot.SpotImages.map(spotImage => (
-                        <img key={spotImage.id} className="spot-details-image" src={spotImage.url}></img>
-                    ))}
+                <div className="spot-preview-image-container">
+                    <img className="spot-preview-image" src={previewImageUrl}></img>
+                </div>
+                <div className="quad-photos">
+                    {spot.SpotImages &&
+                        noPreviewSpotImages.map(spotImage => (
+                            <img key={spotImage.id} className="spot-details-image" src={spotImage.url}></img>
+                        ))}
+                </div>
             </div>
             <div className="spot-details-description-and-price">
                 <div className="spot-details-description">{`${spot.description}`}</div>
