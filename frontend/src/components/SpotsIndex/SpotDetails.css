@@ -14,6 +14,7 @@
 .spot-details-image-container {
     display: flex;
     justify-content: space-between;
+    overflow: hidden;
     /* justify-content: space-between; */
     /* border: 1px dotted black; */
     /* margin: 15px; */
@@ -57,7 +58,7 @@
     display: flex;
     justify-content: center;;
 }
-.price{
+.price {
     margin-right: 5px;
 }
 .avg-rating-and-location-container{

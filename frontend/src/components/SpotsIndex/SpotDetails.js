@@ -85,7 +85,7 @@ const SpotDetails = ({ }) => {
         )
     }
 
-    
+
     return (
         <div>
             <h1>{`${spot.name}`}</h1>
@@ -98,7 +98,7 @@ const SpotDetails = ({ }) => {
                     {`${spot.city}, ${spot.state}, ${spot.country}`}
                 </span>
             </div>
-            <div className="spot-details-image-container">
+            <div className="spot-details-image-container rounded-corners">
                 <div className="spot-preview-image-container">
                     <img className="spot-preview-image" src={previewImageUrl}></img>
                 </div>
