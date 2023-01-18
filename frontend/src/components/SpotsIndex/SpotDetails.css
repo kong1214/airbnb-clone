@@ -31,11 +31,12 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    align-content: space-between;
     width: 49.5%;
 }
 .spot-details-image {
     width: 49%;
-    height: 47.5%
+    height: 48.7%
 }
 .spot-details-description-and-price{
     margin-top: 15px;
