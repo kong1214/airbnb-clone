@@ -24,13 +24,13 @@ const DetailCard = ({ spot }) => {
                 <div className="detail-card-location-and-avgRating">
                     <div className="detail-card-location">{`${location} `}</div>
                     <span className="star-avg-rating-container">
-                        <i className="fa-solid fa-star"></i>
+                        <i className="fa-solid fa-star fa-xs"></i>
                         {`${avgRating}`}
                     </span>
                 </div>
-                <div className="price-container">
-                    <span className="price">{`$${spot.price}`}</span>
-                    <span className="night">night</span>
+                <div className="spots-index-price-container">
+                    <span className="spots-index-price">{`$${spot.price} `}</span>
+                    <span className="spots-index-night">night</span>
                 </div>
             </div>
         </Link>

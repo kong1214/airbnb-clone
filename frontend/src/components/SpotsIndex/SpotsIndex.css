@@ -36,8 +36,28 @@ body {
 .spot-info {
     margin-top: 5px
 }
-.price {
+.spots-index-price-container{
+    margin-top: 1.5%;
+    font-size: 15px;
+}
+.spots-index-price {
     font-weight: bold;
+}
+.detail-card-location-and-avgRating {
+    display: flex;
+    font-size: 15px;
+}
+.detail-card-location {
+    width: 100%;
+}
+.star-avg-rating-container {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    width: 20%;
+}
+.rounded-corners {
+    border-radius: 15px;
 }
 
 a:link {
@@ -46,18 +66,4 @@ a:link {
 a:visited {
     text-decoration: none;
     color: black;
-}
-.detail-card-location-and-avgRating {
-    display: flex;
-}
-.detail-card-location {
-    width: 100%;
-}
-.star-avg-rating-container {
-    display: flex;
-    justify-content: end;
-    width: 20%;
-}
-.rounded-corners {
-    border-radius: 15px;
 }
