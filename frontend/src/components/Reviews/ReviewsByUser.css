@@ -5,11 +5,11 @@
     align-items: center;
 }
 
-
 .review-by-user-card-container {
     width: 100%;
     display: flex;
     align-items: center;
+    margin-bottom: 5%;
 }
 
 .delete-review-button {

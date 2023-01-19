@@ -36,6 +36,8 @@
     width: 80px;
     height: 40px;
     color: #ff385c;
+    border-radius: 20px;
+    overflow: hidden;
 }
 .signup-button {
     margin-top: 10px;
@@ -43,6 +45,8 @@
     width: 80px;
     height: 40px;
     color: #ff385c;
+    border-radius: 20px;
+    overflow: hidden;
 }
 
 .logged-in-nav-buttons {
@@ -54,12 +58,16 @@
     width: 80px;
     height: 40px;
     color: #ff385c;
+    border-radius: 20px;
+    overflow: hidden;
 }
 .view-all-reviews-button-container {
     margin-top: 10px;
     margin-right: 10px;
     width: 80px;
     height: 40px;
+    border-radius: 20px;
+    overflow: hidden;
 }
 .view-all-reviews-button{
     background-color: #ff385c;
@@ -75,8 +83,8 @@
     margin-top: 10px;
     margin-right: 5px;
     border: 1px solid lightgray;
-    width: 70px;
-    height: 37px;
+    width: 80px;
+    height: 40px;
 }
 .profile-button-container.rounded-corners{
     border-radius: 18px;

@@ -82,18 +82,24 @@
     border: none;
     width: 90px;
     height: 40px;
+    border-radius: 20px;
+    overflow: hidden;
 }
 .edit-this-spot-button {
     width: 90px;
     height: 40px;
     background-color: #ff385c;
     display: flex;
+    border-radius: 20px;
+    overflow: hidden;
 }
 .create-a-review-button {
     width: 90px;
     height: 40px;
     background-color: #ff385c;
     display: flex;
+    border-radius: 20px;
+    overflow: hidden;
 }
 .spot-details-description-container{
     display: flex;
