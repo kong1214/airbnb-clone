@@ -60,6 +60,7 @@
 }
 .price {
     margin-right: 5px;
+    font-weight: bold;
 }
 .avg-rating-and-location-container{
     display: flex;
