@@ -32,13 +32,17 @@
 
 .login-button {
     margin-top: 10px;
-    margin-right: 5px;
+    margin-right: 10px;
     width: 80px;
+    height: 40px;
+    color: #ff385c;
 }
 .signup-button {
     margin-top: 10px;
-    margin-left: 5px;
+    margin-right: 10px;
     width: 80px;
+    height: 40px;
+    color: #ff385c;
 }
 
 .logged-in-nav-buttons {
