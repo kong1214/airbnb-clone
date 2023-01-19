@@ -1,11 +1,13 @@
 .hidden {
     display: none
 }
-
 .navButtons {
     display: flex;
     height: 40%;
     justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid lightgray;
+    padding-bottom: 1%
 }
 .home-button-container {
     display: flex;
@@ -68,11 +70,18 @@
     align-items: center;
     margin-top: 10px;
     margin-right: 5px;
+    border: 1px solid lightgray;
     width: 70px;
     height: 37px;
 }
 .profile-button-container.rounded-corners{
-    border-radius: 15px;
+    border-radius: 18px;
+}
+.fa-bars {
+    color: gray;
+}
+.fa-user-circle {
+    color: gray;
 }
 .modal-buttons {
     background-color: #ff385c;
