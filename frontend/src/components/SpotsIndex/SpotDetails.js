@@ -25,6 +25,7 @@ const SpotDetails = ({ }) => {
     const sessionUser = useSelector(state => state.session.user);
 
     if (spot.id === undefined) return null;
+    if (spot.Owner === undefined) return null;
 
     const ownerName = spot.Owner.firstName
 
