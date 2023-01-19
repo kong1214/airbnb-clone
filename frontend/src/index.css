@@ -5,3 +5,9 @@ a[href], input[type='submit'], input[type='image'], label[for], select, button, 
 body{
     font-family: Arial, Helvetica, sans-serif
 }
+#modal-content{
+    padding-left: 3%;
+    padding-right: 3%;
+    padding-bottom: 2%;
+    padding-top: 2%
+}
