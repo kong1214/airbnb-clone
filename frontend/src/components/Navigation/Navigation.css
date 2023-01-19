@@ -1,52 +1,96 @@
 .hidden {
     display: none
 }
-
 .navButtons {
     display: flex;
     height: 40%;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: .5px solid lightgray;
+    padding-bottom: 1.5%
 }
-
 .home-button-container {
-    /* display: flex; */
+    display: flex;
+    flex-direction: row;
     margin-top: 10px;
-    width: 5%;
 }
 .fa-house{
     height: 100%;
     width: 100%;
+    color:#ff385c;
+}
+.home-button-text{
+    margin-left: 8px;
+    font-size: 25px;
+    font-family: "Goudy Bookletter 1911", sans-serif
 }
 
 .login-signup-buttons {
     display: flex;
-    justify-content: end;
-    width: 100%;
     /* padding-left: 90%; */
 }
 
 .login-button {
     margin-top: 10px;
-    margin-right: 5px;
+    margin-right: 10px;
+    width: 80px;
+    height: 40px;
+    color: #ff385c;
 }
 .signup-button {
     margin-top: 10px;
-    margin-left: 5px;
+    margin-right: 10px;
+    width: 80px;
+    height: 40px;
+    color: #ff385c;
 }
 
 .logged-in-nav-buttons {
     display: flex;
-    width: 100%;
-    justify-content: end;
 }
 .create-a-spot-button {
     margin-top: 10px;
-    margin-right: 5px;
+    margin-right: 10px;
+    width: 80px;
+    height: 40px;
+    color: #ff385c;
 }
-.view-all-reviews-button {
+.view-all-reviews-button-container {
+    margin-top: 10px;
+    margin-right: 10px;
+    width: 80px;
+    height: 40px;
+}
+.view-all-reviews-button{
+    background-color: #ff385c;
+    border: none;
+    color: white;
+    height: 100%;
+}
+.profile-button-container{
+    border-width: thin;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
     margin-top: 10px;
     margin-right: 5px;
+    border: 1px solid lightgray;
+    width: 70px;
+    height: 37px;
 }
-.profile-button {
-    margin-top: 10px;
-    margin-right: 5px;
+.profile-button-container.rounded-corners{
+    border-radius: 18px;
+}
+.fa-bars {
+    color: gray;
+}
+.fa-user-circle {
+    color: gray;
+}
+.modal-buttons {
+    background-color: #ff385c;
+    border: none;
+    color: white;
+    width: 100%;
+    height: 100%;
 }

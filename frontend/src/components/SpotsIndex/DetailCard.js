@@ -17,17 +17,21 @@ const DetailCard = ({ spot }) => {
 
     return (
         <Link to={`/spots/${spot.id}`} className="card-container">
-            <img className="preview-image" src={`${spot.previewImage}`} />
-            <div className="detail-card-location-and-avgRating">
-                <div className="detail-card-location">{`${location} `}</div>
-                <span className="star-avg-rating-container">
-                    <i className="fa-solid fa-star"></i>
-                    {`${avgRating}`}
-                </span>
+            <div className="preview-image-container">
+                <img className="preview-image rounded-corners" src={`${spot.previewImage}`} />
             </div>
-            <div className="price-container">
-                <span className="price">{`$${spot.price} `}</span>
-                <span className="night">night</span>
+            <div className="spot-info">
+                <div className="detail-card-location-and-avgRating">
+                    <div className="detail-card-location">{`${location} `}</div>
+                    <span className="star-avg-rating-container">
+                        <i className="fa-solid fa-star fa-xs"></i>
+                        {`${avgRating}`}
+                    </span>
+                </div>
+                <div className="spots-index-price-container">
+                    <span className="spots-index-price">{`$${spot.price} `}</span>
+                    <span className="spots-index-night">night</span>
+                </div>
             </div>
         </Link>
     )

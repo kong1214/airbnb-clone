@@ -4,7 +4,7 @@ import * as reviewsActions from "../../store/reviews"
 import ReviewCard from "./ReviewCard"
 import "./Reviews.css"
 
-const ReviewsBySpot = ({spotId, numReviews}) => {
+const ReviewsBySpot = ({spotId, numReviews, avgStars}) => {
     const dispatch = useDispatch()
     const [reviewIsLoaded, setReviewIsLoaded] = useState(false)
 
@@ -22,7 +22,10 @@ const ReviewsBySpot = ({spotId, numReviews}) => {
     }
     return (
         <div className="reviews-container">
-            <h2 className="reviews-header">Reviews</h2>
+            <h2 className="reviews-header">
+                <i className="fa-solid fa-star fa-xs"></i>
+                {` ${avgStars} ~ ${numReviews} `} reviews
+            </h2>
             <div className="review-cards-container">
                 {reviews.map(review => (
                     <ReviewCard

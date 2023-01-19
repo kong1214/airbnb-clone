@@ -13,9 +13,21 @@ const ReviewCard = ({ review }) => {
     let fullDate = `${monthNames[monthIdx]} ${year}`
     return (
         <div className="review-card-container">
-            <div className="user-name">{`${review.User.firstName} ${review.User.lastName}`}</div>
-            <div className="creation-date">{fullDate}</div>
-            <div className="stars-rating">{`*STAR ICON* ${review.stars}`}</div>
+            <div className="picture-name-date-stars-container">
+                <div className="icon-container">
+                    <img className="profile-picture" src="https://cdn.vectorstock.com/i/preview-1x/90/02/profile-photo-placeholder-icon-design-vector-43189002.jpg"></img>
+                </div>
+                <div className="name-date-stars-container">
+                    <div className="user-name">{`${review.User.firstName} ${review.User.lastName}`}</div>
+                    <div className="date-stars-container">
+                        <div className="creation-date">{fullDate}</div>
+                        <div className="stars-rating">
+                            <i className="fa-solid fa-star"></i>
+                            {`${review.stars}`}
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div className="review-text">{review.review}</div>
         </div>
     )

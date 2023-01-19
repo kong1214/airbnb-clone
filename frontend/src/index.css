@@ -2,3 +2,6 @@
 a[href], input[type='submit'], input[type='image'], label[for], select, button, .pointer {
     cursor: pointer;
 }
+body{
+    font-family: Arial, Helvetica, sans-serif
+}
