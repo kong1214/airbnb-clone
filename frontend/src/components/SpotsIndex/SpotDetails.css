@@ -67,6 +67,8 @@
 }
 .star-rating-container{
     width: 30%;
+    font-size: 14px;
+    font-weight: bold;
 }
 .spot-details-location-container{
     width: 100%;

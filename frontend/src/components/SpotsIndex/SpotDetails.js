@@ -92,7 +92,7 @@ const SpotDetails = ({ }) => {
             <div className="avg-rating-and-location-container">
                 <div className="star-rating-container">
                     <i className="fa-solid fa-star"></i>
-                    {`${avgRating} - ${spot.numReviews} reviews`}
+                    {` ${avgRating} ~ ${spot.numReviews} reviews`}
                 </div>
                 <span className="spot-details-location-container">
                     {`${spot.city}, ${spot.state}, ${spot.country}`}
@@ -120,7 +120,7 @@ const SpotDetails = ({ }) => {
                 {sessionLinks}
             </div>
             <div className="spot-details-reviews-container">
-                {spotIsLoaded && <ReviewsBySpot spotId={spot.id} numReviews={spot.numReviews} />}
+                {spotIsLoaded && <ReviewsBySpot spotId={spot.id} numReviews={spot.numReviews} avgStars={spot.avgStarRating} />}
             </div>
         </div>
     )

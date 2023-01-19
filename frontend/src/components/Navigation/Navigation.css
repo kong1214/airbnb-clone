@@ -6,8 +6,8 @@
     height: 40%;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 2px solid lightgray;
-    padding-bottom: 1%
+    border-bottom: .5px solid lightgray;
+    padding-bottom: 1.5%
 }
 .home-button-container {
     display: flex;
