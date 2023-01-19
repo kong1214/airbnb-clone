@@ -25,7 +25,10 @@ const SpotDetails = ({ }) => {
     const sessionUser = useSelector(state => state.session.user);
 
     if (spot.id === undefined) return null;
-    // if(spot.SpotImages) return null
+
+    const ownerName = spot.Owner.firstName
+
+
     let location
     if (spot.country === "United States of America") {
         location = `${spot.city}, ${spot.state}`
@@ -109,8 +112,8 @@ const SpotDetails = ({ }) => {
                         ))}
                 </div>
             </div>
-            <div className="spot-details-description-and-price">
-                <div className="spot-details-description">{`${spot.description}`}</div>
+            <div className="spot-details-home-and-price-container">
+                <div className="spot-details-home">{`Entire home hosted by ${ownerName}`}</div>
                 <div className="spot-details-price-container">
                     <span className="price">{`$${spot.price} `}</span>
                     <span className="night">night</span>
@@ -118,6 +121,13 @@ const SpotDetails = ({ }) => {
             </div>
             <div className="buttons">
                 {sessionLinks}
+            </div>
+            <div className="spot-details-description-container">
+                <div className="description-container">
+                    <div className="spot-details-description">
+                        {spot.description}
+                    </div>
+                </div>
             </div>
             <div className="spot-details-reviews-container">
                 {spotIsLoaded && <ReviewsBySpot spotId={spot.id} numReviews={spot.numReviews} avgStars={spot.avgStarRating} />}
