@@ -2,28 +2,30 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 70%;
+    width: 60%;
     border-top: .5px solid lightgray;
-    margin-top: 3%
+    margin-top: 3%;
+    margin-bottom: 5%;
 }
 
 .reviews-header {
-    margin: 30px;
+    margin-top: 3%;
+    margin-bottom: 3%;
     font-weight: light;
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
+    font-size: 22px;
 }
 
 .review-cards-container {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     flex-wrap: wrap;
 }
 
 .review-card-container {
     width: 400px;
-    margin: 10px;
     /* border: 1px dotted black; */
 }
 .picture-name-date-stars-container{
