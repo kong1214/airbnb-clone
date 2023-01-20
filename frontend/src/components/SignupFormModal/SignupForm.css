@@ -33,6 +33,8 @@
     color: white;
     background-color: rgb(255, 56, 92);
     border: none;
+    border-radius: 20px;
+    overflow: hidden;
 }
 .signup-button-container {
     display: flex;

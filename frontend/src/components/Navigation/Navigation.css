@@ -1,4 +1,4 @@
-.hidden {
+.profile-dropdown.hidden {
     display: none
 }
 .navButtons {
@@ -87,7 +87,30 @@
     height: 40px;
 }
 .profile-button-container.rounded-corners{
-    border-radius: 18px;
+    border-radius: 20px;
+}
+.profile-dropdown {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 10%;
+    height: 15%;
+    background-color: white;
+    border: .5px solid lightgray;
+    border-radius: 10px;
+    overflow: hidden;
+    z-index: 1;
+}
+.logout-button{
+    background-color: #ff385c;
+    color: white;
+    border: none;
+    width: 80px;
+    height: 20px;
+    border-radius: 20px;
+    overflow: hidden;
 }
 .fa-bars {
     color: gray;

@@ -15,14 +15,15 @@ const SpotDetails = ({ }) => {
     const dispatch = useDispatch()
     const [spotIsLoaded, setSpotIsLoaded] = useState(false);
 
-
-    useEffect(() => {
-        dispatch(spotsActions.getOneSpot(Number(spotId))).then(() => setSpotIsLoaded(true));;
-    }, [dispatch])
-
-
     const spot = useSelector(state => state.spots.singleSpot)
     const sessionUser = useSelector(state => state.session.user);
+
+    useEffect(() => {
+        dispatch(spotsActions.getOneSpot(Number(spotId)))
+        .then(() => setSpotIsLoaded(true));;
+    }, [spot.address, spot.city, spot.state, spot.country, spot.name, spot.description, spot.price])
+
+
 
     if (spot.id === undefined) return null;
     if (spot.Owner === undefined) return null;
