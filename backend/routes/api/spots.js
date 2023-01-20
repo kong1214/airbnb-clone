@@ -39,7 +39,8 @@ const validateSpot = [
     check('price')
         .exists({ checkFalsy: true })
         .isNumeric()
-        .withMessage("Price per day is required and it must be a number"),
+        .isInt({ min: 1 })
+        .withMessage("Price per day is required and it must be a whole number greater than zero"),
     handleValidationErrors
 ]
 
