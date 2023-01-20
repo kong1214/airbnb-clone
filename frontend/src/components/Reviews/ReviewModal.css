@@ -31,6 +31,8 @@
     color: white;
     background-color: rgb(255, 56, 92);
     border: none;
+    border-radius: 20px;
+    overflow: hidden;
 }
 
 .create-reviews-errors-container{
