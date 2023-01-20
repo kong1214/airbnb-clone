@@ -137,7 +137,7 @@ const spotsReducer = (state = initialState, action) => {
       return newState
     }
     case EDIT_A_SPOT: {
-      const newState = {...state}
+      const newState = {...state, allSpots: {...state.allSpots}, singleSpot: action.spot}
       newState.allSpots[action.spot.id] = {...action.spot}
       return newState
     }

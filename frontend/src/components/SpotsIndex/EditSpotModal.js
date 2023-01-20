@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,  useEffect } from "react";
 import * as spotsActions from "../../store/spots";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
@@ -11,6 +11,12 @@ function EditSpotModal({ spotId }) {
 
   const spot = useSelector(state => state.spots.singleSpot)
 
+  useEffect(() => {
+    dispatch(spotsActions.getOneSpot(Number(spotId)))
+  }, [spot.address, spot.city, spot.state, spot.country, spot.name, spot.description, spot.price])
+
+  // console.log(spot)
+
   const [address, setAddress] = useState(spot.address);
   const [city, setCity] = useState(spot.city);
   const [state, setState] = useState(spot.state);
@@ -21,6 +27,7 @@ function EditSpotModal({ spotId }) {
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
 
+
   const handleSubmit = (e) => {
     e.preventDefault()
     // make the return
@@ -29,10 +36,10 @@ function EditSpotModal({ spotId }) {
       address, city, state, country, lat: 100, lng: 100, name, description, price
     }, spotId))
       .then(closeModal)
-      .then(() => history.push(`/`))
+      // .then(() => history.push(`/`))
       .catch(async (res) => {
         const data = await res.json();
-        console.log(data)
+        // console.log(data)
         if (data && data.errors) setErrors(data.errors);
       });
   };
