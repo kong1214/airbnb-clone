@@ -19,16 +19,7 @@ function ReviewsByUser() {
     }, [dispatch, sessionUser])
 
     if (Object.values(data).length === 0) {
-        return (
-            <div className="content-for-user-with-no-reviews">
-                <div className="you-have-no-reviews-yet">
-                    You have no reviews yet!
-                </div>
-                <div className="start-reviewing">
-                    Start Reviewing!
-                </div>
-            </div>
-        )
+        return null
     }
     // console.log("data", data)
     const deleteHandler = (reviewId) => {
