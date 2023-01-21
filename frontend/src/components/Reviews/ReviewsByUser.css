@@ -11,7 +11,22 @@
     align-items: center;
     margin-bottom: 5%;
 }
-
+.content-for-user-with-no-reviews{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2%;
+}
+.you-have-no-reviews-yet{
+    font-weight: bold;
+    font-size: 45px;
+}
+.start-reviewing{
+    margin-top: 1%;;
+    font-size: 40px;
+}
 .delete-review-button {
     border: none;
     width: 90px;
