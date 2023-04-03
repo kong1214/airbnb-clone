@@ -110,7 +110,33 @@ module.exports = {
         spotId: 4,
         url: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Empire_State_Building_86th_floor.jpg/2560px-Empire_State_Building_86th_floor.jpg",
         preview: false
-      }
+      },
+      {
+        spotId: 5,
+        url: "https://www.travelandleisure.com/thmb/SPUPzO88ZXq6P4Sm4mC5Xuinoik=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/eiffel-tower-paris-france-EIFFEL0217-6ccc3553e98946f18c893018d5b42bde.jpg",
+        preview: true
+      },
+      {
+        spotId: 5,
+        url: "https://www.history.com/.image/ar_4:3%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTk1NjgwNjc2MDI3MDQ5OTIx/gettyimages-1222666416.jpg",
+        preview: false
+      },
+      {
+        spotId: 5,
+        url: "https://images.prismic.io/mystique/9afa653c-d540-4d34-bf09-e77ec9d14295_sam-williams-MTDKcBaetJk-unsplash.jpg",
+        preview: false
+      },
+      {
+        spotId: 5,
+        url: "https://www.toureiffel.paris/sites/default/files/styles/1200x630/public/2022-01/Illumination%20COP21%20One%20heart%20One%20tree%20%C2%A9%20E.Livinec-_2.jpg",
+        preview: false
+      },
+      {
+        spotId: 5,
+        url: "https://www.thetrainline.com/cms/media/1360/france-eiffel-tower-paris.jpg",
+        preview: false
+      },
+
 
     ], {});
   },

@@ -92,7 +92,7 @@ const SpotDetails = ({ }) => {
 
 
     return (
-        <div>
+        <>
             <h1>{`${spot.name}`}</h1>
             <div className="avg-rating-and-location-container">
                 <div className="star-rating-container">
@@ -103,14 +103,16 @@ const SpotDetails = ({ }) => {
                     {`${spot.city}, ${spot.state}, ${spot.country}`}
                 </span>
             </div>
-            <div className="spot-details-image-container rounded-corners">
+            <div className="spot-details-images-container rounded-corners">
                 <div className="spot-preview-image-container">
                     <img className="spot-preview-image" src={previewImageUrl}></img>
                 </div>
                 <div className="quad-photos">
                     {spot.SpotImages &&
                         noPreviewSpotImages.map(spotImage => (
-                            <img key={spotImage.id} className="spot-details-image" src={spotImage.url}></img>
+                            <div className="spot-details-image-container">
+                                <img key={spotImage.id} className="spot-details-image" src={spotImage.url}></img>
+                            </div>
                         ))}
                 </div>
             </div>
@@ -134,7 +136,7 @@ const SpotDetails = ({ }) => {
             <div className="spot-details-reviews-container">
                 {spotIsLoaded && <ReviewsBySpot spotId={spot.id} numReviews={spot.numReviews} avgStars={spot.avgStarRating} />}
             </div>
-        </div>
+        </>
     )
 }
 export default SpotDetails

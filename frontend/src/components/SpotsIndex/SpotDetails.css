@@ -11,10 +11,11 @@
     width: 90px;
     height: 40px;
 }
-.spot-details-image-container {
+.spot-details-images-container {
     display: flex;
     justify-content: space-between;
     overflow: hidden;
+    height: 30%;
     /* justify-content: space-between; */
     /* border: 1px dotted black; */
     /* margin: 15px; */
@@ -22,6 +23,7 @@
 
 .spot-preview-image-container{
     width: 49.5%;
+    aspect-ratio: 1 / 1;
     overflow: hidden;
 }
 .spot-preview-image{
@@ -35,9 +37,13 @@
     align-content: space-between;
     width: 49.5%;
 }
-.spot-details-image {
+.spot-details-image-container{
     width: 49%;
     height: 48.7%
+}
+.spot-details-image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
 }
 .spot-details-home-and-price-container{
     margin-top: 15px;

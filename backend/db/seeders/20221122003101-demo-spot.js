@@ -58,7 +58,19 @@ module.exports = {
         name: "Empire State Building",
         description: "The tallest building in America",
         price: 180
-      }
+      },
+      {
+        ownerId: 3,
+        address: "Champ de Mars, 5 Av. Anatole France",
+        city: "Paris",
+        state: "None",
+        country: "France",
+        lat: 40.7300,
+        lng: 73.9850,
+        name: "Eiffel Tower",
+        description: "The iconic tower of Paris.",
+        price: 280
+      },
     ], {});
   },
 
