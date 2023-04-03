@@ -73,6 +73,7 @@ export const createOneSpot = (spot) => async dispatch => {
   let data
   if (response.ok) {
     data = await response.json()
+    // console.log(typeof previewImage)
     const spotImageFetchResponse = await csrfFetch(`/api/spots/${data.id}/images`, {
       method: "POST",
       body: JSON.stringify({

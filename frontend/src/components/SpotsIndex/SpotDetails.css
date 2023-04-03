@@ -15,7 +15,7 @@
     display: flex;
     justify-content: space-between;
     overflow: hidden;
-    height: 30%;
+    height: 10%;
     /* justify-content: space-between; */
     /* border: 1px dotted black; */
     /* margin: 15px; */
@@ -27,8 +27,8 @@
     overflow: hidden;
 }
 .spot-preview-image{
-    width: 100%;
     height: 100%;
+    /* width: 100%; */
 }
 .quad-photos{
     display: flex;

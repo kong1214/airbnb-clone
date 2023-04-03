@@ -55,6 +55,19 @@ const validateReview = [
     handleValidationErrors
 ];
 
+const validateImageUrl = [
+    check('url')
+      .isURL()
+      .withMessage("Image URL is invalid")
+      .custom((value, { req }) => {
+        if (!value.includes(".jpg") && !value.includes(".png")) {
+          throw new Error("Image URL must end with '.jpg' or '.png'");
+        }
+        return true;
+      }),
+    handleValidationErrors
+  ];
+
 const endDateChecker = (date1, date2) => {
     const startDate = new Date(date1).getTime()
     const endDate = new Date(date2).getTime()
@@ -215,7 +228,7 @@ router.get('/current', requireAuth, async (req, res) => {
 })
 
 // ======================= ADD AN IMAGE TO A SPOT BASED ON SPOT ID ==================
-router.post('/:spotId/images', requireAuth, async (req, res, next) => {
+router.post('/:spotId/images', requireAuth, validateImageUrl, async (req, res, next) => {
     const loggedInUserId = res.req.user.dataValues.id
     const spotId = Number(req.params.spotId)
     const { url, preview } = await req.body
