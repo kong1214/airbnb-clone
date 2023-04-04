@@ -39,7 +39,10 @@ function CreateSpotModal() {
     })
     .catch(async (res) => {
       const data = await res.json();
-      if (data && data.errors) setErrors(data.errors);
+      if (data && data.errors) {
+        data.errors.splice(data.errors.find(error => "Invalid value"), 1)
+        setErrors(data.errors);
+      }
     })
   };
 
