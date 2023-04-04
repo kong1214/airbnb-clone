@@ -75,6 +75,9 @@
     border-radius: 20px;
     overflow: hidden;
 }
+.edit-a-spot-form-button:disabled{
+    background-color: gray;
+}
 .edit-photos-modal{
     margin-left: 30px;
     display: flex;

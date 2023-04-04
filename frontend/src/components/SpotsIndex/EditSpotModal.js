@@ -5,17 +5,16 @@ import { useModal } from "../../context/Modal";
 import { useHistory } from "react-router-dom";
 import "./EditSpotsModal.css";
 
-function EditSpotModal({ spotId }) {
+function EditSpotModal({ spot }) {
   const dispatch = useDispatch();
   const history = useHistory()
-  const spot = useSelector(state => state.spots.singleSpot)
+  // const spot = useSelector(state => state.spots.singleSpot)
 
   useEffect(() => {
-    dispatch(spotsActions.getOneSpot(Number(spotId))).then(setSpotIsLoaded(true))
+    dispatch(spotsActions.getOneSpot(Number(spot.id))).then(setSpotIsLoaded(true))
   }, [spot.address, spot.city, spot.state, spot.country, spot.name, spot.description, spot.price])
 
-  // console.log(spot)
-
+  console.log(spot)
     const previewImageObj = spot.SpotImages.find(image => image.preview === true)
     const restImages = spot.SpotImages.filter(image => image.preview === false)
 
@@ -35,6 +34,8 @@ function EditSpotModal({ spotId }) {
   const [image2, setImage2] = useState(restImages[1] ? restImages[1].url : null)
   const [image3, setImage3] = useState(restImages[2] ? restImages[2].url : null)
   const [image4, setImage4] = useState(restImages[3] ? restImages[3].url : null)
+  const [formChanged, setFormChanged] = useState(false); // track whether any changes have been made
+
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -42,8 +43,8 @@ function EditSpotModal({ spotId }) {
     setErrors([])
     return dispatch(spotsActions.editOneSpot({
       address, city, state, country, lat: 100, lng: 100, name, description, price
-    }, spotId))
-      .then(() => closeModal)
+    }, spot.id))
+      .then(closeModal)
       // .then(() => history.push(`/`))
       .catch(async (res) => {
         const data = await res.json();
@@ -59,6 +60,12 @@ function EditSpotModal({ spotId }) {
     setOpenEditPhotosModal(!openEditPhotosModal)
   }
 
+  const handleChange = (e) => {
+    // set formChanged to true if any form field value changes
+    setFormChanged(true);
+  }
+
+  const isSubmitDisabled = !formChanged;
   return (
     <>
       <div className="all-forms-container">
@@ -73,7 +80,7 @@ function EditSpotModal({ spotId }) {
                 placeholder="Address"
                 type="text"
                 value={address}
-                onChange={(e) => setAddress(e.target.value)}
+                onChange={(e) => {setAddress(e.target.value); handleChange(e)}}
                 required
               />
             </label>
@@ -84,7 +91,7 @@ function EditSpotModal({ spotId }) {
                 placeholder="City"
                 type="text"
                 value={city}
-                onChange={(e) => setCity(e.target.value)}
+                onChange={(e) => {setCity(e.target.value); handleChange(e)}}
                 required
               />
             </label>
@@ -95,7 +102,7 @@ function EditSpotModal({ spotId }) {
                 placeholder="State"
                 type="text"
                 value={state}
-                onChange={(e) => setState(e.target.value)}
+                onChange={(e) => {setState(e.target.value); handleChange(e)}}
                 required
               />
             </label>
@@ -106,7 +113,7 @@ function EditSpotModal({ spotId }) {
                 placeholder="Country"
                 type="text"
                 value={country}
-                onChange={(e) => setCountry(e.target.value)}
+                onChange={(e) => {setCountry(e.target.value); handleChange(e)}}
                 required
               />
             </label>
@@ -117,7 +124,7 @@ function EditSpotModal({ spotId }) {
                 placeholder="Name of the Spot"
                 type="text"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => {setName(e.target.value); handleChange(e)}}
                 required
               />
             </label>
@@ -128,7 +135,7 @@ function EditSpotModal({ spotId }) {
                 placeholder="Description"
                 type="text"
                 value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={(e) => {setDescription(e.target.value); handleChange(e)}}
                 required
               />
             </label>
@@ -139,7 +146,7 @@ function EditSpotModal({ spotId }) {
                 placeholder="Price per night"
                 type="text"
                 value={price}
-                onChange={(e) => setPrice(e.target.value)}
+                onChange={(e) => {setPrice(e.target.value); handleChange(e)}}
                 required
               />
             </label>
@@ -147,7 +154,7 @@ function EditSpotModal({ spotId }) {
               <button className="open-edit-photos-modal-button" type="button" onClick={editPhotosModalClick}>Edit Photos</button>
             </div>
             <div className="edit-a-spot-button-container">
-              <button className="edit-a-spot-form-button" type="submit">Edit</button>
+              <button className="edit-a-spot-form-button" type="submit" disabled={isSubmitDisabled}>Edit</button>
             </div>
           </form>
         </div>

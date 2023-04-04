@@ -18,9 +18,10 @@ const SpotDetails = ({ }) => {
     const spot = useSelector(state => state.spots.singleSpot)
     const sessionUser = useSelector(state => state.session.user);
 
+    console.log(spot)
     useEffect(() => {
         dispatch(spotsActions.getOneSpot(Number(spotId)))
-        .then(() => setSpotIsLoaded(true));;
+        .then(() => setSpotIsLoaded(true));
     }, [spot.address, spot.city, spot.state, spot.country, spot.name, spot.description, spot.price])
 
 
@@ -59,7 +60,7 @@ const SpotDetails = ({ }) => {
                     <div className="edit-this-spot-button session-buttons">
                         <OpenModalButton
                             buttonText="Edit this Spot"
-                            modalComponent={<EditSpotModal spotId={Number(spotId)} />} />
+                            modalComponent={<EditSpotModal spot={spot}/>} />
                     </div>
                     <button
                         className="delete-this-spot-button session-buttons"
