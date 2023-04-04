@@ -43,7 +43,7 @@ function EditSpotModal({ spotId }) {
     return dispatch(spotsActions.editOneSpot({
       address, city, state, country, lat: 100, lng: 100, name, description, price
     }, spotId))
-      .then(closeModal)
+      .then(() => closeModal)
       // .then(() => history.push(`/`))
       .catch(async (res) => {
         const data = await res.json();
