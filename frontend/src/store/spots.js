@@ -89,7 +89,7 @@ export const createOneSpot = (spot) => async dispatch => {
       createSpotImage(createdSpot.id, previewImage, true),
       createSpotImages(createdSpot.id, imagesArr, false)
     ])
-    console.log(imagesData)
+    
     if (imagesData.flat().every(data => data.ok)) {
       dispatch(addSpot(createdSpot))
       return createdSpot

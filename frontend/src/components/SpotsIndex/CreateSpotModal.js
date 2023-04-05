@@ -38,25 +38,22 @@ function CreateSpotModal() {
       address, city, state, country, lat: 100, lng: 100, name, description, price, previewImage, imagesArr
     }))
       .then(async (res) => {
-        console.log("res", res)
         if (res.id) {
           closeModal()
           history.push(`/spots/${res.id}`)
         } else {
           // const data = await res.json()
-          console.log("test")
-          console.log(res)
           const data = await res.json()
-          console.log(data)
           throw new Error(data.errors, res)
         }
       })
       .catch(async (err) => {
-        console.log(err.message)
         let errorsArr = []
-        err.message.split(',').forEach(element => {
-          errorsArr.push(element)
-        });
+        if (err.message.indexOf(',')) {
+          err.message.split(',').forEach(element => {
+            errorsArr.push(element)
+          })
+        } else errorsArr.push(err.message)
         if (errorsArr.find(error => "Invalid value")) {
           errorsArr.splice(errorsArr.find(error => "Invalid value"), 1)
         }
