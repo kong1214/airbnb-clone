@@ -8,20 +8,22 @@ import ReviewsBySpot from "../Reviews/ReviewsBySpot"
 import CreateReviewModal from "../Reviews/CreateReviewModal"
 import "./SpotsIndex.css"
 import "./SpotDetails.css"
+import "./Bookings.css"
 
 const SpotDetails = ({ }) => {
     const history = useHistory()
     const { spotId } = useParams()
     const dispatch = useDispatch()
     const [spotIsLoaded, setSpotIsLoaded] = useState(false);
-
+    const [checkInDate, setCheckInDate] = useState({})
+    const [checkOutDate, setCheckOutDate] = useState({})
     const spot = useSelector(state => state.spots.singleSpot)
     const sessionUser = useSelector(state => state.session.user);
 
     // console.log(spot)
     useEffect(() => {
         dispatch(spotsActions.getOneSpot(Number(spotId)))
-        .then(() => setSpotIsLoaded(true));
+            .then(() => setSpotIsLoaded(true));
     }, [spot.address, spot.city, spot.state, spot.country, spot.name, spot.description, spot.price])
 
 
@@ -60,7 +62,7 @@ const SpotDetails = ({ }) => {
                     <div className="edit-this-spot-button session-buttons">
                         <OpenModalButton
                             buttonText="Edit this Spot"
-                            modalComponent={<EditSpotModal spot={spot}/>} />
+                            modalComponent={<EditSpotModal spot={spot} />} />
                     </div>
                     <button
                         className="delete-this-spot-button session-buttons"
@@ -91,6 +93,10 @@ const SpotDetails = ({ }) => {
         )
     }
 
+    let displayReserveButton
+    if (sessionUser) {
+        displayReserveButton = (spot.ownerId === sessionUser.id) ? false : true
+    } else displayReserveButton = false;
 
     return (
         <>
@@ -119,9 +125,45 @@ const SpotDetails = ({ }) => {
             </div>
             <div className="spot-details-home-and-price-container">
                 <div className="spot-details-home">{`Entire home hosted by ${ownerName}`}</div>
-                <div className="spot-details-price-container">
-                    <span className="price">{`$${spot.price} `}</span>
-                    <span className="night">night</span>
+                <div className="bookings-container">
+                    <div className="bookings-price-and-reviews-container">
+                        <div className="bookings-price-container">
+                            <div className="bookings-price"><strong>${spot.price}</strong> night</div>
+                        </div>
+                        <div className="star-rating-container">
+                            <i className="fa-solid fa-star"></i>
+                            {` ${avgRating} ~ ${spot.numReviews} reviews`}
+                        </div>
+                    </div>
+                    <div className="booking-dates-container">
+                        <div className="booking-check-in-container booking-date-container">
+                            <label className="bookings-date-label">
+                                CHECK-IN
+                                <input
+                                    type="date"
+                                    className="booking-date-input"
+                                    value={checkInDate}
+                                    onChange={(e) => setCheckInDate(e.target.value)}
+                                    required
+                                />
+                            </label>
+                        </div>
+                        <div className="booking-check-out-container booking-date-container">
+                            <label className="bookings-date-label">
+                                CHECK-OUT
+                                <input
+                                    type="date"
+                                    className="booking-date-input"
+                                    value={checkOutDate}
+                                    onChange={(e) => setCheckOutDate(e.target.value)}
+                                    required
+                                />
+                            </label>
+                        </div>
+                    </div>
+                    {displayReserveButton && (
+                        <button className="booking-reserve-button">Reserve</button>
+                    )}
                 </div>
             </div>
             <div className="buttons">
