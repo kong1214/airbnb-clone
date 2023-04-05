@@ -89,7 +89,7 @@ export const createOneSpot = (spot) => async dispatch => {
       createSpotImage(createdSpot.id, previewImage, true),
       createSpotImages(createdSpot.id, imagesArr, false)
     ])
-    
+
     if (imagesData.flat().every(data => data.ok)) {
       dispatch(addSpot(createdSpot))
       return createdSpot
@@ -117,13 +117,11 @@ const createSpotImage = async (spotId, imageUrl, isPreview) => {
 }
 
 const createSpotImages = async (spotId, imageUrls, isPreview) => {
-  console.log("imageUrls", imageUrls)
   const fetchPromises = imageUrls.map(imageUrl =>
     createSpotImage(spotId, imageUrl, isPreview)
   )
 
   const responses = await Promise.all(fetchPromises)
-  console.log("responses", responses)
   return responses
 }
 

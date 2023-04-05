@@ -61,7 +61,7 @@ function CreateSpotModal() {
       })
   };
 
-  let submitIsDisabled = (previewImage === "" || image1 === "" || image2 === "" || image3 === "" || image4 === "")
+  let submitIsDisabled = (address === "" || city === "" || state === "" || country === "" || name === "" || description === "" || price === "" || previewImage === "" || image1 === "" || image2 === "" || image3 === "" || image4 === "")
   return (
     <>
       <div className="all-forms-container">
