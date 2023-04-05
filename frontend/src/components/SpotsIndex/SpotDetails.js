@@ -18,7 +18,7 @@ const SpotDetails = ({ }) => {
     const spot = useSelector(state => state.spots.singleSpot)
     const sessionUser = useSelector(state => state.session.user);
 
-    console.log(spot)
+    // console.log(spot)
     useEffect(() => {
         dispatch(spotsActions.getOneSpot(Number(spotId)))
         .then(() => setSpotIsLoaded(true));

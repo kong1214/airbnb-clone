@@ -98,7 +98,7 @@ module.exports = {
       },
       {
         spotId: 4,
-        url: "https://www.history.com/.image/t_share/MTU3ODc4NjAzNTE1NTA0MzUx/gettyimages-555173607-2.jpg",
+        url: "https://www.esbnyc.com/sites/default/files/2020-01/ESB%20Day.jpg",
         preview: false
       },
       {
@@ -118,7 +118,7 @@ module.exports = {
       },
       {
         spotId: 5,
-        url: "https://www.history.com/.image/ar_4:3%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTk1NjgwNjc2MDI3MDQ5OTIx/gettyimages-1222666416.jpg",
+        url: "https://images.adsttc.com/media/images/5840/a26d/e58e/ce8f/db00/017d/large_jpg/Sous_la_Tour_Eiffel_1.jpg?1480630880",
         preview: false
       },
       {
