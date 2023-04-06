@@ -6,6 +6,7 @@ import OpenModalButton from "../OpenModalButton"
 import EditSpotModal from "./EditSpotModal"
 import ReviewsBySpot from "../Reviews/ReviewsBySpot"
 import CreateReviewModal from "../Reviews/CreateReviewModal"
+import CreateBookingModal from "../Bookings/CreateBookingModal"
 import "./SpotsIndex.css"
 import "./SpotDetails.css"
 import "./Bookings.css"
@@ -15,8 +16,8 @@ const SpotDetails = ({ }) => {
     const { spotId } = useParams()
     const dispatch = useDispatch()
     const [spotIsLoaded, setSpotIsLoaded] = useState(false);
-    const [checkInDate, setCheckInDate] = useState({})
-    const [checkOutDate, setCheckOutDate] = useState({})
+    const [checkInDate, setCheckInDate] = useState(`${new Date(new Date().getTime() + 24 * 60 * 60 * 1000).toISOString().split('T')[0]}`)
+    const [checkOutDate, setCheckOutDate] = useState(`${new Date(new Date().getTime() + 2 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}`)
     const spot = useSelector(state => state.spots.singleSpot)
     const sessionUser = useSelector(state => state.session.user);
 
@@ -98,6 +99,11 @@ const SpotDetails = ({ }) => {
         displayReserveButton = (spot.ownerId === sessionUser.id) ? false : true
     } else displayReserveButton = false;
 
+    function setEndDateMin() {
+        const startDate = new Date(document.getElementById("start-date").value);
+        const endDateInput = document.getElementById("end-date");
+        endDateInput.min = new Date(startDate.getTime() + 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+      }
     return (
         <>
             <h1>{`${spot.name}`}</h1>
@@ -155,9 +161,10 @@ const SpotDetails = ({ }) => {
                                         CHECK-IN
                                         <input
                                             type="date"
+                                            min={`${new Date(new Date().getTime() + 24 * 60 * 60 * 1000).toISOString().split('T')[0]}`}
                                             className="booking-date-input"
                                             value={checkInDate}
-                                            onChange={(e) => setCheckInDate(e.target.value)}
+                                            onChange={(e) => {setCheckInDate(e.target.value); setEndDateMin()}}
                                             required
                                         />
                                     </label>
@@ -167,6 +174,7 @@ const SpotDetails = ({ }) => {
                                         CHECK-OUT
                                         <input
                                             type="date"
+                                            min={`${new Date(new Date().getTime() + 2 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}`}
                                             className="booking-date-input"
                                             value={checkOutDate}
                                             onChange={(e) => setCheckOutDate(e.target.value)}
@@ -176,7 +184,10 @@ const SpotDetails = ({ }) => {
                                 </div>
                             </div>
                             {displayReserveButton && (
-                                <button className="booking-reserve-button">Reserve</button>
+                                <OpenModalButton
+                                    className="booking-reserve-button"
+                                    buttonText="Reserve"
+                                    modalComponent={<CreateBookingModal bookingInfo={{startDate: checkInDate, endDate: checkOutDate, spotName: spot.name, spotId: spot.id}} />} />
                             )}
                             {sessionLinks}
                         </div>

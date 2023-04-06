@@ -54,22 +54,22 @@ export const clearBookings = () => {
 //   return normalizedData
 // }
 
-// export const createReviewBySpot = (reviewObj) => async (dispatch) => {
-//   const { review, stars, spotId} = reviewObj;
-//   // console.log(reviewObj)
-//   const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
-//     method: "POST",
-//     body: JSON.stringify({
-//       review, stars, spotId
-//     })
-//   })
-//   let data
-//   if(response.ok) {
-//     data = await response.json()
-//     dispatch(addReview(data))
-//     return data
-//   }
-// }
+export const createBookingBySpot = (bookingObj) => async (dispatch) => {
+  const { startDate, endDate, spotId} = bookingObj;
+  // console.log(reviewObj)
+  const response = await csrfFetch(`/api/spots/${spotId}/bookings`, {
+    method: "POST",
+    body: JSON.stringify({
+      startDate, endDate, spotId
+    })
+  })
+  let data
+  if(response.ok) {
+    data = await response.json()
+    dispatch(addBooking(data))
+    return data
+  }
+}
 
 
 export const getBookingsByUser = () => async (dispatch) => {
