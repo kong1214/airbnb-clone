@@ -1,0 +1,19 @@
+.edit-booking-submit-button{
+    width: 30%;
+    height: 30px;
+    float: right;
+    background-color: #ff385c;
+    border-radius: 15px;
+    border: none;
+    color: white;
+}
+.edit-booking-dates-container{
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 8px;
+    border: 1px solid rgb(131, 128, 128);
+    padding: 5%;
+    margin-bottom: 2%;
+}

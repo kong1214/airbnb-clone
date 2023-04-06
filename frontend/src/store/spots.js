@@ -88,7 +88,6 @@ export const createOneSpot = (spot) => async dispatch => {
 
     if (response.ok) {
       createdSpot = await response.json()
-      console.log("createdSpot", createdSpot)
     } else {
       throw new Error("Failed to create spot")
     }

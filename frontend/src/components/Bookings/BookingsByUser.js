@@ -17,11 +17,12 @@ function BookingsByUser() {
     useEffect(() => {
         dispatch(clearSpot())
         dispatch(bookingsActions.getBookingsByUser())
-    }, [dispatch, sessionUser])
+    }, [sessionUser])
 
     if (Object.values(data).length === 0) {
         return null
     }
+
 
     const bookings = Object.values(data)
     console.log(bookings)

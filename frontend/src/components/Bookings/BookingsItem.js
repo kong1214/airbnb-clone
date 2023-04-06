@@ -1,8 +1,14 @@
 import { NavLink } from "react-router-dom"
+import * as bookingsActions from "../../store/bookings"
+import OpenModalButton from "../OpenModalButton"
+import EditBookingModal from "./EditBookingModal"
+import { useDispatch } from "react-redux"
 import "./Bookings.css"
 
-function BookingItem ({ booking }) {
+function BookingItem({ booking }) {
+    const dispatch = useDispatch()
 
+    // console.log(booking)
     let bookingLocation
     if (booking.Spot.country === "United States of America") {
         bookingLocation = `${booking.Spot.city}, ${booking.Spot.state}`
@@ -17,11 +23,19 @@ function BookingItem ({ booking }) {
 
 
     let bookedOn = `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`;
+
+    const deleteHandler = (bookingId) => {
+        return dispatch(bookingsActions.deleteOneBooking(bookingId))
+            .then((res) => {
+                // history.push(`/`)
+            })
+    }
+
     return (
         <div className="booking-item-container">
             <div className="booking-spot-image-container">
                 <NavLink to={`/spots/${booking.Spot.id}`} className="booking-spot-link">
-                    <img className="booking-spot-image"src={booking.Spot.previewImage}></img>
+                    <img className="booking-spot-image" src={booking.Spot.previewImage}></img>
                 </NavLink>
             </div>
             <div className="booking-spot-content-container">
@@ -35,6 +49,13 @@ function BookingItem ({ booking }) {
                     <div className="booking-spot-details-header booking-detail">Booking Details</div>
                     <div className="booking-stay-date booking-detail">{bookingDates}</div>
                     <div className="booking-spot-address booking-detail">Booked On: <strong>{bookedOn}</strong></div>
+                    <div className="booking-buttons">
+                        <button onClick={() => deleteHandler(booking.id)} className="delete-booking-button">Delete Booking</button>
+                        <OpenModalButton
+                                    className="edit-booking-button"
+                                    buttonText="Edit Booking"
+                                    modalComponent={<EditBookingModal booking={booking} />} />
+                    </div>
                 </div>
             </div>
         </div>

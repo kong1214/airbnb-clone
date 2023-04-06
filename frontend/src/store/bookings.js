@@ -3,17 +3,11 @@ import { csrfFetch } from "./csrf";
 //Action Type Constants
 const GET_BOOKINGS_BY_SPOT = "bookings/getBookingsBySpot"
 const CREATE_BOOKING = "bookings/createBooking"
+const EDIT_BOOKING = "bookings/editBooking"
 const GET_BOOKINGS_BY_USER = "bookings/getBookingsByUser"
 const DELETE_BOOKINGS_BY_USER = 'bookings/deleteBookingsByUser'
 const CLEAR_BOOKINGS = "bookings/clearBookings"
 //Action creators
-
-const loadBookingsBySpot = (bookings) => {
-  return {
-    type: GET_BOOKINGS_BY_SPOT,
-    bookings
-  };
-};
 
 const addBooking = (booking) => {
   return {
@@ -22,6 +16,12 @@ const addBooking = (booking) => {
   }
 }
 
+const editBooking = (booking) => {
+  return {
+    type: EDIT_BOOKING,
+    booking
+  }
+}
 const loadBookingsByUser = (bookings) => {
   return {
     type: GET_BOOKINGS_BY_USER,
@@ -42,17 +42,6 @@ export const clearBookings = () => {
   }
 }
 
-// thunk action creators
-// export const getReviewsBySpot = (spotId) => async (dispatch) => {
-//   const response = await csrfFetch(`/api/spots/${spotId}/reviews`);
-//   const data = await response.json();
-//   let normalizedData = {}
-//   data.Reviews.forEach(review => {
-//     normalizedData[review.id] = review
-//   })
-//   dispatch(loadReviewsBySpot(normalizedData));
-//   return normalizedData
-// }
 
 export const createBookingBySpot = (bookingObj) => async (dispatch) => {
   const { startDate, endDate, spotId} = bookingObj;
@@ -71,6 +60,18 @@ export const createBookingBySpot = (bookingObj) => async (dispatch) => {
   }
 }
 
+export const editSingleBooking = (booking) => async (dispatch) => {
+  const { startDate, endDate, bookingId } = booking
+  const response = await csrfFetch(`/api/bookings/${bookingId}`, {
+    method: "PUT",
+    body: JSON.stringify({ startDate, endDate })
+  })
+  if (response.ok) {
+    const data = await response.json()
+    dispatch(editBooking(data))
+    return data;
+  }
+}
 
 export const getBookingsByUser = () => async (dispatch) => {
   const response = await csrfFetch(`/api/bookings/current`);
@@ -84,14 +85,14 @@ export const getBookingsByUser = () => async (dispatch) => {
   return normalizedData
 }
 
-// export const deleteOneReview = (reviewId) => async (dispatch) => {
-//   const response = await csrfFetch(`/api/reviews/${reviewId}`, {
-//     method: "DELETE"
-//   })
-//   if (response.ok) {
-//     dispatch(deleteReview(reviewId))
-//   }
-// }
+export const deleteOneBooking = (bookingId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/bookings/${bookingId}`, {
+    method: "DELETE"
+  })
+  if (response.ok) {
+    dispatch(deleteBooking(bookingId))
+  }
+}
 
 const initialState = {
   spot: {},
@@ -104,6 +105,16 @@ const bookingsReducer = (state = initialState, action) => {
     case GET_BOOKINGS_BY_USER:
       newState = { spot: {}, user: {} }
       newState.user = action.bookings;
+      return newState
+    case EDIT_BOOKING:
+      const spotInfo = state.user[action.booking.id].Spot
+      newState = { ...state, spot: {}, user: {...state.user} }
+      newState.user[action.booking.id] = action.booking
+      newState.user[action.booking.id]["Spot"] = spotInfo
+      return newState
+    case DELETE_BOOKINGS_BY_USER:
+      newState = { spot: {}, user: {...state.user} }
+      delete newState.user[action.bookingId]
       return newState
     default:
       return state;

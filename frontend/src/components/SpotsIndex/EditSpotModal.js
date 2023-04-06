@@ -14,7 +14,6 @@ function EditSpotModal({ spot }) {
     dispatch(spotsActions.getOneSpot(Number(spot.id))).then(setSpotIsLoaded(true))
   }, [spot.address, spot.city, spot.state, spot.country, spot.name, spot.description, spot.price])
 
-  console.log(spot)
   const previewImageObj = spot.SpotImages.find(image => image.preview === true)
   const restImages = spot.SpotImages.filter(image => image.preview === false)
 
