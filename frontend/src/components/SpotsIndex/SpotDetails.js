@@ -123,61 +123,69 @@ const SpotDetails = ({ }) => {
                         ))}
                 </div>
             </div>
-            <div className="spot-details-home-and-price-container">
-                <div className="spot-details-home">{`Entire home hosted by ${ownerName}`}</div>
-                <div className="bookings-container">
-                    <div className="bookings-price-and-reviews-container">
-                        <div className="bookings-price-container">
-                            <div className="bookings-price"><strong>${spot.price}</strong> night</div>
+            <div className="spot-details-bottom-container">
+                <div className="spot-details-columns-container">
+                    <div className="spot-details-left-column-container spot-details-column-container">
+                        <div className="spot-details-home-and-price-container">
+                            <div className="spot-details-home">{`Entire home hosted by ${ownerName}`}</div>
                         </div>
-                        <div className="star-rating-container">
-                            <i className="fa-solid fa-star"></i>
-                            {` ${avgRating} ~ ${spot.numReviews} reviews`}
+                        <div className="spot-details-description-container">
+                            <div className="description-container">
+                                <div className="spot-details-description">
+                                    {spot.description}
+                                </div>
+                            </div>
                         </div>
+
                     </div>
-                    <div className="booking-dates-container">
-                        <div className="booking-check-in-container booking-date-container">
-                            <label className="bookings-date-label">
-                                CHECK-IN
-                                <input
-                                    type="date"
-                                    className="booking-date-input"
-                                    value={checkInDate}
-                                    onChange={(e) => setCheckInDate(e.target.value)}
-                                    required
-                                />
-                            </label>
+                    <div className="spot-details-right-column-container spot-details-column-container">
+                        <div className="bookings-container">
+                            <div className="bookings-price-and-reviews-container">
+                                <div className="bookings-price-container">
+                                    <div className="bookings-price"><strong>${spot.price}</strong> night</div>
+                                </div>
+                                <div className="star-rating-container">
+                                    <i className="fa-solid fa-star"></i>
+                                    {` ${avgRating} ~ ${spot.numReviews} reviews`}
+                                </div>
+                            </div>
+                            <div className="booking-dates-container">
+                                <div className="booking-check-in-container booking-date-container">
+                                    <label className="bookings-date-label">
+                                        CHECK-IN
+                                        <input
+                                            type="date"
+                                            className="booking-date-input"
+                                            value={checkInDate}
+                                            onChange={(e) => setCheckInDate(e.target.value)}
+                                            required
+                                        />
+                                    </label>
+                                </div>
+                                <div className="booking-check-out-container booking-date-container">
+                                    <label className="bookings-date-label">
+                                        CHECK-OUT
+                                        <input
+                                            type="date"
+                                            className="booking-date-input"
+                                            value={checkOutDate}
+                                            onChange={(e) => setCheckOutDate(e.target.value)}
+                                            required
+                                        />
+                                    </label>
+                                </div>
+                            </div>
+                            {displayReserveButton && (
+                                <button className="booking-reserve-button">Reserve</button>
+                            )}
+                            {sessionLinks}
                         </div>
-                        <div className="booking-check-out-container booking-date-container">
-                            <label className="bookings-date-label">
-                                CHECK-OUT
-                                <input
-                                    type="date"
-                                    className="booking-date-input"
-                                    value={checkOutDate}
-                                    onChange={(e) => setCheckOutDate(e.target.value)}
-                                    required
-                                />
-                            </label>
-                        </div>
+
                     </div>
-                    {displayReserveButton && (
-                        <button className="booking-reserve-button">Reserve</button>
-                    )}
                 </div>
-            </div>
-            <div className="buttons">
-                {sessionLinks}
-            </div>
-            <div className="spot-details-description-container">
-                <div className="description-container">
-                    <div className="spot-details-description">
-                        {spot.description}
-                    </div>
+                <div className="spot-details-reviews-container">
+                    {spotIsLoaded && <ReviewsBySpot spotId={spot.id} numReviews={spot.numReviews} avgStars={spot.avgStarRating} />}
                 </div>
-            </div>
-            <div className="spot-details-reviews-container">
-                {spotIsLoaded && <ReviewsBySpot spotId={spot.id} numReviews={spot.numReviews} avgStars={spot.avgStarRating} />}
             </div>
         </>
     )

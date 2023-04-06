@@ -25,6 +25,11 @@ function Navigation({ isLoaded }) {
             <button className="view-all-reviews-button">View all Reviews</button>
           </Link>
         </div>
+        <div className="view-all-reviews-button-container">
+          <Link to="/bookings/current">
+            <button className="view-all-reviews-button">View all Bookings</button>
+          </Link>
+        </div>
         <div className="profile-button">
           <ProfileButton user={sessionUser} />
         </div>

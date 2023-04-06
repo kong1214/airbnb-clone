@@ -4,10 +4,12 @@
 } */
 .session-links{
     display: flex;
-    justify-content: center;
+    justify-content: end;
+    width: 90%;
 }
 .session-buttons{
-    margin: 10px;
+    margin-top: 10px;
+    margin-left: 10px;
     width: 90px;
     height: 40px;
 }
@@ -52,13 +54,31 @@
 }
 .spot-details-home{
     width: 80%;
-    font-size: 25px
+    font-size: 1.8em
 }
 .spot-details-price-container{
     display: flex;
     /* justify-content: end; */
     width: 100%;
     font-size: 25px
+}
+.spot-details-bottom-container{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+.spot-details-columns-container{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+.spot-details-right-column-container{
+    width: 45%;
+}
+.spot-details-left-column-container {
+    width: 65%;
+    display: flex;
+    flex-direction: column;
 }
 .spot-details-reviews-container{
     display: flex;
@@ -70,15 +90,15 @@
 }
 .avg-rating-and-location-container{
     display: flex;
+    justify-content: space-between;
     margin-bottom: 15px;
 }
 .star-rating-container{
-    width: 30%;
     font-size: 14px;
     font-weight: bold;
 }
 .spot-details-location-container{
-    width: 100%;
+    /* width: 100%; */
     display: flex;
     justify-content: end;
 }
@@ -86,21 +106,20 @@
     background-color: #ff385c;
     color: white;
     border: none;
-    width: 90px;
+    width: 120px;
     height: 40px;
     border-radius: 20px;
     overflow: hidden;
 }
 .edit-this-spot-button {
-    width: 90px;
+    width: 120px;
     height: 40px;
-    background-color: #ff385c;
     display: flex;
     border-radius: 20px;
     overflow: hidden;
 }
 .create-a-review-button {
-    width: 90px;
+    width: 120px;
     height: 40px;
     background-color: #ff385c;
     display: flex;
@@ -109,19 +128,20 @@
 }
 .spot-details-description-container{
     display: flex;
-    justify-content: center;
+    justify-content: start;
     width: 100%;
 }
 .description-container{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 58%;
+    width: 80%;
     border-top: .5px solid lightgray;
     margin-top: 3%;
     margin-bottom: 3%;
 }
 .spot-details-description{
     margin-top: 3%;
-    font-size: 16px;
+    font-size: 1em;
+    overflow-wrap: break-word
 }

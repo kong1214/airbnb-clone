@@ -6,6 +6,7 @@ const GET_ONE_SPOT = "spots/getOneSpot"
 const CREATE_A_SPOT = "spots/createSpot"
 const EDIT_A_SPOT = "spots/editSpot"
 const DELETE_SPOT = 'spots/deleteSpot'
+const CLEAR_SPOT = 'spots/clearSpot'
 
 //Action creators
 const loadSpots = (spots) => {
@@ -36,10 +37,16 @@ const editSpot = (spot) => {
   }
 }
 
+
 const deleteSpot = (spotId) => {
   return {
     type: DELETE_SPOT,
     spotId
+  }
+}
+export const clearSpot = () => {
+  return {
+    type: CLEAR_SPOT
   }
 }
 
@@ -61,6 +68,7 @@ export const getOneSpot = (spotId) => async (dispatch) => {
   dispatch(loadOneSpot(data))
   return data
 }
+
 
 
 // ///////////////////
@@ -191,6 +199,12 @@ const spotsReducer = (state = initialState, action) => {
     case DELETE_SPOT: {
       const newState = { ...state }
       delete newState.allSpots[action.spotId]
+      return newState
+    }
+    case CLEAR_SPOT: {
+      const newState = {...state}
+      newState.singleSpot = {}
+      newState.allSpots = {...state.allSpots}
       return newState
     }
     default:
