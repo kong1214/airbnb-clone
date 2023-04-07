@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { createBookingBySpot } from "../../store/bookings";
 import { useState } from "react";
+import "./CreateBookingModal.css"
 
 function CreateBookingModal({ bookingInfo }) {
     const { closeModal } = useModal();
@@ -40,8 +41,8 @@ function CreateBookingModal({ bookingInfo }) {
                 for <strong>{dateFormatter(bookingInfo.startDate)}</strong> to <strong>{dateFormatter(bookingInfo.endDate)}</strong>?
             </div>
             <div className="create-booking-modal-buttons">
-                <button className="delete-modal-cancel-button" onClick={() => closeModal()}>Cancel</button>
-                <button className="delete-modal-confirm-button" onClick={() => handleConfirmation()}>Confirm</button>
+                <button className="create-booking-modal-cancel-button" onClick={() => closeModal()}>Cancel</button>
+                <button className="create-booking-modal-confirm-button" onClick={() => handleConfirmation()}>Confirm</button>
             </div>
         </div>
     )

@@ -49,7 +49,7 @@ function EditBookingModal({ booking }) {
                             min={`${new Date(new Date().getTime() + 24 * 60 * 60 * 1000).toISOString().split('T')[0]}`}
                             className="booking-date-input"
                             value={checkInDate}
-                            onChange={(e) =>  setCheckInDate(e.target.value)}
+                            onChange={(e) => setCheckInDate(e.target.value)}
                             required
                         />
                     </label>
@@ -68,7 +68,10 @@ function EditBookingModal({ booking }) {
                     </label>
                 </div>
             </div>
-            <button className="edit-booking-submit-button" onClick={handleSubmit}>Edit</button>
+            <div className="create-booking-modal-buttons">
+                <button className="create-booking-modal-cancel-button" onClick={() => closeModal()}>Cancel</button>
+                <button className="edit-booking-submit-button" onClick={handleSubmit}>Edit</button>
+            </div>
         </div>
     )
 }
