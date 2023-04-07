@@ -12,15 +12,27 @@ const validateSpot = [
     check('address')
         .exists({ checkFalsy: true })
         .withMessage("Street address is required"),
+    check('address')
+        .isLength({ min: 3, max: 20})
+        .withMessage("Street address must be between 3 and 20 characters."),
     check('city')
         .exists({ checkFalsy: true })
         .withMessage("City is required"),
+    check('city')
+        .isLength({ min: 3, max: 20})
+        .withMessage("City must be between 3 and 20 characters."),
     check('state')
         .exists({ checkFalsy: true })
         .withMessage("State is required"),
+    check('state')
+        .isLength({ min: 3, max: 20})
+        .withMessage("State must be between 3 and 20 characters."),
     check('country')
         .exists({ checkFalsy: true })
         .withMessage("Country is required"),
+    check('country')
+        .isLength({ min: 3, max: 20})
+        .withMessage("Country must be between 3 and 20 characters."),
     check('lat')
         .exists({ checkFalsy: true })
         .isNumeric()

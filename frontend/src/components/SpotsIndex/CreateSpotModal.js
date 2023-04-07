@@ -55,7 +55,7 @@ function CreateSpotModal() {
           })
         } else errorsArr.push(err.message)
         if (errorsArr.find(error => "Invalid value")) {
-          errorsArr.splice(errorsArr.find(error => "Invalid value"), 1)
+          errorsArr = errorsArr.filter(error => error !== "Invalid value")
         }
         setErrors(errorsArr);
       })
