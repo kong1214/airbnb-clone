@@ -25,7 +25,7 @@ function BookingsByUser() {
 
 
     const bookings = Object.values(data)
-    console.log(bookings)
+    // console.log(bookings)
     return (
         <div className='bookings-page-container'>
             <div className="bookings-by-user-container-with-header">

@@ -91,26 +91,26 @@ const endDateChecker = (date1, date2) => {
 }
 
 const bookingConflictChecker = (date1, date2, date3, date4) => {
-    console.log("user startDate", date1)
-    console.log("user endDate", date2)
-    console.log("query startDate", date3)
-    console.log("query endDate", date4)
+    // console.log("user startDate", date1)
+    // console.log("user endDate", date2)
+    // console.log("query startDate", date3)
+    // console.log("query endDate", date4)
     const currentStartDate = new Date(date1).getTime()
     const currentEndDate = new Date(date2).getTime()
     const dateCheckStartDate = new Date(date3).getTime()
     const dateCheckEndDate = new Date(date4).getTime()
 
-    console.log("currentStartDate", currentStartDate)
-    console.log("currentEndDate", currentEndDate)
-    console.log("dateCheckStartDate", dateCheckStartDate)
-    console.log("dateCheckEndDate", dateCheckEndDate)
+    // console.log("currentStartDate", currentStartDate)
+    // console.log("currentEndDate", currentEndDate)
+    // console.log("dateCheckStartDate", dateCheckStartDate)
+    // console.log("dateCheckEndDate", dateCheckEndDate)
     const errors = []
     if (currentStartDate >= dateCheckStartDate && currentStartDate <= dateCheckEndDate) {
-        console.log("Start date is between the start date and end date of another booking!")
+        // console.log("Start date is between the start date and end date of another booking!")
         errors.push("Start date conflicts with an existing booking")
     }
     if (currentEndDate >= dateCheckStartDate && currentEndDate <= dateCheckEndDate) {
-        console.log("End date is between the start date and end date of another booking!")
+        // console.log("End date is between the start date and end date of another booking!")
         errors.push("End date conflicts with an existing booking")
     }
     return errors;

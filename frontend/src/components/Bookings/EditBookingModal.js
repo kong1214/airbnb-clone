@@ -8,7 +8,7 @@ function EditBookingModal({ booking }) {
 
     const dateFormatter = (date) => {
         const splitDate = date.split('-')
-        console.log(date)
+        // console.log(date)
         return `${splitDate[1]}-${splitDate[2]}-${splitDate[0]}`
     }
 

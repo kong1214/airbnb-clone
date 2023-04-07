@@ -40,11 +40,11 @@ function EditSpotModal({ spot }) {
       // .then(() => history.push(`/`))
       .catch(async (res) => {
         const data = await res.json();
-        console.log(data)
+        // console.log(data)
         if (data && data.errors) {
           data.errors = data.errors.filter(error => error !== "Invalid value")
           // data.errors.splice(data.errors.find(error => "Invalid value"), 1)
-          console.log(country)
+          // console.log(country)
           setErrors(data.errors);
         }
       });
