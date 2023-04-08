@@ -14,13 +14,17 @@ function BookingItem({ booking }) {
         bookingLocation = `${booking.Spot.city}, ${booking.Spot.state}`
     } else bookingLocation = `${booking.Spot.city}, ${booking.Spot.country}`
 
-    let bookingDates = `${booking.startDate} to ${booking.endDate}`
 
     const date = new Date(booking.createdAt)
     const year = date.getFullYear();
     const month = date.getMonth() + 1;
     const day = date.getDate();
 
+    const dateFormatter = (date) => {
+        const splitDate = date.split('-')
+        return `${splitDate[1]}-${splitDate[2]}-${splitDate[0]}`
+    }
+    let bookingDates = `${dateFormatter(booking.startDate)} to ${dateFormatter(booking.endDate)}`
 
     let bookedOn = `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`;
 
@@ -48,7 +52,7 @@ function BookingItem({ booking }) {
                 <div className="booking-details-container">
                     <div className="booking-spot-details-header booking-detail">Booking Details</div>
                     <div className="booking-stay-date booking-detail">{bookingDates}</div>
-                    <div className="booking-spot-address booking-detail">Booked On: <strong>{bookedOn}</strong></div>
+                    <div className="booking-spot-address booking-detail">Booked On: <strong>{dateFormatter(bookedOn)}</strong></div>
                     <div className="booking-buttons">
                         <button onClick={() => deleteHandler(booking.id)} className="delete-booking-button">Delete Booking</button>
                         <OpenModalButton

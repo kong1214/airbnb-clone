@@ -15,12 +15,15 @@ function CreateBookingModal({ bookingInfo }) {
         return `${splitDate[1]}-${splitDate[2]}-${splitDate[0]}`
     }
     const handleConfirmation = async () => {
+        console.log(bookingInfo)
         return dispatch(createBookingBySpot({
-            startDate: dateFormatter(bookingInfo.startDate),
-            endDate: dateFormatter(bookingInfo.endDate),
+            startDate: bookingInfo.startDate,
+            endDate: bookingInfo.endDate,
             spotId: bookingInfo.spotId
         }))
             .then(() => {
+                console.log(bookingInfo.startDate)
+                console.log(bookingInfo.endDate)
                 closeModal()
                 history.push("/bookings/current")
             })
