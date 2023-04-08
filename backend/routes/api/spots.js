@@ -486,8 +486,6 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
             spotId
         }
     })
-    console.log(`\n\n${bookingQuery}\n\n\n`)
-    console.log(startDate, endDate)
 
 
     const overlap = bookingQuery.some((reservation) => {
@@ -500,18 +498,12 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
         requestedStart.setHours(0, 0, 0, 0)
         reservationEnd.setHours(0, 0, 0, 0)
 
-        console.log(startDate)
-        console.log(requestedStart)
-        console.log(requestedStart.getTime())
-        console.log(reservation.endDate)
-        console.log(reservationEnd)
-        console.log(reservationEnd.getTime(), "\n\n")
-
         return (
             (requestedStart >= reservationStart && requestedStart < reservationEnd) ||
             (requestedEnd > reservationStart && requestedEnd <= reservationEnd) ||
             (requestedStart <= reservationStart && requestedEnd >= reservationEnd) ||
-            (startDate === reservation.endDate)
+            (startDate === reservation.endDate) ||
+            (endDate === reservation.startDate)
         );
     });
 
