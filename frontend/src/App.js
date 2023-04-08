@@ -6,6 +6,7 @@ import Navigation from "./components/Navigation";
 import SpotsIndex from "./components/SpotsIndex";
 import SpotDetails from "./components/SpotsIndex/SpotDetails";
 import ReviewsByUser from "./components/Reviews/ReviewsByUser";
+import BookingsByUser from "./components/Bookings/BookingsByUser";
 
 function App() {
   const dispatch = useDispatch();
@@ -27,6 +28,9 @@ function App() {
           </Route>
           <Route exact path="/reviews/current" >
             <ReviewsByUser />
+          </Route>
+          <Route exact path="/bookings/current" >
+            <BookingsByUser />
           </Route>
         </Switch>
       )}

@@ -1,0 +1,61 @@
+.bookings-container {
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.bookings-price-and-reviews-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 2%;
+}
+.bookings-price-container {
+    font-size: 25px
+}
+.booking-dates-container{
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 8px;
+    border: 1px solid rgb(131, 128, 128);
+    padding: 5%;
+    margin-bottom: 2%;
+}
+.booking-date-container {
+    width: 48%;
+}
+.booking-date-input{
+    width: 100%;
+    height: 30px;
+}
+.bookings-date-label{
+    font-size: 12px;
+}
+.booking-reserve-button{
+    width: 90%;
+    height: 50px;
+    color: white;
+    background-color: #ff385c;
+    border: none;
+    font-size: 18px;
+    border-radius: 10px;
+}
+
+@media screen and (max-width: 1025px) {
+    .booking-dates-container {
+        flex-direction: column;
+    }
+    .booking-date-container {
+        width: 100%;
+    }
+    .bookings-date-label {
+        width: 100%;
+    }
+}

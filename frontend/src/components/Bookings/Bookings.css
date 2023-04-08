@@ -1,0 +1,110 @@
+.bookings-page-container {
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+}
+
+.bookings-by-user-container-with-header {
+    width: 60%
+}
+
+.booking-item-container {
+    box-sizing: border-box;
+    width: 100%;
+    height: 250px;
+    display: flex;
+    padding: 20px 1%;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid lightgray;
+    margin-top: 25px;
+    border-radius: 20px;
+}
+
+.booking-spot-image-container {
+    height: 100%;
+    min-width: 25%;
+    aspect-ratio: 1 / 1;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.booking-spot-image {
+    height: 100%;
+}
+
+.booking-spot-content-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+    height: 100%;
+}
+
+.booking-spot-details-header {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-top: 5%;
+    margin-bottom: 4%;
+}
+
+.booking-spot-details-container {
+    margin-left: 5%;
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    min-width: fit-content;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid lightgray;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.booking-details-container {
+    margin-left: 5%;
+    height: 100%;
+    aspect-ratio: 1 / .75;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid lightgray;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.booking-detail {
+    margin-bottom: 3%;
+}
+.booking-buttons{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+.delete-booking-button {
+    background-color: #ff385c;
+    border: none;
+    color: white;
+    width: 40%;
+    height: 30px;
+    border-radius: 15px;
+}
+.edit-booking-button{
+    background-color: #ff385c;
+    border: none;
+    color: white;
+    width: 40%;
+    height: 30px;
+    border-radius: 15px;
+}
+@media screen and (max-width: 1500px) {
+    .booking-spot-image-container {
+        height: 100%;
+        border-radius: 20px;
+        overflow: hidden;
+    }
+
+    .booking-item-container {
+        height: 200px;
+    }
+}

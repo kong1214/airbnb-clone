@@ -40,3 +40,17 @@
     border-radius: 20px;
     overflow: hidden;
 }
+
+.edit-review-modal-button{
+    border: none;
+    width: 90px;
+    height: 40px;
+    color: white;
+    background-color: #ff385c;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 4%;
+    border-radius: 20px;
+    overflow: hidden;
+}

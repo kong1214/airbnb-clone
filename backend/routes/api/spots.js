@@ -12,15 +12,27 @@ const validateSpot = [
     check('address')
         .exists({ checkFalsy: true })
         .withMessage("Street address is required"),
+    check('address')
+        .isLength({ min: 3, max: 20 })
+        .withMessage("Street address must be between 3 and 20 characters."),
     check('city')
         .exists({ checkFalsy: true })
         .withMessage("City is required"),
+    check('city')
+        .isLength({ min: 3, max: 20 })
+        .withMessage("City must be between 3 and 20 characters."),
     check('state')
         .exists({ checkFalsy: true })
         .withMessage("State is required"),
+    check('state')
+        .isLength({ min: 3, max: 20 })
+        .withMessage("State must be between 3 and 20 characters."),
     check('country')
         .exists({ checkFalsy: true })
         .withMessage("Country is required"),
+    check('country')
+        .isLength({ min: 3, max: 20 })
+        .withMessage("Country must be between 3 and 20 characters."),
     check('lat')
         .exists({ checkFalsy: true })
         .isNumeric()
@@ -36,6 +48,9 @@ const validateSpot = [
     check('description')
         .exists({ checkFalsy: true })
         .withMessage("Description is required"),
+    check('description')
+        .isLength({ min: 1, max: 500 })
+        .withMessage("Description must be 500 characters or less"),
     check('price')
         .exists({ checkFalsy: true })
         .isNumeric()
@@ -48,10 +63,26 @@ const validateReview = [
     check('review')
         .exists({ checkFalsy: true })
         .withMessage("Review text is required"),
+    check('review')
+        .isLength({ min: 1, max: 500 })
+        .withMessage("Review must not exceed 500 characters"),
     check('stars')
         .exists({ checkFalsy: true })
         .isInt({ min: 1, max: 5 })
         .withMessage('Stars must be an integer from 1 to 5'),
+    handleValidationErrors
+];
+
+const validateImageUrl = [
+    check('url')
+        .isURL()
+        .withMessage("Image URL is invalid")
+        .custom((value, { req }) => {
+            if (!value.includes(".jpg") && !value.includes(".png")) {
+                throw new Error("Image URL must end with '.jpg' or '.png'");
+            }
+            return true;
+        }),
     handleValidationErrors
 ];
 
@@ -63,11 +94,19 @@ const endDateChecker = (date1, date2) => {
 }
 
 const bookingConflictChecker = (date1, date2, date3, date4) => {
+    // console.log("user startDate", date1)
+    // console.log("user endDate", date2)
+    // console.log("query startDate", date3)
+    // console.log("query endDate", date4)
     const currentStartDate = new Date(date1).getTime()
     const currentEndDate = new Date(date2).getTime()
     const dateCheckStartDate = new Date(date3).getTime()
     const dateCheckEndDate = new Date(date4).getTime()
 
+    // console.log("currentStartDate", currentStartDate)
+    // console.log("currentEndDate", currentEndDate)
+    // console.log("dateCheckStartDate", dateCheckStartDate)
+    // console.log("dateCheckEndDate", dateCheckEndDate)
     const errors = []
     if (currentStartDate >= dateCheckStartDate && currentStartDate <= dateCheckEndDate) {
         // console.log("Start date is between the start date and end date of another booking!")
@@ -111,19 +150,19 @@ router.get('/', async (req, res) => {
     //PAGINATION / QUERY PARAMS
     let { page, size } = req.query;
     let pagination = {}
-    if(!page) page = 1
-    if(!size) size = 20
-    if(Number(page) > 10) page = 10
+    if (!page) page = 1
+    if (!size) size = 20
+    if (Number(page) > 10) page = 10
     if (Number(page) > 20) size = 20
     pagination.limit = size;
     pagination.offset = size * (page - 1)
     let whereQueryParams = {}
-    if (req.query.minLat) whereQueryParams.lat = {[Op.gte]: req.query.minLat}
-    if (req.query.maxLat) whereQueryParams.lat = {[Op.lte]: req.query.maxLat}
-    if (req.query.minLng) whereQueryParams.lng = {[Op.gte]: req.query.minLng}
-    if (req.query.maxLng) whereQueryParams.lng = {[Op.lte]: req.query.maxLng}
-    if (req.query.minPrice) whereQueryParams.price = {[Op.gte]: req.query.minPrice}
-    if (req.query.maxPrice) whereQueryParams.price = {[Op.lte]: req.query.maxPrice}
+    if (req.query.minLat) whereQueryParams.lat = { [Op.gte]: req.query.minLat }
+    if (req.query.maxLat) whereQueryParams.lat = { [Op.lte]: req.query.maxLat }
+    if (req.query.minLng) whereQueryParams.lng = { [Op.gte]: req.query.minLng }
+    if (req.query.maxLng) whereQueryParams.lng = { [Op.lte]: req.query.maxLng }
+    if (req.query.minPrice) whereQueryParams.price = { [Op.gte]: req.query.minPrice }
+    if (req.query.maxPrice) whereQueryParams.price = { [Op.lte]: req.query.maxPrice }
 
 
 
@@ -215,7 +254,7 @@ router.get('/current', requireAuth, async (req, res) => {
 })
 
 // ======================= ADD AN IMAGE TO A SPOT BASED ON SPOT ID ==================
-router.post('/:spotId/images', requireAuth, async (req, res, next) => {
+router.post('/:spotId/images', requireAuth, validateImageUrl, async (req, res, next) => {
     const loggedInUserId = res.req.user.dataValues.id
     const spotId = Number(req.params.spotId)
     const { url, preview } = await req.body
@@ -315,7 +354,7 @@ router.put('/:spotId', requireAuth, validateSpot, async (req, res, next) => {
 
     if (currentSpot.toJSON().ownerId !== loggedInUserId) {
         const err = new Error()
-        err.errors =[]
+        err.errors = []
         err.errors.push("Spot must belong to the current User")
         err.status = 403
         err.statusCode = 403
@@ -369,7 +408,7 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res, ne
             const err = new Error()
             err.errors = []
             err.errors.push("User already has a review for this spot")
-                err.status = 403;
+            err.status = 403;
             err.statusCode = 403;
             return next(err)
         }
@@ -403,13 +442,13 @@ router.get('/:spotId/reviews', async (req, res, next) => {
         //     err.status = 404
         // err.statusCode = 404
         // return next(err)
-        res.json({Reviews: []})
+        res.json({ Reviews: [] })
     } else {
         const parsedReviewsArr = []
         unparsedReviewsArr.forEach(review => { parsedReviewsArr.push(review.toJSON()) })
         // console.log(parsedReviewsArr)
 
-        res.json({ Reviews: parsedReviewsArr})
+        res.json({ Reviews: parsedReviewsArr })
     }
 })
 
@@ -428,52 +467,68 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
         err.statusCode = 404;
         return next(err)
     }
-    // Error handler: Spot must NOT belong to the current user
-    // if (spotQuery.dataValues.ownerId === loggedInUserId) {
-    //     const err = new Error()
-    //     err.status = 401;
-    //     err.statusCode = 401;
-    //     err.message = "This user is the owner and cannot make a booking here!"
-    //     return next(err)
-    // }
+
     const { startDate, endDate } = req.body
     // console.log(`StartDate: ${startDate}    EndDate: ${endDate}`)
     const startDateJS = new Date(startDate)
     const endDateJS = new Date(endDate)
-    // console.log("startDate: ", startDateJS)
-    // console.log("endDate: ", endDateJS)
-    // Error handler: End date must be after start date
     if (endDateChecker(startDate, endDate) === false) {
         const err = new Error()
         err.message = "Validation error"
         err.statusCode = 400;
         err.status = 400;
-        err.errors = ["endDate cannot be on or before startDate"]
+        err.errors = ["End Date cannot be on or before Start Date"]
         return next(err)
     }
     // Error handler: There must not be a booking in this period
     const bookingQuery = await Booking.findAll({
         where: {
-            spotId,
-            startDate: {
-                [Op.gte]: startDateJS
-            }
+            spotId
         }
     })
-    if (bookingQuery.length > 0) {
-        for (let booking of bookingQuery) {
-            const bookingErrors = bookingConflictChecker(startDate, endDate, booking.dataValues.startDate, booking.dataValues.endDate)
 
-            if (bookingErrors.length > 0) {
-                const err = new Error()
-                err.message = "Sorry, this spot is already booked for the specified dates"
-                err.status = 403;
-                err.statusCode = 403;
-                err.errors = bookingErrors;
-                return next(err)
-            }
-        }
+
+    const overlap = bookingQuery.some((reservation) => {
+        console.log(reservation)
+        const reservationStart = new Date(reservation.startDate);
+        const reservationEnd = new Date(reservation.endDate);
+        const requestedStart = new Date(startDate);
+        const requestedEnd = new Date(endDate);
+
+        requestedStart.setHours(0, 0, 0, 0)
+        reservationEnd.setHours(0, 0, 0, 0)
+
+        return (
+            (requestedStart >= reservationStart && requestedStart < reservationEnd) ||
+            (requestedEnd > reservationStart && requestedEnd <= reservationEnd) ||
+            (requestedStart <= reservationStart && requestedEnd >= reservationEnd) ||
+            (startDate === reservation.endDate) ||
+            (endDate === reservation.startDate)
+        );
+    });
+
+    if (overlap) {
+        const err = new Error()
+        err.message = "Sorry, this spot is already booked for the specified dates"
+        err.status = 403;
+        err.statusCode = 403;
+        err.errors = ["Sorry, this spot is already booked for the specified dates"]
+        return next(err)
     }
+    // if (bookingQuery.length > 0) {
+    //     for (let booking of bookingQuery) {
+    //         const bookingErrors = bookingConflictChecker(startDate, endDate, booking.dataValues.startDate, booking.dataValues.endDate)
+
+    //         if (bookingErrors.length > 0) {
+    //             const err = new Error()
+    //             err.message = "Sorry, this spot is already booked for the specified dates"
+    //             err.status = 403;
+    //             err.statusCode = 403;
+    //             err.errors = bookingErrors;
+    //             return next(err)
+    //         }
+    //     }
+    // }
     // Success Response
     const newBooking = await Booking.build({
         spotId, userId: loggedInUserId, startDate, endDate
@@ -489,7 +544,7 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
     const loggedInUserId = res.req.user.dataValues.id
 
     const spotQueryTest = await Spot.findOne({
-        where: {id: currentSpotId}
+        where: { id: currentSpotId }
     })
     // Error if spot cannot be found
     if (spotQueryTest === null) {
@@ -504,7 +559,7 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
     // Success if the one querying owns the spot
     if (spotQueryTest.dataValues.ownerId === loggedInUserId) {
         const spotQuery = await Booking.findAll({
-            where: {spotId: currentSpotId},
+            where: { spotId: currentSpotId },
             include: [
                 {
                     model: User,
@@ -513,17 +568,17 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
             ],
             attributes: ["id", "spotId", "userId", "startDate", "endDate", "createdAt", "updatedAt"]
         })
-        spotQuery.forEach(booking => {bookingResponseArr.push(booking.toJSON())})
-    // Success if the one querying does not own the spot
+        spotQuery.forEach(booking => { bookingResponseArr.push(booking.toJSON()) })
+        // Success if the one querying does not own the spot
     } else {
         const spotQuery = await Booking.findAll({
-            where: {spotId: currentSpotId},
+            where: { spotId: currentSpotId },
             attributes: ["spotId", "startDate", "endDate"]
         })
-        spotQuery.forEach(booking => {bookingResponseArr.push(booking.toJSON())})
+        spotQuery.forEach(booking => { bookingResponseArr.push(booking.toJSON()) })
     }
 
-    res.json({Bookings: bookingResponseArr})
+    res.json({ Bookings: bookingResponseArr })
 })
 
 
@@ -533,7 +588,7 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
     const loggedInUserId = res.req.user.dataValues.id
 
     const spotQueryTest = await Spot.findOne({
-        where: {id: currentSpotId},
+        where: { id: currentSpotId },
     })
     // ERROR HANDLER if the spot doesn't exist
     if (spotQueryTest === null) {
@@ -544,7 +599,7 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
         return next(err)
     }
     // ERROR HANDLER if the logged in user is not the owner of the spot
-    if (spotQueryTest.dataValues.ownerId !== loggedInUserId)  {
+    if (spotQueryTest.dataValues.ownerId !== loggedInUserId) {
         const err = new Error()
         err.errors = []
         err.errors.push("Spot must belong to the current User")
@@ -554,6 +609,6 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
     }
 
     await spotQueryTest.destroy()
-    res.json({message: "Successfully deleted"})
+    res.json({ message: "Successfully deleted" })
 })
 module.exports = router;

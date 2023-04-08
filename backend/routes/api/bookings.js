@@ -116,7 +116,7 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
         err.message = "Validation error"
         err.statusCode = 400;
         err.status = 400;
-        err.errors = ["endDate cannot be on or before startDate"]
+        err.errors = ["End Date cannot be on or before start date"]
         return next(err)
     }
 
@@ -127,24 +127,37 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
     const bookingQuery = await Booking.findAll({
         where: {
             spotId: bookingQueryTest.dataValues.spotId,
-            startDate: {
-                [Op.gte]: startDateJS
+            id: {
+                [Op.ne]: currentBookingId
             }
         }
     })
-    if (bookingQuery.length > 0) {
-        for (let booking of bookingQuery) {
-            const bookingErrors = bookingConflictChecker(startDate, endDate, booking.dataValues.startDate, booking.dataValues.endDate)
+    const overlap = bookingQuery.some((reservation) => {
+        console.log(reservation)
+        const reservationStart = new Date(reservation.startDate);
+        const reservationEnd = new Date(reservation.endDate);
+        const requestedStart = new Date(startDate);
+        const requestedEnd = new Date(endDate);
 
-            if (bookingErrors.length > 0) {
-                const err = new Error()
-                err.message = "Sorry, this spot is already booked for the specified dates"
-                err.status = 403;
-                err.statusCode = 403;
-                err.errors = bookingErrors;
-                return next(err)
-            }
-        }
+        requestedStart.setHours(0, 0, 0, 0)
+        reservationEnd.setHours(0, 0, 0, 0)
+
+        return (
+            (requestedStart >= reservationStart && requestedStart < reservationEnd) ||
+            (requestedEnd > reservationStart && requestedEnd <= reservationEnd) ||
+            (requestedStart <= reservationStart && requestedEnd >= reservationEnd) ||
+            (startDate === reservation.endDate) ||
+            (endDate === reservation.startDate)
+        );
+    });
+
+    if (overlap) {
+        const err = new Error()
+        err.message = "Sorry, this spot is already booked for the specified dates"
+        err.status = 403;
+        err.statusCode = 403;
+        err.errors = ["Sorry, this spot is already booked for the specified dates"]
+        return next(err)
     }
     // Success Response
     bookingQueryTest.update({

@@ -3,6 +3,7 @@ import { csrfFetch } from "./csrf";
 //Action Type Constants
 const GET_REVIEWS_BY_SPOT = "reviews/getReviewsBySpot"
 const CREATE_REVIEW = "reviews/createReview"
+const EDIT_REVIEW = "reviews/editReviews"
 const GET_REVIEWS_BY_USER = "reviews/getReviewsByUser"
 const DELETE_REVIEWS_BY_USER = 'reviews/deleteReviewsByUser'
 const CLEAR_REVIEWS = "reviews/clearReviews"
@@ -17,6 +18,13 @@ const loadReviewsBySpot = (reviews) => {
 const addReview = (review) => {
   return {
     type: CREATE_REVIEW,
+    review
+  }
+}
+
+const editReview = (review) => {
+  return {
+    type: EDIT_REVIEW,
     review
   }
 }
@@ -54,7 +62,7 @@ export const getReviewsBySpot = (spotId) => async (dispatch) => {
 }
 
 export const createReviewBySpot = (reviewObj) => async (dispatch) => {
-  const { review, stars, spotId} = reviewObj;
+  const { review, stars, spotId } = reviewObj;
   // console.log(reviewObj)
   const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
     method: "POST",
@@ -63,13 +71,27 @@ export const createReviewBySpot = (reviewObj) => async (dispatch) => {
     })
   })
   let data
-  if(response.ok) {
+  if (response.ok) {
     data = await response.json()
     dispatch(addReview(data))
     return data
   }
 }
 
+export const editReviewByUser = (reviewObj) => async (dispatch) => {
+  const { review, stars, reviewId } = reviewObj;
+  const response = await csrfFetch(`/api/reviews/${reviewId}`, {
+    method: "PUT",
+    body: JSON.stringify({
+      review, stars
+    })
+  })
+  if (response.ok) {
+    const data = await response.json()
+    dispatch(editReview(data))
+    return data;
+  }
+}
 
 export const getReviewsByUser = () => async (dispatch) => {
   const response = await csrfFetch(`/api/reviews/current`);
@@ -105,19 +127,27 @@ const reviewsReducer = (state = initialState, action) => {
       newState.spot = action.reviews;
       return newState;
     case CREATE_REVIEW:
-      newState = {...state, spot: {...state.spot}, user: {...state.user}}
+      newState = { ...state, spot: { ...state.spot }, user: { ...state.user } }
       newState.spot[action.review.id] = action.review
+      return newState
+    case EDIT_REVIEW:
+      const spotInfo = state.user[action.review.id].Spot
+      const userInfo = state.user[action.review.id].User
+      newState = { ...state, spot: {}, user: {...state.user} }
+      newState.user[action.review.id] = action.review
+      newState.user[action.review.id]["Spot"] = spotInfo
+      newState.user[action.review.id]["User"] = userInfo
       return newState
     case GET_REVIEWS_BY_USER:
       newState = { spot: {}, user: {} }
       newState.user = action.reviews;
       return newState
     case DELETE_REVIEWS_BY_USER:
-      newState = {...state, spot: {}, user: {...state.user}}
+      newState = { ...state, spot: {}, user: { ...state.user } }
       delete newState.user[action.reviewId]
       return newState
     case CLEAR_REVIEWS:
-      newState = {...state}
+      newState = { ...state }
       newState.user = {}
       newState.spot = {}
       return newState
