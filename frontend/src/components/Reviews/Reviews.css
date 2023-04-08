@@ -64,3 +64,6 @@
     font-size: 12px;
     color: gray
 }
+.review-text {
+    word-wrap: break-word;
+}

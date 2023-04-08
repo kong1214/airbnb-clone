@@ -3,7 +3,9 @@ import { useDispatch, useSelector } from "react-redux"
 import { useHistory } from "react-router-dom"
 import * as reviewsActions from "../../store/reviews"
 import ReviewCard from "./ReviewCard"
+import EditReviewModal from "./EditReviewModal"
 import "./ReviewsByUser.css"
+import OpenModalButton from "../OpenModalButton"
 
 
 function ReviewsByUser() {
@@ -37,6 +39,10 @@ function ReviewsByUser() {
                 {reviews.map(review => (
                     <div className="review-by-user-card-container" key={review.id}>
                         <ReviewCard review={review} />
+                        <OpenModalButton
+                            className="edit-review-modal-button"
+                            buttonText="Edit Review"
+                            modalComponent={<EditReviewModal review={review} />} />
                         <button onClick={() => deleteHandler(review.id)} className="delete-review-button">Delete Review</button>
                     </div>
                 ))}

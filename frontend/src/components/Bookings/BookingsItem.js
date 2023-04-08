@@ -52,9 +52,9 @@ function BookingItem({ booking }) {
                     <div className="booking-buttons">
                         <button onClick={() => deleteHandler(booking.id)} className="delete-booking-button">Delete Booking</button>
                         <OpenModalButton
-                                    className="edit-booking-button"
-                                    buttonText="Edit Booking"
-                                    modalComponent={<EditBookingModal booking={booking} />} />
+                            className="edit-booking-button"
+                            buttonText="Edit Booking"
+                            modalComponent={<EditBookingModal booking={booking} />} />
                     </div>
                 </div>
             </div>
