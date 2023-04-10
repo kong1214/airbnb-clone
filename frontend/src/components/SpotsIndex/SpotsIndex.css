@@ -45,16 +45,18 @@ body {
 }
 .detail-card-location-and-avgRating {
     display: flex;
-    font-size: 15px;
+    justify-content: space-between;
+    font-size: .8em;
 }
 .detail-card-location {
-    width: 100%;
+    width: 75%;
+    overflow: hidden
 }
 .star-avg-rating-container {
     display: flex;
     justify-content: end;
     align-items: center;
-    width: 20%;
+    width: auto;
 }
 .rounded-corners {
     border-radius: 15px;
@@ -66,4 +68,25 @@ a:link {
 a:visited {
     text-decoration: none;
     color: black;
+}
+
+@media screen and (max-width:1639px) {
+    .card-container {
+        width: 18%;
+    }
+}
+@media screen and (max-width:1449px) {
+    .card-container {
+        width: 20.5%;
+    }
+}
+@media screen and (max-width:1200px) {
+    .card-container {
+        width: 23%;
+    }
+}
+@media screen and (max-width:1150px) {
+    .card-container {
+        width: 30%;
+    }
 }
