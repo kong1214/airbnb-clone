@@ -50,7 +50,7 @@ body {
 }
 .detail-card-location {
     width: 75%;
-    overflow: hidden
+    word-wrap: break-word;
 }
 .star-avg-rating-container {
     display: flex;
